@@ -1,0 +1,75 @@
+.login{
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../../assets/mri-g070688221_1280.png");
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-family: 'Roboto';
+
+    .form{
+        height: 70vh;
+        width: 30vw;
+        margin-right: 5%;
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        gap: 48px;
+
+        .title{
+            padding-top: 36px;
+            font-size: 32px;
+            color: #338ebe;
+            padding-bottom: 24px;
+        }
+
+        .input{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70%;
+            height: 34px;
+            box-shadow: 0px 3px 6px #00000029;
+
+            .icon{
+                background-color: #b2f1ff;
+                width: 10%;
+                height: 38px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+            }
+
+            .input-type{
+                width: 90%;
+                height: 34px;
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+                border: 1px solid #b2f1ff;;
+            }
+
+            .role{
+                height: 38px;
+            }
+        }
+
+        .btn{
+            width: 30%;
+            height: 38px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            background: #338ebe;
+            box-shadow: 0px 3px 6px #00000029;
+            margin-top: 24px;
+        }
+    }
+
+}
