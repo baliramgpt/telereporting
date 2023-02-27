@@ -2,11 +2,19 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Datatable.scss';
 import { DataGrid } from '@mui/x-data-grid';
+import { GridAddIcon } from '@mui/x-data-grid';
 import { userColumns, userRows } from '../../dataTableSource';
+import * as services from '../../services/Services';
+import Controls from '../../control/Controls';
+import Popup from '../modal/Popup';
+import NewPage from '../../pages/new/NewPage';
+import NewRegistration from '../../pages/new/NewRegistration';
 
 const Datatable = () => {
 
     const [data, setData] = useState(userRows);
+    const [openPopup, setOpenPopup] = useState(false);
+    const [recordForEdit, setRecordForEdit] = useState(null)
 
     const handleDelete = (id) => {
         setData(data.filter((item) => item.id !== id));
@@ -29,9 +37,13 @@ const Datatable = () => {
         <div className='datatable'>
             <div className='datatableTitle'>
                 Add New Users
-                <Link to='/users/new' style={{ textDecoration: 'none', color: 'rgb(178, 178, 247)', border: '1px solid gray', padding: '2px 5px', }}>
-                    Add New
-                </Link>
+                <Controls.Button
+                    text="Add"
+                    variant="outlined"
+                    startIcon={<GridAddIcon />}
+                    className='newButton'
+                    onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
+                />
             </div>
             <DataGrid
                 className='datagrid'
@@ -41,6 +53,15 @@ const Datatable = () => {
                 rowsPerPageOptions={[3]}
                 checkboxSelection
             />
+            <Popup
+                title="Patient Details"
+                openPopup={openPopup}
+                setOpenPopup={setOpenPopup}
+            >
+                <NewRegistration
+                    recordForEdit={recordForEdit}
+                />
+            </Popup>
         </div>
     );
 }
