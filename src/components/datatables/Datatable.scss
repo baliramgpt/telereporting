@@ -23,6 +23,11 @@
         }
     }
 
+    .newButton {
+        position: 'absolute';
+        right: '10px'
+    }
+
     .cellWithImg {
         display: flex;
         align-items: center;
