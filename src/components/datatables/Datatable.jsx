@@ -8,7 +8,6 @@ import Controls from '../../control/Controls';
 import Popup from '../modal/Popup';
 import NewRegistration from '../../pages/new/NewRegistration';
 import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
-import UserTable from '../tables/UserTable';
 import Tables from '../tables/Tables';
 import { Search } from '@mui/icons-material';
 import { EditOutlined } from '@mui/icons-material';
