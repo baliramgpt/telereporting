@@ -113,15 +113,15 @@ const Datatable = () => {
                                 <TableCell>{item.mobile}</TableCell>
                                 <TableCell>{item.department}</TableCell>
                                 <TableCell>
-                                    <Controls.ActionButton
+                                    <Controls.DeleteButton
                                         color="primary"
                                         onClick={() => { openInPopup(item) }}>
                                         <EditOutlined fontSize="small" />
-                                    </Controls.ActionButton>
-                                    <Controls.ActionButton
+                                    </Controls.DeleteButton>
+                                    <Controls.DeleteButton
                                         color="secondary">
                                         <GridCloseIcon fontSize="small" />
-                                    </Controls.ActionButton>
+                                    </Controls.DeleteButton>
                                 </TableCell>
                             </TableRow>)
                             )
