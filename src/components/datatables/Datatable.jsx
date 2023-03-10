@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './Datatable.scss';
 import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
@@ -12,6 +11,8 @@ import Tables from '../tables/Tables';
 import { Search } from '@mui/icons-material';
 import { EditOutlined } from '@mui/icons-material';
 import { GridCloseIcon } from '@mui/x-data-grid';
+import ConfirmDialog from '../modal/ConfirmDialog';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -44,6 +45,8 @@ const Datatable = () => {
     const [recordForEdit, setRecordForEdit] = useState(null)
     const [records, setRecords] = useState(services.getAllDetails())
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+    const [deleteRecordIndex, setDeleteRecordIndex] = useState(null);
 
     const {
         TblContainer,
@@ -80,6 +83,25 @@ const Datatable = () => {
         setOpenPopup(true)
     }
 
+    const handleDeleteRecords = (index) => {
+        //alert('clicked')
+        setShowDeleteDialog(true)
+        setDeleteRecordIndex(index)
+    }
+
+    const handleDeleteConfirm = () => {
+        const updatedRecords = [...records]
+        updatedRecords.splice(deleteRecordIndex, 1)
+        setRecords(updatedRecords)
+        setShowDeleteDialog(false)
+        setDeleteRecordIndex(null)
+    }
+
+    const handleDeleteCancel = () => {
+        setShowDeleteDialog(false)
+        setDeleteRecordIndex(null)
+    }
+
     return (
         <div className='datatable'>
             <Paper className={classes.pageContent}>
@@ -106,8 +128,8 @@ const Datatable = () => {
                     <TblHead />
                     <TableBody>
                         {
-                            recordsAfterPagingAndSorting().map(item =>
-                            (<TableRow key={item.id}>
+                            recordsAfterPagingAndSorting().map((item, index) =>
+                            (<TableRow key={index}>
                                 <TableCell>{item.fullName}</TableCell>
                                 <TableCell>{item.email}</TableCell>
                                 <TableCell>{item.mobile}</TableCell>
@@ -119,7 +141,9 @@ const Datatable = () => {
                                         <EditOutlined fontSize="small" />
                                     </Controls.DeleteButton>
                                     <Controls.DeleteButton
-                                        color="secondary">
+                                        color="secondary"
+                                        onClick={() => handleDeleteRecords(index)}
+                                    >
                                         <GridCloseIcon fontSize="small" />
                                     </Controls.DeleteButton>
                                 </TableCell>
@@ -140,6 +164,12 @@ const Datatable = () => {
                     addOrEdit={addOrEdit}
                 />
             </Popup>
+            <ConfirmDialog
+                showDeleteDialog={showDeleteDialog}
+                title="Delete Records"
+                handleDeleteConfirm={handleDeleteConfirm}
+                handleDeleteCancel={handleDeleteCancel}
+            />
         </div>
     );
 }
