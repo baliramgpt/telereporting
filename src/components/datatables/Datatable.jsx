@@ -34,6 +34,7 @@ const headCells = [
     { id: 'email', label: 'Email Address (Personal)' },
     { id: 'mobile', label: 'Mobile Number' },
     { id: 'department', label: 'Department' },
+    { id: 'file', label: 'file' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -134,6 +135,7 @@ const Datatable = () => {
                                 <TableCell>{item.email}</TableCell>
                                 <TableCell>{item.mobile}</TableCell>
                                 <TableCell>{item.department}</TableCell>
+                                <TableCell>{item.file}</TableCell>
                                 <TableCell>
                                     <Controls.DeleteButton
                                         color="primary"
@@ -146,6 +148,12 @@ const Datatable = () => {
                                     >
                                         <GridCloseIcon fontSize="small" />
                                     </Controls.DeleteButton>
+                                    {records.file && (
+                                        <img
+                                            src={URL.createObjectURL(records.file)}
+                                            alt='profile photo'
+                                        />
+                                    )}
                                 </TableCell>
                             </TableRow>)
                             )

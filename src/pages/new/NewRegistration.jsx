@@ -23,11 +23,12 @@ const initialFValues = {
     departmentId: '',
     //hireDate: new Date(),
     isPermanent: false,
+    file: null
 }
 
 const NewRegistration = (props) => {
     const { addOrEdit, recordForEdit } = props
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState(null);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -39,6 +40,8 @@ const NewRegistration = (props) => {
             temp.mobile = fieldValues.mobile.length > 9 ? "" : "Minimum 10 numbers required."
         if ('departmentId' in fieldValues)
             temp.departmentId = fieldValues.departmentId.length != 0 ? "" : "This field is required."
+        if ('file' in fieldValues)
+            temp.file = fieldValues.file ? "" : "This field is required."
         setErrors({
             ...temp
         })
@@ -128,10 +131,13 @@ const NewRegistration = (props) => {
                     />
                     <div className='formInput'>
                         <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
-                        <input type='file' id='file' style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
+                        <input type='file' id='file' accept='image/*' name='file' value={values.file} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
                     </div>
                     <div className='left'>
-                        <img src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'} alt='profile upload photo' />
+                        {file && (
+                            <img src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'}
+                                alt='profile upload photo' />
+                        )}
                     </div>
                     <div>
                         <Controls.Button
