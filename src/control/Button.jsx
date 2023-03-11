@@ -10,7 +10,6 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-
 const Button = (props) => {
     const { text, size, color, variant, onClick, ...other } = props
     const classes = useStyles();
