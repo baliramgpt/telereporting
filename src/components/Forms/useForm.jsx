@@ -27,8 +27,7 @@ export const useForm = (initialFValues, validateOnChange = false, validate) => {
         errors,
         setErrors,
         handleInputChange,
-        resetForm
-
+        resetForm,
     }
 }
 const useStyles = makeStyles(theme => ({

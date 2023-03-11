@@ -30,10 +30,21 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const headCells = [
-    { id: 'fullName', label: 'Employee Name' },
-    { id: 'email', label: 'Email Address (Personal)' },
-    { id: 'mobile', label: 'Mobile Number' },
-    { id: 'department', label: 'Department' },
+    { id: 'id', label: 'ID' },
+    { id: 'fullName', label: 'Patient Name' },
+    { id: 'testName', label: 'Test Name' },
+    { id: 'regNo', label: 'Reg No' },
+    { id: 'radiologist', label: 'Radiologist' },
+    { id: 'createdAt', label: 'Created At' },
+    { id: 'reportedAt', label: 'Reported At' },
+    { id: 'status', label: 'Status' },
+    { id: 'urgent', label: 'Urgent' },
+    { id: 'review', label: 'Review' },
+    { id: 'options', label: 'Options' },
+    // { id: 'email', label: 'Email Address (Personal)' },
+    // { id: 'mobile', label: 'Mobile Number' },
+    // { id: 'department', label: 'Department' },
+    // { id: 'file', label: 'file' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -107,7 +118,7 @@ const Datatable = () => {
             <Paper className={classes.pageContent}>
                 <Toolbar>
                     <Controls.Input
-                        label="Search Employees"
+                        label="Search Patient"
                         className={classes.searchInput}
                         InputProps={{
                             startAdornment: (<InputAdornment position="start">
@@ -117,7 +128,7 @@ const Datatable = () => {
                         onChange={handleSearch}
                     />
                     <Controls.Button
-                        text="Add User"
+                        text="Add"
                         variant="outlined"
                         startIcon={<GridAddIcon />}
                         className='newButton'
@@ -130,10 +141,17 @@ const Datatable = () => {
                         {
                             recordsAfterPagingAndSorting().map((item, index) =>
                             (<TableRow key={index}>
-                                <TableCell>{item.fullName}</TableCell>
-                                <TableCell>{item.email}</TableCell>
-                                <TableCell>{item.mobile}</TableCell>
-                                <TableCell>{item.department}</TableCell>
+                                <TableCell>{item.id}</TableCell>
+                                <TableCell>{item.patientName}</TableCell>
+                                <TableCell>{item.testName}</TableCell>
+                                <TableCell>{item.regNo}</TableCell>
+                                <TableCell>{item.doctorName}</TableCell>
+                                <TableCell>{item.createdAt}</TableCell>
+                                <TableCell>{item.reportedAt}</TableCell>
+                                <TableCell>{item.status}</TableCell>
+                                <TableCell>{item.urgent}</TableCell>
+                                <TableCell>{item.review}</TableCell>
+                                <TableCell>{item.options}</TableCell>
                                 <TableCell>
                                     <Controls.DeleteButton
                                         color="primary"
@@ -146,6 +164,12 @@ const Datatable = () => {
                                     >
                                         <GridCloseIcon fontSize="small" />
                                     </Controls.DeleteButton>
+                                    {records.file && (
+                                        <img
+                                            src={URL.createObjectURL(records.file)}
+                                            alt='profile photo'
+                                        />
+                                    )}
                                 </TableCell>
                             </TableRow>)
                             )

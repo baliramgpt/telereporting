@@ -5,6 +5,7 @@ import Controls from '../../control/Controls'
 import { useForm, Form } from '../../components/Forms/useForm'
 import * as services from '../../services/Services'
 import './NewPage.scss';
+import dayjs from 'dayjs';
 
 
 const genderItems = [
@@ -13,21 +14,27 @@ const genderItems = [
     { id: 'other', title: 'Other' },
 ]
 
+const currentDate = new Date();
+
 const initialFValues = {
     id: 0,
     patientName: '',
+    age: '',
     email: '',
-    mobile: '',
-    city: '',
+    contactNo: '',
     gender: 'male',
+    referralDoctor: '',
+    testDate: dayjs(new Date()),
+    testName: '',
+    history: '',
     doctorId: '',
-    hireDate: new Date(),
-    isPermanent: false,
+    regNo: '',
+    file: null
 }
 
 const NewRegistration = (props) => {
     const { addOrEdit, recordForEdit } = props
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState(null);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -37,6 +44,8 @@ const NewRegistration = (props) => {
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
         if ('mobile' in fieldValues)
             temp.mobile = fieldValues.mobile.length > 9 ? "" : "Minimum 10 numbers required."
+        if ('file' in fieldValues)
+            temp.file = fieldValues.file ? "" : "This field is required."
         if ('doctorId' in fieldValues)
             temp.doctorId = fieldValues.doctorId.length != 0 ? "" : "This field is required."
         setErrors({
@@ -53,15 +62,15 @@ const NewRegistration = (props) => {
         errors,
         setErrors,
         handleInputChange,
-        resetForm
+        resetForm,
     } = useForm(initialFValues, true, validate);
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log(values)
-        if (validate()) {
+        console.log(values, "#", validate());
+        // if (validate()) {
             addOrEdit(values, resetForm);
-        }
+        // }
     }
 
     useEffect(() => {
@@ -95,13 +104,6 @@ const NewRegistration = (props) => {
                         value={values.email}
                         onChange={handleInputChange}
                         error={errors.email}
-                    />
-                    <Controls.Input
-                        label="Mobile"
-                        name="mobile"
-                        value={values.mobile}
-                        onChange={handleInputChange}
-                        error={errors.mobile}
                     />
                     <Controls.Input
                         label="Referral Doctor"
@@ -168,19 +170,24 @@ const NewRegistration = (props) => {
                     /> */}
                     <div className='formInput'>
                         <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
-                        <input type='file' id='file' style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
+                        <input type='file' id='file' accept='image/*' name='file' value={values.file} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
                     </div>
                     <div className='left'>
-                        <img src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'} alt='profile upload photo' />
+                        {file && (
+                            <img src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'}
+                                alt='profile upload photo' />
+                        )}
                     </div>
                     <div>
                         <Controls.Button
                             type="submit"
-                            text="Submit" />
+                            text="Submit" 
+                        />
                         <Controls.Button
                             text="Reset"
                             color="default"
-                            onClick={resetForm} />
+                            onClick={resetForm} 
+                        />
                     </div>
                 </Grid>
             </Grid>
