@@ -8,10 +8,11 @@ import Popup from '../modal/Popup';
 import NewRegistration from '../../pages/new/NewRegistration';
 import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
 import Tables from '../tables/Tables';
-import { Search } from '@mui/icons-material';
+import { Search, NoteAdd } from '@mui/icons-material';
 import { EditOutlined } from '@mui/icons-material';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import ConfirmDialog from '../modal/ConfirmDialog';
+import AddNoteDialog from '../modal/AddNoteDialog';
 
 
 
@@ -51,13 +52,16 @@ const headCells = [
 
 const Datatable = () => {
 
-    const classes = useStyles();
-    const [openPopup, setOpenPopup] = useState(false);
+    const classes = useStyles()
+    const [openPopup, setOpenPopup] = useState(false)
     const [recordForEdit, setRecordForEdit] = useState(null)
     const [records, setRecords] = useState(services.getAllDetails())
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
-    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
-    const [deleteRecordIndex, setDeleteRecordIndex] = useState(null);
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+    const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
+    const [selectedRecord, setSelectedRecord] = useState(null)
+    const [submitButtonText, setSubmitButtonText] = useState('Submit')
+    const [showAddCommentModal, setShowAddCommentModal] = useState(false)
 
     const {
         TblContainer,
@@ -113,6 +117,21 @@ const Datatable = () => {
         setDeleteRecordIndex(null)
     }
 
+    const handleAddNote = (index) => {
+        //alert('clicked')
+        setShowAddCommentModal(true)
+        setSelectedRecord(index)
+    }
+
+    const handleSaveComment = (index, comment) => {
+        alert('Comment Saved')
+    }
+
+    const handleCloseAddCommentModal = () => {
+        setShowAddCommentModal(false)
+        setSelectedRecord(null)
+    }
+
     return (
         <div className='datatable'>
             <Paper className={classes.pageContent}>
@@ -164,12 +183,19 @@ const Datatable = () => {
                                     >
                                         <GridCloseIcon fontSize="small" />
                                     </Controls.DeleteButton>
+                                    <Controls.DeleteButton
+                                        color="primary"
+                                        onClick={() => handleAddNote(index)}
+                                    >
+                                        <NoteAdd />
+                                    </Controls.DeleteButton>
                                     {records.file && (
                                         <img
                                             src={URL.createObjectURL(records.file)}
                                             alt='profile photo'
                                         />
                                     )}
+
                                 </TableCell>
                             </TableRow>)
                             )
@@ -193,6 +219,13 @@ const Datatable = () => {
                 title="Delete Records"
                 handleDeleteConfirm={handleDeleteConfirm}
                 handleDeleteCancel={handleDeleteCancel}
+            />
+            <AddNoteDialog
+                //index={index}
+                //open={selectedRecord && selectedRecord.id === index.id && showAddCommentModal}
+                showAddCommentModal={showAddCommentModal}
+                handleCloseAddCommentModal={handleCloseAddCommentModal}
+                onSaveComment={handleSaveComment}
             />
         </div>
     );
