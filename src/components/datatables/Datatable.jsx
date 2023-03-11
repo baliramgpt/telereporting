@@ -141,11 +141,17 @@ const Datatable = () => {
                         {
                             recordsAfterPagingAndSorting().map((item, index) =>
                             (<TableRow key={index}>
-                                <TableCell>{item.fullName}</TableCell>
-                                <TableCell>{item.email}</TableCell>
-                                <TableCell>{item.mobile}</TableCell>
-                                <TableCell>{item.department}</TableCell>
-                                <TableCell>{item.file}</TableCell>
+                                <TableCell>{item.id}</TableCell>
+                                <TableCell>{item.patientName}</TableCell>
+                                <TableCell>{item.testName}</TableCell>
+                                <TableCell>{item.regNo}</TableCell>
+                                <TableCell>{item.doctorName}</TableCell>
+                                <TableCell>{item.createdAt}</TableCell>
+                                <TableCell>{item.reportedAt}</TableCell>
+                                <TableCell>{item.status}</TableCell>
+                                <TableCell>{item.urgent}</TableCell>
+                                <TableCell>{item.review}</TableCell>
+                                <TableCell>{item.options}</TableCell>
                                 <TableCell>
                                     <Controls.DeleteButton
                                         color="primary"

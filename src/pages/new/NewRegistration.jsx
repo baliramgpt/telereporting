@@ -67,10 +67,10 @@ const NewRegistration = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log(values)
-        if (validate()) {
+        console.log(values, "#", validate());
+        // if (validate()) {
             addOrEdit(values, resetForm);
-        }
+        // }
     }
 
     useEffect(() => {
