@@ -5,6 +5,7 @@ import Controls from '../../control/Controls'
 import { useForm, Form } from '../../components/Forms/useForm'
 import * as services from '../../services/Services'
 import './NewPage.scss';
+import dayjs from 'dayjs';
 
 
 const genderItems = [
@@ -13,16 +14,21 @@ const genderItems = [
     { id: 'other', title: 'Other' },
 ]
 
+const currentDate = new Date();
+
 const initialFValues = {
     id: 0,
-    fullName: '',
+    patientName: '',
+    age: '',
     email: '',
-    mobile: '',
-    city: '',
+    contactNo: '',
     gender: 'male',
-    departmentId: '',
-    //hireDate: new Date(),
-    isPermanent: false,
+    referralDoctor: '',
+    testDate: dayjs(new Date()),
+    testName: '',
+    history: '',
+    doctorId: '',
+    regNo: '',
     file: null
 }
 
@@ -32,16 +38,16 @@ const NewRegistration = (props) => {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('fullName' in fieldValues)
-            temp.fullName = fieldValues.fullName ? "" : "This field is required."
+        if ('patientName' in fieldValues)
+            temp.patientName = fieldValues.patientName ? "" : "This field is required."
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
         if ('mobile' in fieldValues)
             temp.mobile = fieldValues.mobile.length > 9 ? "" : "Minimum 10 numbers required."
-        if ('departmentId' in fieldValues)
-            temp.departmentId = fieldValues.departmentId.length != 0 ? "" : "This field is required."
         if ('file' in fieldValues)
             temp.file = fieldValues.file ? "" : "This field is required."
+        if ('doctorId' in fieldValues)
+            temp.doctorId = fieldValues.doctorId.length != 0 ? "" : "This field is required."
         setErrors({
             ...temp
         })
@@ -56,7 +62,7 @@ const NewRegistration = (props) => {
         errors,
         setErrors,
         handleInputChange,
-        resetForm
+        resetForm,
     } = useForm(initialFValues, true, validate);
 
     const handleSubmit = e => {
@@ -79,11 +85,18 @@ const NewRegistration = (props) => {
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
-                        name="fullName"
-                        label="Full Name"
-                        value={values.fullName}
+                        name="patientName"
+                        label="Patient Name"
+                        value={values.patientName}
                         onChange={handleInputChange}
-                        error={errors.fullName}
+                        error={errors.patientName}
+                    />
+                    <Controls.Input
+                        name="age"
+                        label="Age"
+                        value={values.age}
+                        onChange={handleInputChange}
+                        error={errors.age}
                     />
                     <Controls.Input
                         label="Email"
@@ -93,16 +106,42 @@ const NewRegistration = (props) => {
                         error={errors.email}
                     />
                     <Controls.Input
-                        label="Mobile"
-                        name="mobile"
-                        value={values.mobile}
+                        label="Referral Doctor"
+                        name="referralDoctor"
+                        value={values.referralDoctor}
                         onChange={handleInputChange}
-                        error={errors.mobile}
+                    />
+                    <Controls.SelectButton
+                        name="testName"
+                        label="Test Name"
+                        value={values.testName}
+                        onChange={handleInputChange}
+                        options={services.getTestName()}
+                        error={errors.testName}
+                    />
+                    <Controls.Date
+                        label="Test Date"
+                        name="testDate"
+                        value={values.testDate}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.TextArea
+                        label="History / Analysis"
+                        name="history"
+                        placeholder="History / Analysis"
+                        value={values.history}
+                        onChange={handleInputChange}
                     />
                     <Controls.Input
-                        label="City"
-                        name="city"
-                        value={values.city}
+                        label="Contact Number"
+                        name="contactNo"
+                        value={values.contactNo}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.Input
+                        label="Registration No / Bill No"
+                        name="regNo"
+                        value={values.regNo}
                         onChange={handleInputChange}
                     />
 
@@ -116,19 +155,19 @@ const NewRegistration = (props) => {
                         items={genderItems}
                     />
                     <Controls.SelectButton
-                        name="departmentId"
-                        label="Department"
-                        value={values.departmentId}
+                        name="doctorId"
+                        label="Assign to Doctor"
+                        value={values.doctorId}
                         onChange={handleInputChange}
-                        options={services.getDepartmentCollection()}
-                        error={errors.departmentId}
+                        options={services.getDoctorsCollection()}
+                        error={errors.doctorId}
                     />
-                    <Controls.CheckBox
+                    {/* <Controls.CheckBox
                         name="isPermanent"
                         label="Keep Updated"
                         value={values.isPermanent}
                         onChange={handleInputChange}
-                    />
+                    /> */}
                     <div className='formInput'>
                         <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
                         <input type='file' id='file' accept='image/*' name='file' value={values.file} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
@@ -142,11 +181,13 @@ const NewRegistration = (props) => {
                     <div>
                         <Controls.Button
                             type="submit"
-                            text="Submit" />
+                            text="Submit" 
+                        />
                         <Controls.Button
                             text="Reset"
                             color="default"
-                            onClick={resetForm} />
+                            onClick={resetForm} 
+                        />
                     </div>
                 </Grid>
             </Grid>

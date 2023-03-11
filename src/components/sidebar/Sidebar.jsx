@@ -48,6 +48,18 @@ const Sidebar = () => {
                             <span>ECG Reporting</span>
                         </li>
                     </Link>
+                    <Link to="/users" style={{ textDecoration: "none" }}>
+                        <li>
+                            <MedicalInformationIcon className="icon" />
+                            <span>MRI Reporting</span>
+                        </li>
+                    </Link>
+                    <Link to="/users" style={{ textDecoration: "none" }}>
+                        <li>
+                            <MedicalInformationIcon className="icon" />
+                            <span>CT-Scan Reporting</span>
+                        </li>
+                    </Link>
                     {/* <li>
                         <CreditCardIcon className="icon" />
                         <span>Orders</span>
