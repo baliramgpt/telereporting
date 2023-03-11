@@ -141,7 +141,7 @@ function NewPage(props, title) {
                                         label="Department"
                                         value={values.departmentId}
                                         onChange={handleInputChange}
-                                        options={services.getDepartmentCollection()}
+                                        options={services.getDoctorsCollection()}
                                         error={errors.departmentId}
                                     />
                                     <Controls.CheckBox

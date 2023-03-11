@@ -15,12 +15,12 @@ const genderItems = [
 
 const initialFValues = {
     id: 0,
-    fullName: '',
+    patientName: '',
     email: '',
     mobile: '',
     city: '',
     gender: 'male',
-    departmentId: '',
+    doctorId: '',
     hireDate: new Date(),
     isPermanent: false,
 }
@@ -30,14 +30,14 @@ const NewRegistration = (props) => {
     const [file, setFile] = useState('');
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('fullName' in fieldValues)
-            temp.fullName = fieldValues.fullName ? "" : "This field is required."
+        if ('patientName' in fieldValues)
+            temp.patientName = fieldValues.patientName ? "" : "This field is required."
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
         if ('mobile' in fieldValues)
             temp.mobile = fieldValues.mobile.length > 9 ? "" : "Minimum 10 numbers required."
-        if ('departmentId' in fieldValues)
-            temp.departmentId = fieldValues.departmentId.length != 0 ? "" : "This field is required."
+        if ('doctorId' in fieldValues)
+            temp.doctorId = fieldValues.doctorId.length != 0 ? "" : "This field is required."
         setErrors({
             ...temp
         })
@@ -72,11 +72,18 @@ const NewRegistration = (props) => {
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
-                        name="fullName"
-                        label="Full Name"
-                        value={values.fullName}
+                        name="patientName"
+                        label="Patient Name"
+                        value={values.patientName}
                         onChange={handleInputChange}
-                        error={errors.fullName}
+                        error={errors.patientName}
+                    />
+                    <Controls.Input
+                        name="age"
+                        label="Age"
+                        value={values.age}
+                        onChange={handleInputChange}
+                        error={errors.age}
                     />
                     <Controls.Input
                         label="Email"
@@ -93,9 +100,23 @@ const NewRegistration = (props) => {
                         error={errors.mobile}
                     />
                     <Controls.Input
-                        label="City"
-                        name="city"
-                        value={values.city}
+                        label="Referral Doctor"
+                        name="referralDoctor"
+                        value={values.referralDoctor}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.SelectButton
+                        name="testName"
+                        label="Test Name"
+                        value={values.testName}
+                        onChange={handleInputChange}
+                        options={services.getTestName()}
+                        error={errors.testName}
+                    />
+                    <Controls.Input
+                        label="Registration No / Bill No"
+                        name="regNo"
+                        value={values.regNo}
                         onChange={handleInputChange}
                     />
 
@@ -109,19 +130,19 @@ const NewRegistration = (props) => {
                         items={genderItems}
                     />
                     <Controls.SelectButton
-                        name="departmentId"
-                        label="Department"
-                        value={values.departmentId}
+                        name="doctorId"
+                        label="Assign to Doctor"
+                        value={values.doctorId}
                         onChange={handleInputChange}
-                        options={services.getDepartmentCollection()}
-                        error={errors.departmentId}
+                        options={services.getDoctorsCollection()}
+                        error={errors.doctorId}
                     />
-                    <Controls.CheckBox
+                    {/* <Controls.CheckBox
                         name="isPermanent"
                         label="Keep Updated"
                         value={values.isPermanent}
                         onChange={handleInputChange}
-                    />
+                    /> */}
                     <div className='formInput'>
                         <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
                         <input type='file' id='file' style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
