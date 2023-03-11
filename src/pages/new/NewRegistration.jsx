@@ -22,12 +22,14 @@ const initialFValues = {
     gender: 'male',
     doctorId: '',
     hireDate: new Date(),
+    //hireDate: new Date(),
     isPermanent: false,
 }
 
 const NewRegistration = (props) => {
     const { addOrEdit, recordForEdit } = props
     const [file, setFile] = useState('');
+
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('patientName' in fieldValues)
@@ -58,6 +60,9 @@ const NewRegistration = (props) => {
     const handleSubmit = e => {
         e.preventDefault()
         console.log(values)
+        if (validate()) {
+            addOrEdit(values, resetForm);
+        }
     }
 
     useEffect(() => {

@@ -16,6 +16,28 @@ export const getTestName = () => ([
     { id: '3', title: 'RIGHT XRAY' },
     { id: '4', title: 'CHEST XRAY' },
 ])
+export function insertEmployee(data) {
+    let doctor = getAllDetails();
+    data['id'] = generateEmployeeId()
+    doctor.push(data)
+    localStorage.setItem(KEYS.doctor, JSON.stringify(doctor))
+}
+
+export function updateEmployee(data) {
+    let doctor = getAllDetails();
+    let recordIndex = doctor.findIndex(x => x.id == data.id);
+    doctor[recordIndex] = { ...data }
+    localStorage.setItem(KEYS.doctor, JSON.stringify(doctor));
+}
+
+export function generateEmployeeId() {
+    if (localStorage.getItem(KEYS.doctorId) == null)
+        localStorage.setItem(KEYS.doctorId, '0')
+    var id = parseInt(localStorage.getItem(KEYS.doctorId))
+    localStorage.setItem(KEYS.doctorId, (++id).toString())
+    return id;
+}
+
 
 export const getAllDetails = () => {
     if (localStorage.getItem(KEYS.doctor) == null)
