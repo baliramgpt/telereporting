@@ -1,10 +1,10 @@
-import React from 'react'
-//import DateFnsUtils from '@date-io/date-fns'
-//import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers'
-import { DateTimePicker } from '@material-ui/pickers'
+import React from 'react';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
-const DatePicker = (props) => {
+const Date = (props) => {
     const { name, label, value, onChange } = props
 
 
@@ -16,15 +16,16 @@ const DatePicker = (props) => {
 
     return (
         <>
-            <DateTimePicker
-                label={label}
-                format="dd/mm/yyyy"
-                value={value}
-                name={name}
-                onChange={date => onChange(convertToDefEventPara(name, date))}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                    label={label}
+                    value={value}
+                    name={name}
+                    onChange={date => onChange(convertToDefEventPara(name, date))}
+                />
+            </LocalizationProvider>
         </>
     )
 }
 
-export default DatePicker
+export default Date
