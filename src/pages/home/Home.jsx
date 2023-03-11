@@ -5,6 +5,7 @@ import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Tables from '../../components/tables/Tables';
 import Widget from '../../components/widget/Widget';
+import { Link } from "react-router-dom";
 import './Home.scss';
 
 const Home = () => {
@@ -13,8 +14,14 @@ const Home = () => {
             <Sidebar />
             <div className='homeContainer'>
                 <Navbar />
+                <div className='headingCenter'>
+                    Welcome to Medicare Pvt Ltd
+                </div>
                 <div className='widgets'>
-                    <Widget type="user" />
+                    <Link to="/users" style={{ textDecoration: "none" }}>
+                        <Widget type="user" />
+                    </Link>
+
                     <Widget type="order" />
                     <Widget type="earning" />
                     <Widget type="balance" />
