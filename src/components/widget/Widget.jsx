@@ -4,6 +4,7 @@ import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import { Link } from "react-router-dom";
 
 
 import './Widget.scss';
@@ -75,12 +76,11 @@ const Widget = ({ type }) => {
             <div className='left'>
                 <span className='title'>{data.title}</span>
                 <span className='counter'>{amount}</span>
-                {/* <span className='link'>{data.link}</span> */}
+                <span className='link'>{data.link}</span>
             </div>
-            {/* <div className='right'>
-                <div className='percentage positive'> <ArrowDropUpIcon /> {diff} %</div>
+            <div className='right'>
                 {data.icon}
-            </div> */}
+            </div>
         </div>
     )
 }
