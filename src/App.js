@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -9,6 +10,7 @@ import Login from './pages/login/Login';
 import List from './pages/list/List';
 import SinglePage from './pages/single/SinglePage';
 import { userInputs, productInputs } from './formSource';
+import Sidebar from "./components/sidebar/Sidebar";
 
 import './styles/dark.scss';
 import { useContext } from "react";
@@ -18,9 +20,11 @@ import NewRegistration from "./pages/new/NewRegistration";
 function App() {
 
   const { darkMode } = useContext(DarkModeContext);
+  const [isSidebar, setIsSidebar] = useState(true);
 
   return (
-    <div className={darkMode ? "app dark" : "app"}>
+    <div className="app">
+      {/*<Sidebar isSidebar={isSidebar} />*/}
       <BrowserRouter>
         <Routes>
           <Route path="/">
