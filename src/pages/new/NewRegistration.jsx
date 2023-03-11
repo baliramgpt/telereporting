@@ -22,7 +22,6 @@ const initialFValues = {
     gender: 'male',
     doctorId: '',
     hireDate: new Date(),
-    //hireDate: new Date(),
     isPermanent: false,
 }
 
@@ -117,6 +116,25 @@ const NewRegistration = (props) => {
                         onChange={handleInputChange}
                         options={services.getTestName()}
                         error={errors.testName}
+                    />
+                    <Controls.Date
+                        label="Test Date"
+                        name="testDate"
+                        value={values.testDate}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.TextArea
+                        label="History / Analysis"
+                        name="history"
+                        placeholder="History / Analysis"
+                        value={values.history}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.Input
+                        label="Contact Number"
+                        name="contactNo"
+                        value={values.contactNo}
+                        onChange={handleInputChange}
                     />
                     <Controls.Input
                         label="Registration No / Bill No"

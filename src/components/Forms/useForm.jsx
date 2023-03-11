@@ -35,7 +35,20 @@ const useStyles = makeStyles(theme => ({
     root: {
         '& .MuiFormControl-root': {
             width: '80%',
-            margin: theme.spacing(1)
+            margin: theme.spacing(1),
+        },
+        '& .MuiInputLabel-formControl': {
+            top: -theme.spacing(.75),
+            fontSize: theme.spacing(1.7),
+            // transform: 'translate(14px, 14px) scale(1)',
+        },
+        '& .MuiOutlinedInput-input': {
+            padding: '12px 14px',
+        },
+        '& .MuiTextarea-root': {
+            fontSize: theme.spacing(1.7),
+            width: '100%',
+            margin: theme.spacing(1),
         }
     }
 }))
