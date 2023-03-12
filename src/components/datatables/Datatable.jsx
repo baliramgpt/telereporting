@@ -13,6 +13,7 @@ import { EditOutlined } from '@mui/icons-material';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import ConfirmDialog from '../modal/ConfirmDialog';
 import AddNoteDialog from '../modal/AddNoteDialog';
+import Typo from '../../control/Typo';
 
 
 
@@ -60,7 +61,6 @@ const Datatable = () => {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
     const [selectedRecord, setSelectedRecord] = useState(null)
-    const [submitButtonText, setSubmitButtonText] = useState('Submit')
     const [showAddCommentModal, setShowAddCommentModal] = useState(false)
 
     const {
@@ -134,6 +134,9 @@ const Datatable = () => {
 
     return (
         <div className='datatable'>
+            <Typo
+                title='X-Ray Reports'
+            />
             <Paper className={classes.pageContent}>
                 <Toolbar>
                     <Controls.Input
@@ -221,8 +224,6 @@ const Datatable = () => {
                 handleDeleteCancel={handleDeleteCancel}
             />
             <AddNoteDialog
-                //index={index}
-                //open={selectedRecord && selectedRecord.id === index.id && showAddCommentModal}
                 showAddCommentModal={showAddCommentModal}
                 handleCloseAddCommentModal={handleCloseAddCommentModal}
                 onSaveComment={handleSaveComment}
