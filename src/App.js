@@ -7,15 +7,15 @@ import {
 
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
-import List from './pages/list/List';
+import XraySection from './pages/list/XraySection';
+import EcgSection from "./pages/list/EcgSection";
 import SinglePage from './pages/single/SinglePage';
 import { userInputs, productInputs } from './formSource';
-import Sidebar from "./components/sidebar/Sidebar";
 
 import './styles/dark.scss';
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
-import NewRegistration from "./pages/new/NewRegistration";
+import NewRegistration from "./pages/new/XrayRegistration";
 
 function App() {
 
@@ -24,19 +24,24 @@ function App() {
 
   return (
     <div className="app">
-      {/*<Sidebar isSidebar={isSidebar} />*/}
+      {/* <Sidebar isSidebar={isSidebar} /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
             <Route path="login" element={<Login />} />
-            <Route path="users">
-              <Route index element={<List />} />
+            <Route path="x-ray">
+              <Route index element={<XraySection />} />
+              <Route path=":userId" element={<SinglePage />} />
+              <Route path="new" element={<NewRegistration title='Add New User' />} />
+            </Route>
+            <Route path="ecg">
+              <Route index element={<EcgSection />} />
               <Route path=":userId" element={<SinglePage />} />
               <Route path="new" element={<NewRegistration title='Add New User' />} />
             </Route>
             <Route path="products">
-              <Route index element={<List />} />
+              <Route index element={<XraySection />} />
               <Route path=":userId" element={<SinglePage />} />
               <Route path="new" element={<NewRegistration inputs={productInputs} title='Add New Product' />} />
             </Route>

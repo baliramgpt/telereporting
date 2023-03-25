@@ -20,6 +20,10 @@
       align-items: center;
       padding: 3px;
 
+      .icon {
+        cursor: pointer;
+      }
+
       .navTitleText {
         font-size: 14px;
         color: rgba(0, 0, 21, 0.5);
