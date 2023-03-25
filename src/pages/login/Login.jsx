@@ -1,6 +1,5 @@
 import React from "react";
 import { Input, FormGroup, InputGroup, InputGroupText, Button } from "reactstrap";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PersonIcon from '@mui/icons-material/Person';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import PeopleIcon from '@mui/icons-material/People';
@@ -9,6 +8,10 @@ import { Link } from "react-router-dom";
 import './Login.scss';
 
 const Login = () => {
+    const [username, setUsername] = React.useState();
+    const [password, setPassword] = React.useState();
+    const [role, setRole] = React.useState("lab");
+    const [error, setError] = React.useState();
     return (
         <div className="login">
             {/* <div className="form">
@@ -24,9 +27,9 @@ const Login = () => {
                     </InputGroupText>
                     <Input
                         type="select"
-                        // value="role"
+                        value={role}
                         placeholder="Select Your Role"
-                        onChange={() => { }}
+                        onChange={(e) => { setRole(e.target.value )}}
                         className="input-type role"
                     >
                         <option value="lab">Lab</option>
@@ -42,9 +45,9 @@ const Login = () => {
                     </InputGroupText>
                     <Input
                         type="text"
-                        // value="username"
+                        value={username}
                         placeholder="Enter Your Username"
-                        onChange={() => { }}
+                        onChange={(e) => { setUsername(e.target.value) }}
                         className="input-type"
                     >
                         {/* <FontAwesomeIcon icon="fa-solid fa-user" /> */}
@@ -58,9 +61,9 @@ const Login = () => {
                     </InputGroupText>
                     <Input
                         type="password"
-                        // value="password"
+                        value={password}
                         placeholder="Enter Your Password"
-                        onChange={() => { }}
+                        onChange={(e) => { setPassword(e.target.value) }}
                         className="input-type"
                     >
                         Password
@@ -69,9 +72,9 @@ const Login = () => {
 
                 
                     <Button className="btn">
-                    <Link to="/" style={{ textDecoration: "none" }}>
+                    <Link to={`${role==="lab" ? "/lab" : role==="doctor" ? "/doctor" : "/admin"}`} style={{ textDecoration: "none" }}>
                         LOGIN
-                        </Link>
+                    </Link>
                     </Button>
                 
 

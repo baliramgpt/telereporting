@@ -32,7 +32,7 @@ const initialFValues = {
     file: null
 }
 
-const NewRegistration = (props) => {
+const XrayRegistration = (props) => {
     const { addOrEdit, recordForEdit } = props
     const [file, setFile] = useState(null);
 
@@ -195,4 +195,4 @@ const NewRegistration = (props) => {
     )
 }
 
-export default NewRegistration
+export default XrayRegistration;
