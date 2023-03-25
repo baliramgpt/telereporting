@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Chart from '../../components/chart/Chart';
 import Featured from '../../components/featured/Featured';
 import Navbar from '../../components/navbar/Navbar';
@@ -9,11 +9,16 @@ import { Link } from "react-router-dom";
 import './Home.scss';
 
 const Home = () => {
+    const [ isSideBarOpen, setIsSideBarOpen ] = useState(false);
     return (
         <div className='home'>
-            <Sidebar />
+            <Sidebar isSideBarOpen={isSideBarOpen}
+                setIsSideBarOpen={setIsSideBarOpen}
+            />
             <div className='homeContainer'>
-                <Navbar />
+                <Navbar isSideBarOpen={isSideBarOpen}
+                    setIsSideBarOpen={setIsSideBarOpen}
+                />
                 <div className='headingCenter'>
                     Welcome to Medicare Pvt Ltd
                 </div>

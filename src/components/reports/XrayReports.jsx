@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import './Datatable.scss';
+import './Report.scss';
 import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
 import * as services from '../../services/Services';
 import Controls from '../../control/Controls';
 import Popup from '../modal/Popup';
-import NewRegistration from '../../pages/new/NewRegistration';
+import NewRegistration from '../../pages/new/XrayRegistration';
 import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
 import Tables from '../tables/Tables';
 import { Search } from '@mui/icons-material';
@@ -49,7 +49,7 @@ const headCells = [
 ]
 
 
-const Datatable = () => {
+const XrayReports = () => {
 
     const classes = useStyles();
     const [openPopup, setOpenPopup] = useState(false);
@@ -198,4 +198,4 @@ const Datatable = () => {
     );
 }
 
-export default Datatable;
+export default XrayReports;

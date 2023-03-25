@@ -1,20 +1,20 @@
 import React from 'react';
-import Datatable from '../../components/datatables/Datatable';
+import XrayReports from '../../components/reports/XrayReports';
 
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import './List.scss';
 
-const List = () => {
+const XraySection = () => {
     return (
         <div className='list'>
             <Sidebar />
             <div className='listContainer'>
                 <Navbar />
-                <Datatable />
+                <XrayReports />
             </div>
         </div>
     )
 }
 
-export default List;
+export default XraySection;

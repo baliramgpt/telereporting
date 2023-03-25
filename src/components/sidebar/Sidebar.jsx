@@ -1,26 +1,26 @@
 import "./Sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import PaymentIcon from '@mui/icons-material/Payment';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import PriceChangeOutlinedIcon from '@mui/icons-material/PriceChangeOutlined';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import SettingsSystemDaydreamOutlinedIcon from "@mui/icons-material/SettingsSystemDaydreamOutlined";
-import PsychologyOutlinedIcon from "@mui/icons-material/PsychologyOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
-const Sidebar = () => {
+const Sidebar = ({isSideBarOpen, setIsSideBarOpen}) => {
+    // const { isOpen, setIsOpen } = useState(false);
     const { dispatch } = useContext(DarkModeContext);
+
     return (
-        <div className="sidebar">
+        <div 
+            className="sidebar" 
+            // style={{ display: isSideBarOpen? "": "none" }}
+        >
             <div className="top">
                 <Link to="/" style={{ textDecoration: "none" }}>
                     <span className="logo">Medicare</span>
@@ -36,16 +36,23 @@ const Sidebar = () => {
                             <span>Dashboard</span>
                         </li>
                     </Link>
-                    <Link to="/users" style={{ textDecoration: "none" }}>
+                    <Link to="/x-ray" style={{ textDecoration: "none" }}>
                         <li>
                             <MedicalInformationIcon className="icon" />
                             <span>X-Ray Reporting</span>
                         </li>
                     </Link>
-                    <Link to="/products" style={{ textDecoration: "none" }}>
+                    <Link to="/ecg" style={{ textDecoration: "none" }}>
                         <li>
                             <MonitorHeartIcon className="icon" />
                             <span>ECG Reporting</span>
+                        </li>
+                    </Link>
+
+                    <Link to="/users" style={{ textDecoration: "none" }}>
+                        <li>
+                            <MedicalInformationIcon className="icon" />
+                            <span>EEG Reporting</span>
                         </li>
                     </Link>
                     <Link to="/users" style={{ textDecoration: "none" }}>

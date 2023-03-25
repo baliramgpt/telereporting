@@ -4,7 +4,7 @@ import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUpload
 import Controls from '../../control/Controls'
 import { useForm, Form } from '../../components/Forms/useForm'
 import * as services from '../../services/Services'
-import './NewPage.scss';
+import './Registration.scss';
 import dayjs from 'dayjs';
 
 
