@@ -3,6 +3,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  useNavigate,
 } from "react-router-dom";
 
 import Home from './pages/home/Home';
@@ -31,6 +32,8 @@ function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [isSidebar, setIsSidebar] = useState(true);
 
+  // const navigate = useNavigate();
+
   return (
     <div className="app">
       {/* <Sidebar isSidebar={isSidebar} /> */}
@@ -38,7 +41,7 @@ function App() {
         <Routes>
           <Route path="/">
             {/* <Route index element={<Home />} /> */}
-            <Route path="login" element={<Login />} />
+            <Route index element={<Login />} />
             <Route path="lab">
               <Route index element={<Home />} />
               <Route path="x-ray">

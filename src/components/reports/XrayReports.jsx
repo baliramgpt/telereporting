@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core'
 import * as services from '../../services/Services';
 import Controls from '../../control/Controls';
 import Popup from '../modal/Popup';
-import NewRegistration from '../../pages/new/XrayRegistration';
 import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
 import Tables from '../tables/Tables';
 import { Search, NoteAdd } from '@mui/icons-material';
@@ -14,6 +13,7 @@ import { GridCloseIcon } from '@mui/x-data-grid';
 import ConfirmDialog from '../modal/ConfirmDialog';
 import AddNoteDialog from '../modal/AddNoteDialog';
 import Typo from '../../control/Typo';
+import XrayRegistration from '../../pages/new/XrayRegistration';
 
 
 
@@ -212,7 +212,7 @@ const XrayReports = () => {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <NewRegistration
+                <XrayRegistration
                     recordForEdit={recordForEdit}
                     addOrEdit={addOrEdit}
                 />

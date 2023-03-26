@@ -22,7 +22,7 @@ const Sidebar = ({isSideBarOpen, setIsSideBarOpen}) => {
             // style={{ display: isSideBarOpen? "": "none" }}
         >
             <div className="top">
-                <Link to="/" style={{ textDecoration: "none" }}>
+                <Link to="/lab" style={{ textDecoration: "none" }}>
                     <span className="logo">Medicare</span>
                 </Link>
             </div>
@@ -30,38 +30,38 @@ const Sidebar = ({isSideBarOpen, setIsSideBarOpen}) => {
             <div className="center">
                 <ul>
                     <p className="title">MAIN</p>
-                    <Link to="/" style={{ textDecoration: "none" }}>
+                    <Link to="/lab" style={{ textDecoration: "none" }}>
                         <li>
                             <DashboardIcon className="icon" />
                             <span>Dashboard</span>
                         </li>
                     </Link>
-                    <Link to="/x-ray" style={{ textDecoration: "none" }}>
+                    <Link to="/lab/x-ray" style={{ textDecoration: "none" }}>
                         <li>
                             <MedicalInformationIcon className="icon" />
                             <span>X-Ray Reporting</span>
                         </li>
                     </Link>
-                    <Link to="/ecg" style={{ textDecoration: "none" }}>
+                    <Link to="/lab/ecg" style={{ textDecoration: "none" }}>
                         <li>
                             <MonitorHeartIcon className="icon" />
                             <span>ECG Reporting</span>
                         </li>
                     </Link>
 
-                    <Link to="/users" style={{ textDecoration: "none" }}>
+                    <Link to="/lab/eeg" style={{ textDecoration: "none" }}>
                         <li>
                             <MedicalInformationIcon className="icon" />
                             <span>EEG Reporting</span>
                         </li>
                     </Link>
-                    <Link to="/users" style={{ textDecoration: "none" }}>
+                    <Link to="/lab/mri" style={{ textDecoration: "none" }}>
                         <li>
                             <MedicalInformationIcon className="icon" />
                             <span>MRI Reporting</span>
                         </li>
                     </Link>
-                    <Link to="/users" style={{ textDecoration: "none" }}>
+                    <Link to="/lab/ctscan" style={{ textDecoration: "none" }}>
                         <li>
                             <MedicalInformationIcon className="icon" />
                             <span>CT-Scan Reporting</span>
