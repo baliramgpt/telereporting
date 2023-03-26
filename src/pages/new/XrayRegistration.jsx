@@ -162,12 +162,6 @@ const XrayRegistration = (props) => {
                         options={services.getDoctorsCollection()}
                         error={errors.doctorId}
                     />
-                    {/* <Controls.CheckBox
-                        name="isPermanent"
-                        label="Keep Updated"
-                        value={values.isPermanent}
-                        onChange={handleInputChange}
-                    /> */}
                     <div className='formInput'>
                         <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
                         <input type='file' id='file' accept='image/*' name='file' value={values.file} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
