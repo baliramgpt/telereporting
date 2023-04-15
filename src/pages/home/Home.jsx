@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Chart from '../../components/chart/Chart';
 import Featured from '../../components/featured/Featured';
 import Navbar from '../../components/navbar/Navbar';
-import Sidebar from '../../components/sidebar/Sidebar';
+import Sidebar from '../../components/sidebar/LabSidebar';
 import Tables from '../../components/tables/Tables';
 import Widget from '../../components/widget/Widget';
 import { Link } from "react-router-dom";
@@ -12,13 +12,13 @@ const Home = () => {
     const [ isSideBarOpen, setIsSideBarOpen ] = useState(false);
     return (
         <div className='home'>
-            <Sidebar isSideBarOpen={isSideBarOpen}
+            {/* <Sidebar isSideBarOpen={isSideBarOpen}
                 setIsSideBarOpen={setIsSideBarOpen}
-            />
+            /> */}
             <div className='homeContainer'>
-                <Navbar isSideBarOpen={isSideBarOpen}
+                {/* <Navbar isSideBarOpen={isSideBarOpen}
                     setIsSideBarOpen={setIsSideBarOpen}
-                />
+                /> */}
                 <div className='headingCenter'>
                     Welcome to Medicare Pvt Ltd
                 </div>

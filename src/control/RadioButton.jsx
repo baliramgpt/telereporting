@@ -5,10 +5,15 @@ import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
     radioAlign: {
-        alignItems: 'center'
+        alignItems: 'left',
+        marginBottom: '24px !important',
     },
     radioLabel: {
-        marginLeft: '-33px'
+        marginLeft: '8px',
+        marginBottom: '8px'
+    },
+    radioGroup: {
+        marginLeft: '16px'
     }
 }))
 
@@ -22,6 +27,7 @@ const RadioButton = (props) => {
             <MuiRadioGroup row
                 name={name}
                 value={value}
+                className={classes.radioGroup}
                 onChange={onChange}>
                 {
                     items.map(
