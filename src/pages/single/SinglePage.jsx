@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import Sidebar from '../../components/sidebar/Sidebar';
+import Sidebar from '../../components/sidebar/LabSidebar';
 import Chart from '../../components/chart/Chart';
 import './SinglePage.scss';
 import Tables from '../../components/tables/Tables';

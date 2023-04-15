@@ -42,7 +42,7 @@ const headCells = [
     { id: 'status', label: 'Status' },
     { id: 'urgent', label: 'Urgent' },
     { id: 'review', label: 'Review' },
-    { id: 'options', label: 'Options' },
+    // { id: 'options', label: 'Options' },
     // { id: 'email', label: 'Email Address (Personal)' },
     // { id: 'mobile', label: 'Mobile Number' },
     // { id: 'department', label: 'Department' },
@@ -173,7 +173,7 @@ const XrayReports = () => {
                                 <TableCell>{item.status}</TableCell>
                                 <TableCell>{item.urgent}</TableCell>
                                 <TableCell>{item.review}</TableCell>
-                                <TableCell>{item.options}</TableCell>
+                                {/* <TableCell>{item.options}</TableCell> */}
                                 <TableCell>
                                     <Controls.DeleteButton
                                         color="primary"

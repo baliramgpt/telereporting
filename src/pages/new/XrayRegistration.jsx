@@ -69,7 +69,7 @@ const XrayRegistration = (props) => {
         e.preventDefault()
         console.log(values, "#", validate());
         // if (validate()) {
-            addOrEdit(values, resetForm);
+        addOrEdit(values, resetForm);
         // }
     }
 
@@ -122,7 +122,7 @@ const XrayRegistration = (props) => {
                     <Controls.Date
                         label="Test Date"
                         name="testDate"
-                        value={values.testDate}
+                        value={dayjs(values.testDate)}
                         onChange={handleInputChange}
                     />
                     <Controls.TextArea
@@ -144,9 +144,6 @@ const XrayRegistration = (props) => {
                         value={values.regNo}
                         onChange={handleInputChange}
                     />
-
-                </Grid>
-                <Grid item xs={6}>
                     <Controls.RadioButton
                         name="gender"
                         label="Gender"
@@ -162,25 +159,28 @@ const XrayRegistration = (props) => {
                         options={services.getDoctorsCollection()}
                         error={errors.doctorId}
                     />
+                </Grid>
+
+                <Grid item xs={6}>
                     <div className='formInput'>
                         <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
                         <input type='file' id='file' accept='image/*' name='file' value={values.file} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
                     </div>
                     <div className='left'>
                         {file && (
-                            <img src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'}
+                            <img className='img-attached' src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'}
                                 alt='profile upload photo' />
                         )}
                     </div>
-                    <div>
+                    <div className='btn-grp'>
                         <Controls.Button
                             type="submit"
-                            text="Submit" 
+                            text="Submit"
                         />
                         <Controls.Button
                             text="Reset"
                             color="default"
-                            onClick={resetForm} 
+                            onClick={resetForm}
                         />
                     </div>
                 </Grid>

@@ -12,14 +12,14 @@ import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext, useState } from "react";
 
-const Sidebar = ({isSideBarOpen, setIsSideBarOpen}) => {
+const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
     // const { isOpen, setIsOpen } = useState(false);
     const { dispatch } = useContext(DarkModeContext);
 
     return (
-        <div 
-            className="sidebar" 
-            // style={{ display: isSideBarOpen? "": "none" }}
+        <div
+            className="sidebar"
+        // style={{ display: isSideBarOpen? "": "none" }}
         >
             <div className="top">
                 <Link to="/lab" style={{ textDecoration: "none" }}>
@@ -85,31 +85,43 @@ const Sidebar = ({isSideBarOpen, setIsSideBarOpen}) => {
                         <span>Notifications</span>
                     </li> */}
                     <p className="title">ACCOUNTS</p>
-                    <li>
-                        <PaymentIcon className="icon" />
-                        <span>Payment</span>
-                    </li>
-                    <li>
-                        <PaymentsIcon className="icon" />
-                        <span>X-Ray Billing</span>
-                    </li>
-                    <li>
-                        <PaymentsIcon className="icon" />
-                        <span>ECG Billing</span>
-                    </li>
+                    <Link to="/lab/payment" style={{ textDecoration: "none" }}>
+                        <li>
+                            <PaymentIcon className="icon" />
+                            <span>Payment</span>
+                        </li>
+                    </Link>
+                    <Link to="/lab/billing" style={{ textDecoration: "none" }}>
+                        <li>
+                            <PaymentsIcon className="icon" />
+                            <span>X-Ray Billing</span>
+                        </li>
+                    </Link>
+                    <Link to="/lab/billing" style={{ textDecoration: "none" }}>
+                        <li>
+                            <PaymentsIcon className="icon" />
+                            <span>ECG Billing</span>
+                        </li>
+                    </Link>
                     <p className="title">SETTINGS</p>
-                    <li>
-                        <SettingsApplicationsIcon className="icon" />
-                        <span>General Settings</span>
-                    </li>
-                    <li>
-                        <PriceChangeOutlinedIcon className="icon" />
-                        <span>Rate Chart</span>
-                    </li>
-                    <li>
-                        <CallOutlinedIcon className="icon" />
-                        <span>Contact Admin</span>
-                    </li>
+                    <Link to="/lab/settings" style={{ textDecoration: "none" }}>
+                        <li>
+                            <SettingsApplicationsIcon className="icon" />
+                            <span>General Settings</span>
+                        </li>
+                    </Link>
+                    <Link to="/lab/rate" style={{ textDecoration: "none" }}>
+                        <li>
+                            <PriceChangeOutlinedIcon className="icon" />
+                            <span>Rate Chart</span>
+                        </li>
+                    </Link>
+                    <Link to="/lab/contact" style={{ textDecoration: "none" }}>
+                        <li>
+                            <CallOutlinedIcon className="icon" />
+                            <span>Contact Admin</span>
+                        </li>
+                    </Link>
                 </ul>
             </div>
             {/* <div className="bottom">

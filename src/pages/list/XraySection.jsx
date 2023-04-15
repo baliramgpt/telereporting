@@ -2,7 +2,7 @@ import React from 'react';
 import XrayReports from '../../components/reports/XrayReports';
 
 import Navbar from '../../components/navbar/Navbar';
-import Sidebar from '../../components/sidebar/Sidebar';
+import Sidebar from '../../components/sidebar/LabSidebar';
 import './List.scss';
 
 const XraySection = () => {

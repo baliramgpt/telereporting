@@ -8,29 +8,34 @@ import { makeStyles } from '@material-ui/core'
 const useStyles = makeStyles(theme => ({
     clearfixTitle: {
         background: '#f0f3f5',
-        padding: '12px',
+        padding: '8px 16px',
         border: '1px solid #c8ced3',
-        borderRadius: '8px 8px 0 0'
+        borderRadius: '8px 8px 0 0',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     pullRight: {
         float: 'right',
         display: 'flex',
-        alignItems: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: '10px'
     },
     btn: {
         color: '#000',
         backgroundColor: '#0dcaf0',
         borderColor: '#0dcaf0',
-        float: 'right',
-
+        // float: 'right',
+        height: '100%',
     },
-    pullLeft: {
-        lineHeight: '38px',
-        paddingLeft: '8px',
-        float: 'left',
-        color: '#ef971a',
-        fontWeight: '600'
-    }
+    // pullLeft: {
+    //     lineHeight: '38px',
+    //     paddingLeft: '8px',
+    //     float: 'left',
+    //     color: '#ef971a',
+    //     fontWeight: '600'
+    // }
 }))
 
 const Typo = (props) => {
@@ -54,6 +59,11 @@ const Typo = (props) => {
 
     return (
         <div className={classes.clearfixTitle}>
+            <div>
+                <Typography>
+                    {title}
+                </Typography>
+            </div>
             <div className={classes.pullRight}>
                 <Button className={classes.btn}
                     variant="contained"
@@ -63,11 +73,6 @@ const Typo = (props) => {
                     <AutorenewIcon />
                 </Button>
                 <Typography>Last Update: {lastRefreshTime ? lastRefreshTime || '-' : '07:10Am'}</Typography>
-            </div>
-            <div>
-                <Typography>
-                    {title}
-                </Typography>
             </div>
         </div>
     )
