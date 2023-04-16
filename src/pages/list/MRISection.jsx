@@ -8,9 +8,7 @@ import './List.scss';
 const MRISection = () => {
     return (
         <div className='list'>
-            <Sidebar />
             <div className='listContainer'>
-                <Navbar />
                 <MRIReports />
             </div>
         </div>
