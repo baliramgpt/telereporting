@@ -8,12 +8,12 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    container: {
-        margin: '0 auto',
-        maxWidth: '500px'
+    datatable: {
+        height: "600px",
+        padding: "20px",
     },
     paper: {
-        boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
+        boxShadow: '0px 2px 10px rgba(0,0,0,0)',
         padding: '20px'
     },
     tableContainer: {
@@ -21,21 +21,31 @@ const useStyles = makeStyles((theme) => ({
         //boxShadow: '0px 2px 10px rgba(0,0,0,0.1)',
         padding: '20px'
     },
+    selectOption: {
+        marginLeft: "60%",
+        padding: "8px 8px"
+    },
     btn: {
-        width: '100%',
+        width: '10%',
         backgroundColor: '#007bff',
         color: '#fff',
         border: 'none',
-        padding: '10px',
+        padding: '8px',
         borderRadius: '5px',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        //marginLeft: '-10%',
     },
     gridPaymentHistory: {
+        marginTop: '10px',
         background: '#f0f3f5',
         padding: '8px 16px',
         border: '1px solid #c8ced3',
         borderRadius: '8px 8px 0 0',
         alignItems: 'center',
+        color: '#ef971a'
+    },
+    payBtn: {
+        width: '10% !important',
     }
 
 }))
@@ -52,7 +62,7 @@ const PaymentAdmin = (props) => {
     const [amount, setAmount] = useState('');
     const classes = useStyles();
     const [paymentHistory, setPaymentHistory] = useState([]);
-    const [remainingAmount, setRemainingAmount] = useState(500);
+    const [remainingAmount, setRemainingAmount] = useState(100);
 
 
     const handleAmountChange = (event) => {
@@ -68,13 +78,14 @@ const PaymentAdmin = (props) => {
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
         };
-        setRemainingAmount(remainingAmount - amount);
+        let totalPayment = remainingAmount - amount
+        setRemainingAmount(totalPayment);
         setPaymentHistory([...paymentHistory, paymentDetails]);
         setAmount("");
     };
 
     return (
-        <>
+        <div className='datatable'>
             <TypoPayment title="Make Payment" remainingAmount={remainingAmount} />
             <Grid container spacing={2} justifyContent="center" className={classes.container}>
                 <Grid item xs={12}>
@@ -82,10 +93,7 @@ const PaymentAdmin = (props) => {
                         <form onSubmit={handlePaymentSubmit}>
                             <Grid container spacing={2} alignItems="center">
                                 <Grid item xs={12} sm={6}>
-                                    <label htmlFor="payment-amount" style={{ display: 'block' }}>
-                                        Payment Amount:
-                                    </label>
-                                    <select id="payment-amount" value={amount} onChange={handleAmountChange} style={{ width: '100%' }}>
+                                    <select id="payment-amount" value={amount} onChange={handleAmountChange} className={classes.selectOption}>
                                         <option value="">Select an amount</option>
                                         {paymentOptions.map((option) => (
                                             <option key={option.value} value={option.value}>
@@ -118,16 +126,22 @@ const PaymentAdmin = (props) => {
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Id</TableCell>
-                                            <TableCell>Payment Date</TableCell>
-                                            <TableCell>Payment Amount</TableCell>
+                                            <TableCell>Amount</TableCell>
+                                            <TableCell>Is Direct</TableCell>
+                                            <TableCell>Mode</TableCell>
+                                            <TableCell>Transaction Id</TableCell>
+                                            <TableCell>Date</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {paymentHistory.map((payment, index) => (
                                             <TableRow key={index}>
                                                 <TableCell>{payment.id}</TableCell>
-                                                <TableCell>{payment.date}</TableCell>
                                                 <TableCell>{`$${payment.amount}`}</TableCell>
+                                                <TableCell>Y</TableCell>
+                                                <TableCell>razorpay</TableCell>
+                                                <TableCell>order_LdvqWLvkKnMIH3</TableCell>
+                                                <TableCell>{payment.date}</TableCell>
                                             </TableRow>
                                         ))}
                                     </TableBody>
@@ -137,7 +151,7 @@ const PaymentAdmin = (props) => {
                     </Grid>
                 </Grid>
             </Grid>
-        </>
+        </div>
     )
 }
 

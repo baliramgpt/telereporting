@@ -29,13 +29,13 @@ const useStyles = makeStyles(theme => ({
         // float: 'right',
         height: '100%',
     },
-    // pullLeft: {
-    //     lineHeight: '38px',
-    //     paddingLeft: '8px',
-    //     float: 'left',
-    //     color: '#ef971a',
-    //     fontWeight: '600'
-    // }
+    textTitle: {
+        lineHeight: '38px',
+        paddingLeft: '8px',
+        float: 'left',
+        color: '#ef971a',
+        fontWeight: '600'
+    }
 }))
 
 const TypoPayment = (props) => {
@@ -60,7 +60,7 @@ const TypoPayment = (props) => {
 
     return (
         <div className={classes.clearfixTitle}>
-            <div>
+            <div className={classes.textTitle}>
                 <Typography>
                     {title}
                 </Typography>
