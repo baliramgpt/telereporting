@@ -8,9 +8,7 @@ import './List.scss';
 const CTScanSection = () => {
     return (
         <div className='list'>
-            <Sidebar />
             <div className='listContainer'>
-                <Navbar />
                 <CTScanReports />
             </div>
         </div>

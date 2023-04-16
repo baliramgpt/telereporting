@@ -104,12 +104,10 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                         </li>
                     </Link>
                     <p className="title">SETTINGS</p>
-                    <Link to="/lab/settings" style={{ textDecoration: "none" }}>
-                        <li>
-                            <SettingsApplicationsIcon className="icon" />
-                            <span>General Settings</span>
-                        </li>
-                    </Link>
+                    <li>
+                        <SettingsApplicationsIcon className="icon" />
+                        <span>General Settings</span>
+                    </li>
                     <Link to="/lab/rate" style={{ textDecoration: "none" }}>
                         <li>
                             <PriceChangeOutlinedIcon className="icon" />
@@ -134,7 +132,7 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                     onClick={() => dispatch({ type: "DARK" })}
                 ></div>
             </div> */}
-        </div>
+        </div >
     );
 };
 
