@@ -26,16 +26,8 @@ const useStyles = makeStyles(theme => ({
         color: '#000',
         backgroundColor: '#0dcaf0',
         borderColor: '#0dcaf0',
-        // float: 'right',
         height: '100%',
     },
-    // pullLeft: {
-    //     lineHeight: '38px',
-    //     paddingLeft: '8px',
-    //     float: 'left',
-    //     color: '#ef971a',
-    //     fontWeight: '600'
-    // }
 }))
 
 const Typo = (props) => {
@@ -59,11 +51,9 @@ const Typo = (props) => {
 
     return (
         <div className={classes.clearfixTitle}>
-            <div>
-                <Typography>
-                    {title}
-                </Typography>
-            </div>
+            <Typography>
+                {title}
+            </Typography>
             <div className={classes.pullRight}>
                 <Button className={classes.btn}
                     variant="contained"
