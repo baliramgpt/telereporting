@@ -6,7 +6,8 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(0.5)
     },
     label: {
-        textTransform: 'none'
+        textTransform: 'none',
+        textDecoration: 'none',
     }
 }))
 

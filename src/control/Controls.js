@@ -4,7 +4,7 @@ import SelectButton from "./SelectButton";
 import CheckBox from "./CheckBox";
 import Date from "./DatePicker";
 import Button from "./Button";
-import DeleteButton from "./DeleteButton";
+import IconButton from "./IconButton";
 import TextArea from "./TextArea";
 
 const Controls = {
@@ -14,7 +14,7 @@ const Controls = {
     CheckBox,
     Date,
     Button,
-    DeleteButton,
+    IconButton,
     TextArea
 }
 

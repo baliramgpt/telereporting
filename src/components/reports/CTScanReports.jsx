@@ -172,23 +172,23 @@ const CTScanReports = () => {
                                 <TableCell>{item.review}</TableCell>
                                 <TableCell>{item.options}</TableCell>
                                 <TableCell>
-                                    <Controls.DeleteButton
+                                    <Controls.IconButton
                                         color="primary"
                                         onClick={() => { openInPopup(item) }}>
                                         <EditOutlined fontSize="small" />
-                                    </Controls.DeleteButton>
-                                    <Controls.DeleteButton
+                                    </Controls.IconButton>
+                                    <Controls.IconButton
                                         color="secondary"
                                         onClick={() => handleDeleteRecords(index)}
                                     >
                                         <GridCloseIcon fontSize="small" />
-                                    </Controls.DeleteButton>
-                                    <Controls.DeleteButton
+                                    </Controls.IconButton>
+                                    <Controls.IconButton
                                         color="primary"
                                         onClick={() => handleAddNote(index)}
                                     >
                                         <NoteAdd />
-                                    </Controls.DeleteButton>
+                                    </Controls.IconButton>
                                     {records.file && (
                                         <img
                                             src={URL.createObjectURL(records.file)}

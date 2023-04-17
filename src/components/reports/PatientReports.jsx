@@ -9,9 +9,10 @@ import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '
 import Tables from '../tables/Tables';
 import { Search, NoteAdd } from '@mui/icons-material';
 import { EditOutlined } from '@mui/icons-material';
+import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import ConfirmDialog from '../modal/ConfirmDialog';
-import AddNoteDialog from '../modal/AddNoteDialog';
+import PatientDiagnosisDetail from '../modal/PatientDiagnosisDetail';
 import Typo from '../../control/Typo';
 import XrayRegistration from '../../pages/new/XrayRegistration';
 
@@ -61,13 +62,13 @@ const PatientReports = () => {
 
     const classes = useStyles()
     const [openPopup, setOpenPopup] = useState(false)
+    const [openPatientDiagnosisPopup, setOpenPatientDiagnosisPopup] = useState(false)
     const [recordForEdit, setRecordForEdit] = useState(null)
     const [records, setRecords] = useState(services.getAllDetails())
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
     const [selectedRecord, setSelectedRecord] = useState(null)
-    const [showAddCommentModal, setShowAddCommentModal] = useState(false)
 
     const {
         TblContainer,
@@ -123,9 +124,9 @@ const PatientReports = () => {
         setDeleteRecordIndex(null)
     }
 
-    const handleAddNote = (index) => {
+    const handlePatientDiagnosisDetail = (index) => {
         //alert('clicked')
-        setShowAddCommentModal(true)
+        setOpenPatientDiagnosisPopup(true);
         setSelectedRecord(index)
     }
 
@@ -133,10 +134,9 @@ const PatientReports = () => {
         alert('Comment Saved')
     }
 
-    const handleCloseAddCommentModal = () => {
-        setShowAddCommentModal(false)
-        setSelectedRecord(null)
-    }
+    // const handleClosePatientDiagnosisModal = () => {
+    //     setSelectedRecord(null)
+    // }
 
     return (
         <div className='datatable'>
@@ -181,23 +181,23 @@ const PatientReports = () => {
                                 {/* <TableCell>{item.review}</TableCell> */}
                                 {/* <TableCell>{item.options}</TableCell> */}
                                 <TableCell>
-                                    <Controls.DeleteButton
+                                    <Controls.IconButton
                                         color="primary"
                                         onClick={() => { openInPopup(item) }}>
                                         <EditOutlined fontSize="small" />
-                                    </Controls.DeleteButton>
-                                    <Controls.DeleteButton
+                                    </Controls.IconButton>
+                                    <Controls.IconButton
                                         color="secondary"
                                         onClick={() => handleDeleteRecords(index)}
                                     >
                                         <GridCloseIcon fontSize="small" />
-                                    </Controls.DeleteButton>
-                                    {/* <Controls.DeleteButton
+                                    </Controls.IconButton>
+                                    <Controls.IconButton
                                         color="primary"
-                                        onClick={() => handleAddNote(index)}
+                                        onClick={() => handlePatientDiagnosisDetail(index)}
                                     >
-                                        <NoteAdd />
-                                    </Controls.DeleteButton> */}
+                                        <AssessmentOutlinedIcon fontSize="small"/>
+                                    </Controls.IconButton>
                                     {records.file && (
                                         <img
                                             src={URL.createObjectURL(records.file)}
@@ -218,10 +218,10 @@ const PatientReports = () => {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <XrayRegistration
-                    recordForEdit={recordForEdit}
-                    addOrEdit={addOrEdit}
-                />
+            <XrayRegistration
+                recordForEdit={recordForEdit}
+                addOrEdit={addOrEdit}
+            />
             </Popup>
             <ConfirmDialog
                 showDeleteDialog={showDeleteDialog}
@@ -229,11 +229,15 @@ const PatientReports = () => {
                 handleDeleteConfirm={handleDeleteConfirm}
                 handleDeleteCancel={handleDeleteCancel}
             />
-            <AddNoteDialog
-                showAddCommentModal={showAddCommentModal}
-                handleCloseAddCommentModal={handleCloseAddCommentModal}
-                onSaveComment={handleSaveComment}
-            />
+            <Popup
+                title="Patient Diagnosis Details"
+                openPopup={openPatientDiagnosisPopup}
+                setOpenPopup={setOpenPatientDiagnosisPopup}
+            >
+                <PatientDiagnosisDetail
+                    onSaveComment={handleSaveComment}
+                />
+            </Popup>
         </div>
     );
 }

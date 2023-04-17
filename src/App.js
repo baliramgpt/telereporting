@@ -28,6 +28,10 @@ import CTScanRegsitration from "./pages/new/CTScanRegsitration";
 import DoctorDashboard from "./pages/doctor/DoctorDashboard";
 import SharedLayout from "./components/shared-layout/SharedLayout";
 import XrayReports from "./components/reports/XrayReports";
+import EcgReports from "./components/reports/EcgReports";
+import EegReports from "./components/reports/EegReports";
+import MRIReports from "./components/reports/MRIReports";
+import CTScanReports from "./components/reports/CTScanReports";
 
 function App() {
 
@@ -52,22 +56,22 @@ function App() {
                 <Route path="new" element={<XrayRegistration title='Add New User' />} />
               </Route>
               <Route path="ecg">
-                <Route index element={<EcgSection />} />
+                <Route index element={<EcgReports />} />
                 <Route path=":userId" element={<SinglePage />} />
                 <Route path="new" element={<EcgRegistration title='Add New User' />} />
               </Route>
               <Route path="eeg">
-                <Route index element={<EEGSection />} />
+                <Route index element={<EegReports />} />
                 <Route path=":userId" element={<SinglePage />} />
                 <Route path="new" element={<EEGRegistration title='Add New User' />} />
               </Route>
               <Route path="mri">
-                <Route index element={<MRISection />} />
+                <Route index element={<MRIReports />} />
                 <Route path=":userId" element={<SinglePage />} />
                 <Route path="new" element={<MRIRegistration title='Add New User' />} />
               </Route>
               <Route path="ctscan">
-                <Route index element={<CTScanSection />} />
+                <Route index element={<CTScanReports />} />
                 <Route path=":userId" element={<SinglePage />} />
                 <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} />
               </Route>
