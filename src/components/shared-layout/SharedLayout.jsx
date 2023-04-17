@@ -7,12 +7,12 @@ import Navbar from '../navbar/Navbar';
 const SharedLayout = () => {
   return (
     <div className='list'>
-            <Sidebar />
-            <div className='listContainer'>
-                <Navbar />
-                <Outlet/>
-            </div>
-        </div>
+      <Sidebar />
+      <div className='listContainer'>
+        <Navbar />
+        <Outlet />
+      </div>
+    </div>
   )
 }
 

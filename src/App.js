@@ -32,6 +32,12 @@ import EcgReports from "./components/reports/EcgReports";
 import EegReports from "./components/reports/EegReports";
 import MRIReports from "./components/reports/MRIReports";
 import CTScanReports from "./components/reports/CTScanReports";
+//import DoctorDashboard from "./pages/doctor/Dashboard";
+import ContactAdminSection from "./pages/list/ContactAdminSection";
+import RateChart from "./pages/list/RateChart";
+import PaymentSection from "./pages/list/PaymentSection";
+import Billing from "./components/reports/Billing";
+import Settings from "./pages/new/Settings";
 
 function App() {
 
@@ -48,7 +54,7 @@ function App() {
           <Route path="/">
             {/* <Route index element={<Home />} /> */}
             <Route index element={<Login />} />
-            <Route path="lab" element={<SharedLayout/>}>
+            <Route path="lab" element={<SharedLayout />}>
               <Route index element={<Home />} />
               <Route path="x-ray">
                 <Route index element={<XrayReports />} />
@@ -76,35 +82,23 @@ function App() {
                 <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} />
               </Route>
               <Route path="payment">
-                <Route index element={<CTScanSection />} />
-                <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} />
+                <Route index element={<PaymentSection />} />
               </Route>
               <Route path="billing">
-                <Route index element={<CTScanSection />} />
-                <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} />
+                <Route index element={<Billing />} />
               </Route>
               <Route path="settings">
-                <Route index element={<CTScanSection />} />
-                <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} />
+                <Route index element={<Settings />} />
               </Route>
               <Route path="rate">
-                <Route index element={<CTScanSection />} />
-                <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} />
+                <Route index element={<RateChart />} />
               </Route>
               <Route path="contact">
-                <Route index element={<CTScanSection />} />
-                <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} />
+                <Route index element={<ContactAdminSection />} />
               </Route>
             </Route>
             <Route path="doctor">
-              <Route index element={<DoctorDashboard/>}/>
-                {/* <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<CTScanRegsitration inputs={productInputs} title='Add New Product' />} /> */}
+              <Route index element={<DoctorDashboard />} />
             </Route>
           </Route>
         </Routes>

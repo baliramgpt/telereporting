@@ -8,9 +8,7 @@ import './List.scss';
 const EEGSection = () => {
     return (
         <div className='list'>
-            <Sidebar />
             <div className='listContainer'>
-                <Navbar />
                 <EegReports />
             </div>
         </div>

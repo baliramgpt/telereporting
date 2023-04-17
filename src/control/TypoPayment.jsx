@@ -26,15 +26,24 @@ const useStyles = makeStyles(theme => ({
         color: '#000',
         backgroundColor: '#0dcaf0',
         borderColor: '#0dcaf0',
+        // float: 'right',
         height: '100%',
     },
+    textTitle: {
+        lineHeight: '38px',
+        paddingLeft: '8px',
+        float: 'left',
+        color: '#ef971a',
+        fontWeight: '600'
+    }
 }))
 
-const Typo = (props) => {
-    const { title } = props
+const TypoPayment = (props) => {
+    const { title, remainingAmount } = props
     const classes = useStyles();
     const [refreshTimer, setRefreshTimer] = useState(null)
     const [lastRefreshTime, setLastRefreshTime] = useState(null)
+    //const [remainingAmount, setRemainingAmount] = useState(500);
 
     const handleRefresh = () => {
         setLastRefreshTime(new Date().toLocaleTimeString())
@@ -51,9 +60,11 @@ const Typo = (props) => {
 
     return (
         <div className={classes.clearfixTitle}>
-            <Typography>
-                {title}
-            </Typography>
+            <div className={classes.textTitle}>
+                <Typography>
+                    {title}
+                </Typography>
+            </div>
             <div className={classes.pullRight}>
                 <Button className={classes.btn}
                     variant="contained"
@@ -62,10 +73,10 @@ const Typo = (props) => {
                 >
                     <AutorenewIcon />
                 </Button>
-                <Typography>Last Update: {lastRefreshTime ? lastRefreshTime || '-' : '07:10Am'}</Typography>
+                <Typography>Balance: ${remainingAmount}</Typography>
             </div>
         </div>
     )
 }
 
-export default Typo
+export default TypoPayment
