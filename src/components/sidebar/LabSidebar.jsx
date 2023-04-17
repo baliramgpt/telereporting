@@ -94,15 +94,15 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                     <Link to="/lab/billing" style={{ textDecoration: "none" }}>
                         <li>
                             <PaymentsIcon className="icon" />
-                            <span>X-Ray Billing</span>
+                            <span>Billing</span>
                         </li>
                     </Link>
-                    <Link to="/lab/billing" style={{ textDecoration: "none" }}>
+                    {/* <Link to="/lab/billing" style={{ textDecoration: "none" }}>
                         <li>
                             <PaymentsIcon className="icon" />
                             <span>ECG Billing</span>
                         </li>
-                    </Link>
+                    </Link> */}
                     <p className="title">SETTINGS</p>
                     <li>
                         <SettingsApplicationsIcon className="icon" />

@@ -25,11 +25,11 @@ const Popup = (props) => {
                     <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
                         {title}
                     </Typography>
-                    <Controls.DeleteButton
+                    <Controls.IconButton
                         color="secondary"
                         onClick={() => { setOpenPopup(false) }}>
                         <GridCloseIcon />
-                    </Controls.DeleteButton>
+                    </Controls.IconButton>
                 </div>
             </DialogTitle>
             <DialogContent dividers>
