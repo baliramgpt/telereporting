@@ -104,10 +104,6 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                         </li>
                     </Link> */}
                     <p className="title">SETTINGS</p>
-                    <li>
-                        <SettingsApplicationsIcon className="icon" />
-                        <span>General Settings</span>
-                    </li>
                     <Link to="/lab/rate" style={{ textDecoration: "none" }}>
                         <li>
                             <PriceChangeOutlinedIcon className="icon" />
