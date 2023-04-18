@@ -73,7 +73,7 @@ const ContactAdmin = (props) => {
     }
 
     return (
-        <div className='datatable'>
+        <div className={classes.datatable}>
             <Typo
                 title='Contact Admin'
             />

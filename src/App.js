@@ -36,7 +36,7 @@ import CTScanReports from "./components/reports/CTScanReports";
 import ContactAdminSection from "./pages/list/ContactAdminSection";
 import RateChart from "./pages/list/RateChart";
 import PaymentSection from "./pages/list/PaymentSection";
-import Billing from "./components/reports/Billing";
+import BillingSection from "./pages/list/BillingSection";
 import Settings from "./pages/new/Settings";
 
 function App() {
@@ -85,7 +85,7 @@ function App() {
                 <Route index element={<PaymentSection />} />
               </Route>
               <Route path="billing">
-                <Route index element={<Billing />} />
+                <Route index element={<BillingSection />} />
               </Route>
               <Route path="settings">
                 <Route index element={<Settings />} />
