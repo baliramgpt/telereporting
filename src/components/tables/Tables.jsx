@@ -5,11 +5,10 @@ import './Tables.scss';
 
 const useStyles = makeStyles(theme => ({
     table: {
-        marginTop: theme.spacing(4),
+        marginTop: theme.spacing(2),
         '& thead th': {
             fontWeight: '600',
             color: '#000',
-            backgroundColor: '#b2f1ff',
         },
         '& tbody td': {
             fontWeight: '300',

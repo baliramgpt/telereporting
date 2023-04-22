@@ -6,7 +6,7 @@ import * as services from '../../services/Services';
 import Controls from '../../control/Controls';
 import Popup from '../modal/Popup';
 import CTScanRegsitration from '../../pages/new/CTScanRegsitration';
-import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
+import { Grid, Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
 import Tables from '../tables/Tables';
 import { Search, NoteAdd } from '@mui/icons-material';
 import { EditOutlined } from '@mui/icons-material';
@@ -18,6 +18,26 @@ import Typo from '../../control/Typo';
 
 
 const useStyles = makeStyles(theme => ({
+    datatable: {
+        height: "600px",
+        padding: "20px",
+    },
+    container: {
+        padding: "30px 0px",
+        background: "rgb(255, 255, 255)",
+        marginBottom: "10px",
+        borderWidth: "0px 1px 1px",
+        borderTopStyle: "initial",
+        borderRightStyle: "solid",
+        borderBottomStyle: "solid",
+        borderLeftStyle: "solid",
+        borderTopColor: "initial",
+        borderRightColor: "rgb(238, 238, 238)",
+        borderBottomColor: "rgb(238, 238, 238)",
+        borderLeftColor: "rgb(238, 238, 238)",
+        borderImage: "initial",
+
+    },
     pageContent: {
         margin: theme.spacing(5),
         padding: theme.spacing(3)
@@ -28,6 +48,9 @@ const useStyles = makeStyles(theme => ({
     newButton: {
         position: 'absolute',
         right: '10px'
+    },
+    modelsContainer: {
+        marginRight: '-40%'
     }
 }))
 
@@ -130,11 +153,11 @@ const CTScanReports = () => {
     }
 
     return (
-        <div className='datatable'>
+        <div className={classes.datatable}>
             <Typo
                 title='CT Scan Reports'
             />
-            <Paper className={classes.pageContent}>
+            <Grid container alignItems="center" justifyContent="center" className={classes.container}>
                 <Toolbar>
                     <Controls.Input
                         label="Search Patient"
@@ -154,56 +177,59 @@ const CTScanReports = () => {
                         onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
                     />
                 </Toolbar>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {
-                            recordsAfterPagingAndSorting().map((item, index) =>
-                            (<TableRow key={index}>
-                                <TableCell>{item.id}</TableCell>
-                                <TableCell>{item.patientName}</TableCell>
-                                <TableCell>{item.testName}</TableCell>
-                                <TableCell>{item.regNo}</TableCell>
-                                <TableCell>{item.doctorName}</TableCell>
-                                <TableCell>{item.createdAt}</TableCell>
-                                <TableCell>{item.reportedAt}</TableCell>
-                                <TableCell>{item.status}</TableCell>
-                                <TableCell>{item.urgent}</TableCell>
-                                <TableCell>{item.review}</TableCell>
-                                <TableCell>{item.options}</TableCell>
-                                <TableCell>
-                                    <Controls.IconButton
-                                        color="primary"
-                                        onClick={() => { openInPopup(item) }}>
-                                        <EditOutlined fontSize="small" />
-                                    </Controls.IconButton>
-                                    <Controls.IconButton
-                                        color="secondary"
-                                        onClick={() => handleDeleteRecords(index)}
-                                    >
-                                        <GridCloseIcon fontSize="small" />
-                                    </Controls.IconButton>
-                                    <Controls.IconButton
-                                        color="primary"
-                                        onClick={() => handleAddNote(index)}
-                                    >
-                                        <NoteAdd />
-                                    </Controls.IconButton>
-                                    {records.file && (
-                                        <img
-                                            src={URL.createObjectURL(records.file)}
-                                            alt='profile photo'
-                                        />
-                                    )}
+                <Grid item xs={12}>
+                    <TblContainer>
+                        <TblHead />
+                        <TableBody>
+                            {
+                                recordsAfterPagingAndSorting().map((item, index) =>
+                                (<TableRow key={index}>
+                                    <TableCell>{item.id}</TableCell>
+                                    <TableCell>{item.patientName}</TableCell>
+                                    <TableCell>{item.testName}</TableCell>
+                                    <TableCell>{item.regNo}</TableCell>
+                                    <TableCell>{item.doctorName}</TableCell>
+                                    <TableCell>{item.createdAt}</TableCell>
+                                    <TableCell>{item.reportedAt}</TableCell>
+                                    <TableCell>{item.status}</TableCell>
+                                    <TableCell>{item.urgent}</TableCell>
+                                    <TableCell>{item.review}</TableCell>
+                                    <TableCell>{item.options}</TableCell>
+                                    <TableCell className={classes.modelsContainer}>
+                                        <Controls.IconButton
+                                            color="primary"
+                                            onClick={() => { openInPopup(item) }}>
+                                            <EditOutlined fontSize="small" />
+                                        </Controls.IconButton>
+                                        <Controls.IconButton
+                                            color="secondary"
+                                            onClick={() => handleDeleteRecords(index)}
+                                        >
+                                            <GridCloseIcon fontSize="small" />
+                                        </Controls.IconButton>
+                                        <Controls.IconButton
+                                            color="primary"
+                                            onClick={() => handleAddNote(index)}
+                                        >
+                                            <NoteAdd />
+                                        </Controls.IconButton>
+                                        {records.file && (
+                                            <img
+                                                src={URL.createObjectURL(records.file)}
+                                                alt='profile photo'
+                                            />
+                                        )}
 
-                                </TableCell>
-                            </TableRow>)
-                            )
-                        }
-                    </TableBody>
-                </TblContainer>
+                                    </TableCell>
+                                </TableRow>)
+                                )
+                            }
+                        </TableBody>
+                    </TblContainer>
+                </Grid>
+
                 <TblPagination />
-            </Paper>
+            </Grid>
             <Popup
                 title="Patient Details"
                 openPopup={openPopup}
