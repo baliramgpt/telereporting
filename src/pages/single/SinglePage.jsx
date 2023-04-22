@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import Sidebar from '../../components/sidebar/LabSidebar';
+import LabNewSideBar from '../../components/sidebar/LabNewSideBar';
 import Chart from '../../components/chart/Chart';
 import './SinglePage.scss';
 import Tables from '../../components/tables/Tables';
@@ -8,7 +8,7 @@ import Tables from '../../components/tables/Tables';
 const SinglePage = () => {
     return (
         <div className='single'>
-            <Sidebar />
+            <LabNewSideBar />
             <div className='singleContainer'>
                 <Navbar />
                 <div className='top'>
