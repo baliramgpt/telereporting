@@ -3,7 +3,6 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import LabNewSideBar from '../sidebar/LabNewSideBar';
 import { IconButton } from '@material-ui/core';
 import { Menu, Close } from '@material-ui/icons';
-import Sidebar from '../sidebar/LabSidebar'
 
 
 import './Navbar.scss';
