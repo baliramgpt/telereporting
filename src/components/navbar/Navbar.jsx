@@ -1,21 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import MenuIcon from '@mui/icons-material/Menu';
+import LabNewSideBar from '../sidebar/LabNewSideBar';
+import { IconButton } from '@material-ui/core';
+import { Menu, Close } from '@material-ui/icons';
+import Sidebar from '../sidebar/LabSidebar'
 
 
 import './Navbar.scss';
 
-const Navbar = ({isSideBarOpen, setIsSideBarOpen}) => {
-    console.log("sidebar", isSideBarOpen);
-    const handleSideBar = () => {
-        setIsSideBarOpen(!isSideBarOpen);
-    }
+const Navbar = () => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const handleSidebarOpen = () => {
+        setSidebarOpen(true);
+    };
+
+    const handleSidebarClose = () => {
+        setSidebarOpen(false);
+    };
+
     return (
         <div className='navbar'>
             <div className='wrapper'>
-                <div className='navTitle'> 
-                    <MenuIcon className="icon" onClick={handleSideBar}/>
-                    <h1 className='navTitleText'> Medicare</h1> 
+                <div className='navTitle'>
+                    {sidebarOpen ? (
+                        <IconButton
+                            color="inherit"
+                            aria-label="close sidebar"
+                            edge="start"
+                            onClick={handleSidebarClose}
+                        >
+                            <Close />
+                        </IconButton>
+                    ) : (
+                        <IconButton
+                            color="inherit"
+                            aria-label="open sidebar"
+                            edge="start"
+                            onClick={handleSidebarOpen}
+                        >
+                            <Menu />
+                        </IconButton>
+                    )}
+                    <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} />
+                    <span className='navTitleText'> Medicare</span>
                 </div>
                 <div className='items'>
                     <div className='item'>

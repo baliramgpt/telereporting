@@ -2,19 +2,50 @@ import "./Sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import PaymentIcon from '@mui/icons-material/Payment';
 import PaymentsIcon from '@mui/icons-material/Payments';
 import PriceChangeOutlinedIcon from '@mui/icons-material/PriceChangeOutlined';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext, useState } from "react";
+import { makeStyles } from '@material-ui/core/styles';
+import { Drawer, List, ListItem, ListItemText, IconButton } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 
-const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
-    // const { isOpen, setIsOpen } = useState(false);
-    const { dispatch } = useContext(DarkModeContext);
+
+const drawerWidth = 240;
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    drawer: {
+        [theme.breakpoints.up('sm')]: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
+    },
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    menuButton: {
+        marginRight: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
+            display: 'none',
+        },
+    },
+    hide: {
+        display: 'none',
+    },
+}));
+
+const Sidebar = ({ open, onClose }) => {
+    const classes = useStyles();
+
+    const handleDrawerClose = () => {
+        onClose();
+    };
 
     return (
         <div
@@ -67,23 +98,6 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                             <span>CT-Scan Reporting</span>
                         </li>
                     </Link>
-                    {/* <li>
-                        <CreditCardIcon className="icon" />
-                        <span>Orders</span>
-                    </li>
-                    <li>
-                        <LocalShippingIcon className="icon" />
-                        <span>Delivery</span>
-                    </li>
-                    <p className="title">USEFUL</p>
-                    <li>
-                        <InsertChartIcon className="icon" />
-                        <span>Stats</span>
-                    </li>
-                    <li>
-                        <NotificationsNoneIcon className="icon" />
-                        <span>Notifications</span>
-                    </li> */}
                     <p className="title">ACCOUNTS</p>
                     <Link to="/lab/payment" style={{ textDecoration: "none" }}>
                         <li>
@@ -97,12 +111,6 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                             <span>Billing</span>
                         </li>
                     </Link>
-                    {/* <Link to="/lab/billing" style={{ textDecoration: "none" }}>
-                        <li>
-                            <PaymentsIcon className="icon" />
-                            <span>ECG Billing</span>
-                        </li>
-                    </Link> */}
                     <p className="title">SETTINGS</p>
                     <Link to="/lab/rate" style={{ textDecoration: "none" }}>
                         <li>
@@ -118,17 +126,7 @@ const Sidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                     </Link>
                 </ul>
             </div>
-            {/* <div className="bottom">
-                <div
-                    className="colorOption"
-                    onClick={() => dispatch({ type: "LIGHT" })}
-                ></div>
-                <div
-                    className="colorOption"
-                    onClick={() => dispatch({ type: "DARK" })}
-                ></div>
-            </div> */}
-        </div >
+        </div>
     );
 };
 
