@@ -38,6 +38,11 @@ import RateChart from "./pages/list/RateChart";
 import PaymentSection from "./pages/list/PaymentSection";
 import BillingSection from "./pages/list/BillingSection";
 import Settings from "./pages/new/Settings";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import Users from "./components/admin/Users";
+import RateList from "./components/admin/RateList";
+import MedicalReports from "./components/admin/MedicalReports";
+import AdminSharedLayout from "./components/shared-layout/AdminSharedLayout";
 
 function App() {
 
@@ -99,6 +104,24 @@ function App() {
             </Route>
             <Route path="doctor">
               <Route index element={<DoctorDashboard />} />
+            </Route>
+            <Route path="admin" element={<AdminSharedLayout/>}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="users">
+                <Route index element={<Users />} />
+                {/* <Route path=":userId" element={<SinglePage />} />
+                <Route path="new" element={<XrayRegistration title='Add New User' />} /> */}
+              </Route>
+              <Route path="rates">
+                <Route index element={<RateList />} />
+                {/* <Route path=":userId" element={<SinglePage />} />
+                <Route path="new" element={<XrayRegistration title='Add New User' />} /> */}
+              </Route>
+              <Route path="reports">
+                <Route index element={<MedicalReports />} />
+                {/* <Route path=":userId" element={<SinglePage />} />
+                <Route path="new" element={<XrayRegistration title='Add New User' />} /> */}
+              </Route>
             </Route>
           </Route>
         </Routes>
