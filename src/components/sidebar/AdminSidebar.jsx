@@ -1,13 +1,7 @@
 import "./Sidebar.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import MonitorHeartIcon from '@mui/icons-material/MonitorHeart';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
-import PaymentIcon from '@mui/icons-material/Payment';
-import PaymentsIcon from '@mui/icons-material/Payments';
 import PriceChangeOutlinedIcon from '@mui/icons-material/PriceChangeOutlined';
-import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
-import MenuIcon from '@mui/icons-material/Menu';
 import PeopleIcon from '@mui/icons-material/People';
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -37,7 +31,7 @@ const AdminSidebar = ({ isSideBarOpen, setIsSideBarOpen }) => {
                             <span>Dashboard</span>
                         </li>
                     </Link>
-                    
+
                     {/* <p className="title">ACCOUNTS</p> */}
                     <Link to="/admin/users" style={{ textDecoration: "none" }}>
                         <li>

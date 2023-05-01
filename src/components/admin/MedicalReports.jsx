@@ -14,9 +14,6 @@ import ConfirmDialog from '../modal/ConfirmDialog';
 import AddNoteDialog from '../modal/AddNoteDialog';
 import Typo from '../../control/Typo';
 import XrayRegistration from '../../pages/new/XrayRegistration';
-import RateList from './RateList';
-
-
 
 const useStyles = makeStyles(theme => ({
     pageContent: {

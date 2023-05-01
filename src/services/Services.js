@@ -1,6 +1,8 @@
 const KEYS = {
     doctor: 'doctor',
-    doctorId: 'doctorId'
+    doctorId: 'doctorId',
+    admin: 'admin',
+    adminId: 'adminId',
 }
 
 export const getDoctorsCollection = () => ([
@@ -43,8 +45,20 @@ export const getAllDetails = () => {
     if (localStorage.getItem(KEYS.doctor) == null)
         localStorage.setItem(KEYS.doctor, JSON.stringify([]))
     let doctor = JSON.parse(localStorage.getItem(KEYS.doctor));
+    let admin = JSON.parse(localStorage.getItem(KEYS.admin));
     let departments = getDoctorsCollection();
     return doctor.map(x => ({
+        ...x,
+        // department: departments[x.departmentId - 1].title
+    }))
+}
+
+export const getAllDetailsAdmin = () => {
+    if (localStorage.getItem(KEYS.admin) == null)
+        localStorage.setItem(KEYS.admin, JSON.stringify([]))
+    let admin = JSON.parse(localStorage.getItem(KEYS.admin));
+    let departments = getDoctorsCollection();
+    return admin.map(x => ({
         ...x,
         // department: departments[x.departmentId - 1].title
     }))

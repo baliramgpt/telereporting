@@ -1,47 +1,44 @@
 import React, { useState } from 'react';
-import Chart from '../../components/chart/Chart';
-import Navbar from '../../components/navbar/Navbar';
-import Widget from '../../components/widget/Widget';
 import { Link } from "react-router-dom";
-import PatientReports from '../../components/reports/PatientReports';
 import './Dashboard.scss';
-import DoctorSidebar from '../../components/sidebar/DoctorSidebar';
 import AdminSidebar from '../../components/sidebar/AdminSidebar';
+import AdminWidget from './widget/AdminWidget';
+import Bargraph from './bargraph/Bargraph';
+
+const data = [
+    { month: "Jan", totalPatients: 50 },
+    { month: "Feb", totalPatients: 70 },
+    { month: "Mar", totalPatients: 100 },
+    { month: "Apr", totalPatients: 80 },
+    { month: "May", totalPatients: 120 },
+    { month: "Jun", totalPatients: 90 },
+];
+
 
 const AdminDashboard = () => {
-    const [ isSideBarOpen, setIsSideBarOpen ] = useState(false);
+    const [isSideBarOpen, setIsSideBarOpen] = useState(false);
     return (
         <div className='home'>
             <AdminSidebar isSideBarOpen={isSideBarOpen}
                 setIsSideBarOpen={setIsSideBarOpen}
             />
             <div className='homeContainer'>
-                {/* <Navbar isSideBarOpen={isSideBarOpen}
-                    setIsSideBarOpen={setIsSideBarOpen}
-                /> */}
+                <div className='headingCenter'>
+                    Welcome to Medicare Pvt Ltd
+                </div>
                 <div className='headingCenter'>
                     Admin Panel
                 </div>
-                {/* <div className='widgets'>
+                <div className='widgets'>
                     <Link to="/users" style={{ textDecoration: "none" }}>
-                        <Widget type="user" />
+                        <AdminWidget type="user" />
                     </Link>
 
-                    <Widget type="order" />
-                    <Widget type="earning" />
-                    <Widget type="balance" />
+                    <AdminWidget type="order" />
+                    <AdminWidget type="earning" />
+                    <AdminWidget type="balance" />
                 </div>
-                <div className='charts'>
-                    <Featured />
-                    <Chart aspect={2 / 1} title='Reports' />
-                </div>
-                <div className='listContainer'>
-                    <div className='listTitle'>Recent Transaction</div>
-                    <Tables />
-                </div>  */}
-                {/* <div>
-                    <PatientReports/>
-                </div> */}
+                <Bargraph data={data} />
             </div>
         </div>
     )
