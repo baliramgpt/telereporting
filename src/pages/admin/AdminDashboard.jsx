@@ -18,10 +18,7 @@ const data = [
 const AdminDashboard = () => {
     const [isSideBarOpen, setIsSideBarOpen] = useState(false);
     return (
-        <div className='home'>
-            <AdminSidebar isSideBarOpen={isSideBarOpen}
-                setIsSideBarOpen={setIsSideBarOpen}
-            />
+        <div className='home'>\
             <div className='homeContainer'>
                 <div className='headingCenter'>
                     Welcome to Medicare Pvt Ltd

@@ -11,9 +11,6 @@ const DoctorDashboard = () => {
     const [ isSideBarOpen, setIsSideBarOpen ] = useState(false);
     return (
         <div className='home'>
-            <DoctorSidebar isSideBarOpen={isSideBarOpen}
-                setIsSideBarOpen={setIsSideBarOpen}
-            />
             <div className='homeContainer'>
                 <Navbar isSideBarOpen={isSideBarOpen}
                     setIsSideBarOpen={setIsSideBarOpen}
@@ -21,23 +18,6 @@ const DoctorDashboard = () => {
                 <div className='headingCenter'>
                     Welcome to Medicare Pvt Ltd (Doctor Services)
                 </div>
-                {/* <div className='widgets'>
-                    <Link to="/users" style={{ textDecoration: "none" }}>
-                        <Widget type="user" />
-                    </Link>
-
-                    <Widget type="order" />
-                    <Widget type="earning" />
-                    <Widget type="balance" />
-                </div>
-                <div className='charts'>
-                    <Featured />
-                    <Chart aspect={2 / 1} title='Reports' />
-                </div>
-                <div className='listContainer'>
-                    <div className='listTitle'>Recent Transaction</div>
-                    <Tables />
-                </div>  */}
                 <div>
                     <PatientReports/>
                 </div>

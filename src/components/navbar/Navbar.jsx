@@ -43,16 +43,16 @@ const Navbar = () => {
                             <Menu />
                         </IconButton>
                     )}
-                    {/** {(() => {
-                        if (window.location.pathname == '/lab') {
-                            return <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} />
-                        } else if (window.location.pathname == '/doctor') {
-                            return <DoctorSidebar open={sidebarOpen} onClose={handleSidebarClose} />
-                        } else if (window.location.pathname == '/admin') {
-                            return <AdminSidebar open={sidebarOpen} onClose={handleSidebarClose} />
-                        }
-                    })} */}
-                    <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} />
+                    {
+                        window.location.pathname.includes('/lab') 
+                            ? <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} />
+                            : window.location.pathname.includes('/doctor')
+                            ? <DoctorSidebar open={sidebarOpen} onClose={handleSidebarClose} />
+                            : window.location.pathname.includes('/admin')
+                            ? <AdminSidebar open={sidebarOpen} onClose={handleSidebarClose} />
+                            : <></>
+                    }
+                    {/* <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} /> */}
                     <span className='navTitleText'> Medicare</span>
                 </div>
                 <div className='items'>
