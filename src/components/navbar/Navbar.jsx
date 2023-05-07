@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import LabNewSideBar from '../sidebar/LabNewSideBar';
+import DoctorSidebar from '../sidebar/DoctorSidebar';
+import AdminSidebar from '../sidebar/AdminSidebar';
 import { IconButton } from '@material-ui/core';
 import { Menu, Close } from '@material-ui/icons';
 
@@ -41,7 +43,16 @@ const Navbar = () => {
                             <Menu />
                         </IconButton>
                     )}
-                    <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} />
+                    {
+                        window.location.pathname.includes('/lab') 
+                            ? <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} />
+                            : window.location.pathname.includes('/doctor')
+                            ? <DoctorSidebar open={sidebarOpen} onClose={handleSidebarClose} />
+                            : window.location.pathname.includes('/admin')
+                            ? <AdminSidebar open={sidebarOpen} onClose={handleSidebarClose} />
+                            : <></>
+                    }
+                    {/* <LabNewSideBar open={sidebarOpen} onClose={handleSidebarClose} /> */}
                     <span className='navTitleText'> Medicare</span>
                 </div>
                 <div className='items'>

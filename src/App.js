@@ -8,18 +8,10 @@ import {
 
 import Home from './pages/home/Home';
 import Login from './pages/login/Login';
-import XraySection from './pages/list/XraySection';
-import EcgSection from "./pages/list/EcgSection";
 import SinglePage from './pages/single/SinglePage';
 import { userInputs, productInputs } from './formSource';
 
 import './styles/dark.scss';
-import { useContext } from "react";
-import { DarkModeContext } from "./context/darkModeContext";
-import NewRegistration from "./pages/new/XrayRegistration";
-import EEGSection from "./pages/list/EEGSection";
-import MRISection from "./pages/list/MRISection";
-import CTScanSection from "./pages/list/CTScanSection";
 import XrayRegistration from "./pages/new/XrayRegistration";
 import EcgRegistration from "./pages/new/EcgRegistration";
 import EEGRegistration from "./pages/new/EEGRegistration";
@@ -39,25 +31,20 @@ import PaymentSection from "./pages/list/PaymentSection";
 import BillingSection from "./pages/list/BillingSection";
 import Settings from "./pages/new/Settings";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import Users from "./components/admin/Users";
-import RateList from "./components/admin/RateList";
+import AdminListUsers from "./components/admin/AdminListUsers";
+import AdminRateList from "./components/admin/AdminRateList";
 import MedicalReports from "./components/admin/MedicalReports";
 import AdminSharedLayout from "./components/shared-layout/AdminSharedLayout";
 
 function App() {
 
-  const { darkMode } = useContext(DarkModeContext);
-  const [isSidebar, setIsSidebar] = useState(true);
-
-  // const navigate = useNavigate();
+  const [currentPanel, setCurrentPanel] = useState("admin");
 
   return (
     <div className="app">
-      {/* <Sidebar isSidebar={isSidebar} /> */}
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            {/* <Route index element={<Home />} /> */}
             <Route index element={<Login />} />
             <Route path="lab" element={<SharedLayout />}>
               <Route index element={<Home />} />
@@ -105,22 +92,16 @@ function App() {
             <Route path="doctor">
               <Route index element={<DoctorDashboard />} />
             </Route>
-            <Route path="admin" element={<AdminSharedLayout/>}>
+            <Route path="admin" element={<AdminSharedLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="users">
-                <Route index element={<Users />} />
-                {/* <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<XrayRegistration title='Add New User' />} /> */}
+                <Route index element={<AdminListUsers />} />
               </Route>
               <Route path="rates">
-                <Route index element={<RateList />} />
-                {/* <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<XrayRegistration title='Add New User' />} /> */}
+                <Route index element={<AdminRateList />} />
               </Route>
               <Route path="reports">
                 <Route index element={<MedicalReports />} />
-                {/* <Route path=":userId" element={<SinglePage />} />
-                <Route path="new" element={<XrayRegistration title='Add New User' />} /> */}
               </Route>
             </Route>
           </Route>
