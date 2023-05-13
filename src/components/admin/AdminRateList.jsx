@@ -33,33 +33,6 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const options = [
-    {
-        id: 1,
-        label: 'MRI', value: 'mri', rate: 500
-    },
-    {
-        id: 2,
-        label: 'CT-Scan', value: 'ct-scan', rate: 400
-    },
-    {
-        id: 3,
-        label: 'ECG', value: 'ecg', rate: 100
-    },
-    {
-        id: 4,
-        label: "MRI",
-        value: "mri",
-        rate: "$500",
-    },
-    {
-        id: 5,
-        label: "CTScan",
-        value: "ctscan",
-        rate: "$200",
-    }
-];
-
 const AdminRateList = () => {
     const [remainingAmount, setRemainingAmount] = useState(1000);
     const [selectedTest, setSelectedTest] = useState("");
@@ -200,34 +173,32 @@ const AdminRateList = () => {
                 </Modal>
             </Grid>
             <Grid item xs={12}>
-                {options.length >= 0 && (
-                    <TableContainer component={Paper} className={classes.tableContainer}>
-                        <Table stickyHeader>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Test</TableCell>
-                                    <TableCell>Text</TableCell>
-                                    <TableCell>Rate</TableCell>
+                <TableContainer component={Paper} className={classes.tableContainer}>
+                    <Table stickyHeader>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Test</TableCell>
+                                <TableCell>Text</TableCell>
+                                <TableCell>Rate</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {records.map((record, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>{record.test}</TableCell>
+                                    <TableCell>{record.text}</TableCell>
+                                    <TableCell>{record.rate}</TableCell>
                                 </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {records.map((record, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{record.test}</TableCell>
-                                        <TableCell>{record.text}</TableCell>
-                                        <TableCell>{record.rate}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                        <Button onClick={() => handleChangePage(null, page - 1)} disabled={page === 0}>
-                            Previous Page
-                        </Button>
-                        <Button onClick={() => handleChangePage(null, page + 1)} disabled={endIndex >= totalRows}>
-                            Next Page
-                        </Button>
-                    </TableContainer>
-                )}
+                            ))}
+                        </TableBody>
+                    </Table>
+                    <Button onClick={() => handleChangePage(null, page - 1)} disabled={page === 0}>
+                        Previous Page
+                    </Button>
+                    <Button onClick={() => handleChangePage(null, page + 1)} disabled={endIndex >= totalRows}>
+                        Next Page
+                    </Button>
+                </TableContainer>
             </Grid>
         </div>
     )
