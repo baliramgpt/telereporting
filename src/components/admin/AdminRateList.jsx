@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import TypoPayment from '../../control/TypoPayment'
 import { makeStyles } from '@material-ui/core'
 import {
@@ -12,10 +12,13 @@ import {
     FormControl,
     Select,
     MenuItem,
-    Button
+    Button,
+    Modal,
+    InputLabel
 } from "@material-ui/core"
 import { Grid, TextField } from '@mui/material'
-import { useLocalStorage } from '@rehooks/local-storage'
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 
 const useStyles = makeStyles(theme => ({
@@ -23,22 +26,6 @@ const useStyles = makeStyles(theme => ({
         height: "600px",
         padding: "20px",
     },
-    // container: {
-    //     padding: "30px 0px",
-    //     background: "rgb(255, 255, 255)",
-    //     marginBottom: "10px",
-    //     borderWidth: "0px 1px 1px",
-    //     borderTopStyle: "initial",
-    //     borderRightStyle: "solid",
-    //     borderBottomStyle: "solid",
-    //     borderLeftStyle: "solid",
-    //     borderTopColor: "initial",
-    //     borderRightColor: "rgb(238, 238, 238)",
-    //     borderBottomColor: "rgb(238, 238, 238)",
-    //     borderLeftColor: "rgb(238, 238, 238)",
-    //     borderImage: "initial",
-
-    // },
     filterContainer: {
         display: "flex",
         justifyContent: "flex-end",
@@ -78,16 +65,45 @@ const AdminRateList = () => {
     const [selectedTest, setSelectedTest] = useState("");
     const classes = useStyles();
     const [filter, setFilter] = useState("");
-    const [sortDirection, setSortDirection] = useState("asc");
-    const [sortColumn, setSortColumn] = useState("createdAt");
     const [page, setPage] = useState(0);
     const rowsPerPage = 5;
-    const [name, setName] = useState('');
-    const [rate, setRate] = useState('');
-    const [records, setRecords] = useLocalStorage('records', []);
+    const [open, setOpen] = useState(false);
+    const [textValue, setTextValue] = useState('');
+    const [rate, setRate] = useState(0);
+    const [records, setRecords] = useState([]);
+    const [sortColumn, setSortColumn] = useState('');
+    const [sortOrder, setSortOrder] = useState('asc');
+
 
     const handleTestChange = (event) => {
         setSelectedTest(event.target.value);
+        switch (event.target.value) {
+            case 'MRI':
+                setRate(500);
+                break;
+            case 'CTScan':
+                setRate(400);
+                break;
+            case 'ECG':
+                setRate(200);
+                break;
+            default:
+                setRate(0);
+                break;
+        }
+    };
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+
+    const handleTextChange = (event) => {
+        setTextValue(event.target.value);
     };
 
     const handleChangePage = (event, newPage) => {
@@ -96,89 +112,92 @@ const AdminRateList = () => {
 
     const handleSort = (column) => {
         if (column === sortColumn) {
-            setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+            setSortOrder(sortOrder === "asc" ? "desc" : "asc");
         } else {
-            setSortDirection("asc");
-            setSortColumn(column);
+            setSortColumn("asc");
+            setSortOrder(column);
         }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newRecord = { selectedTest, name, rate };
-        setRecords([...records, newRecord]);
+        const newRecord = {
+            test: selectedTest,
+            text: textValue,
+            rate: rate,
+        };
+        //setRecords([...records, newRecord]);
+        setRecords((prevRecords) => [...prevRecords, newRecord]);
         setSelectedTest('');
-        setName('');
-        setRate('');
+        setTextValue('');
+        setRate(0);
+
+        handleClose();
     };
 
-    const handleChange = (event) => {
-        const selectedTestValue = event.target.value;
-        const selectedOption = options.find(option => option.value === selectedTestValue);
-        setSelectedTest(selectedTestValue);
-        setRate(selectedOption.rate);
-    };
+    useEffect(() => {
+        localStorage.setItem('testRecords', JSON.stringify(records));
+    }, [records]);
 
-    let filteredTests = selectedTest
-        ? options.filter((test) => test.testName === selectedTest)
-        : options;
+    useEffect(() => {
+        const savedRecords = JSON.parse(localStorage.getItem('testRecords'));
+        if (savedRecords) {
+            setRecords(savedRecords);
+        }
+    }, []);
 
-    filteredTests = filteredTests.sort((a, b) => {
-        if (sortDirection === "asc") {
+    const sortedRecords = [...records].sort((a, b) => {
+        // Sort the records based on the sortColumn and sortOrder
+        if (sortOrder === 'asc') {
             return a[sortColumn] > b[sortColumn] ? 1 : -1;
         } else {
             return a[sortColumn] < b[sortColumn] ? 1 : -1;
         }
     });
 
-    const totalRows = filteredTests.length;
+    const totalRows = sortedRecords.length;
     const startIndex = page * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    const displayedTests = filteredTests.slice(startIndex, endIndex);
+    //const displayedTests = filteredTests.slice(startIndex, endIndex);
 
     return (
         <div className={classes.datatable}>
-            <TypoPayment title="Manage Your Bills" remainingAmount={remainingAmount} />
-            <Grid container alignItems="center" justifyContent="center" className={classes.container}>
-                <form variant="outlined" onSubmit={handleSubmit}>
-                    <Grid item xs={12} sm={6}>
+            <TypoPayment title="Manage Your Rate List" remainingAmount={remainingAmount} />
+            <Grid container alignItems="center" justifyContent="center" className={classes.container} style={{ marginBottom: '20px', marginTop: '20px' }}>
+                <Button variant="contained" onClick={handleOpen}>
+                    Request Test
+                </Button>
+                <Modal open={open} onClose={handleClose} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="modal-container" style={{ backgroundColor: 'white', width: 400, height: 300, padding: 20 }}>
+                        <h2>Test Request Form</h2>
+                        <FormControl fullWidth style={{ marginBottom: '10px' }}>
+                            <InputLabel>Test</InputLabel>
+                            <Select value={selectedTest} onChange={handleTestChange}>
+                                <MenuItem value="MRI">MRI</MenuItem>
+                                <MenuItem value="CTScan">CT Scan</MenuItem>
+                                <MenuItem value="ECG">ECG</MenuItem>
+                            </Select>
+                        </FormControl>
                         <TextField
-                            select
-                            label="Select Test"
-                            value={selectedTest}
-                            onChange={handleChange}
-                            helperText="Please select a test"
                             fullWidth
-                        >
-                            {options.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <TextField
-                            label="Name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            fullWidth
+                            label="Text"
+                            value={textValue}
+                            onChange={handleTextChange}
+                            style={{ marginBottom: '10px' }}
                         />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
                         <TextField
+                            fullWidth
                             label="Rate"
                             value={rate}
-                            onChange={(e) => setRate(e.target.value)}
-                            fullWidth
+                            disabled
+                            style={{ marginBottom: '10px' }}
                         />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="contained" color="primary" type="submit">
+                        <Button variant="contained" onClick={handleSubmit}>
                             Submit
                         </Button>
-                    </Grid>
-                </form>
+                        <Button variant='contained' onClick={handleClose} style={{ marginLeft: '20px' }}>Cancel</Button>
+                    </div>
+                </Modal>
             </Grid>
             <Grid item xs={12}>
                 {options.length >= 0 && (
@@ -186,19 +205,17 @@ const AdminRateList = () => {
                         <Table stickyHeader>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell onClick={() => handleSort("id")}>Id {sortColumn === "id" ? `(${sortDirection})` : ""}</TableCell>
                                     <TableCell>Test</TableCell>
-                                    <TableCell>Name</TableCell>
+                                    <TableCell>Text</TableCell>
                                     <TableCell>Rate</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {records.map((item, index) => (
+                                {records.map((record, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>{item.id}</TableCell>
-                                        <TableCell>{item.selectedTest}</TableCell>
-                                        <TableCell>{item.name}</TableCell>
-                                        <TableCell>{`${item.rate}`}</TableCell>
+                                        <TableCell>{record.test}</TableCell>
+                                        <TableCell>{record.text}</TableCell>
+                                        <TableCell>{record.rate}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
