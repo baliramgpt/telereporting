@@ -9,35 +9,9 @@ import { Drawer, List, ListItem, ListItemText, IconButton } from '@material-ui/c
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext, useState } from "react";
+import useStyles from './Sidebar.styles';
 
 import "./Sidebar.scss";
-
-const drawerWidth = 240;
-
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        },
-    },
-    hide: {
-        display: 'none',
-    },
-}));
 
 const AdminSidebar = ({ open, onClose }) => {
     const classes = useStyles();
@@ -60,44 +34,42 @@ const AdminSidebar = ({ open, onClose }) => {
                 }}
                 onClose={handleDrawerClose}
             >
-
                 <div className={classes.drawerHeader}>
                     <IconButton onClick={handleDrawerClose} aria-label="close sidebar" edge="start">
                         <Close />
                     </IconButton>
-                </div>
-                <div className="top">
-                    <Link to="/doctor" style={{ textDecoration: "none" }}>
-                        <span className="logo">Medicare</span>
+                    <Link to="/admin" style={{ textDecoration: "none" }}>
+                        <span className={classes.logo}>Medicare</span>
                     </Link>
                 </div>
+
                 <hr />
-                <div className="center">
+                
+                <div className={classes.center}>
                     <ul>
-                        {/* <p className="title">MAIN</p> */}
+                        <p className={classes.title}>MAIN</p>
                         <Link to="/admin" style={{ textDecoration: "none" }}>
                             <li>
-                                <DashboardIcon className="icon" />
+                                <DashboardIcon className={classes.icon} />
                                 <span>Dashboard</span>
                             </li>
                         </Link>
-
-                        {/* <p className="title">ACCOUNTS</p> */}
+                        <p className={classes.title}>ACCOUNTS</p>
                         <Link to="/admin/users" style={{ textDecoration: "none" }}>
                             <li>
-                                <PeopleIcon className="icon" />
+                                <PeopleIcon className={classes.icon} />
                                 <span>Users</span>
                             </li>
                         </Link>
                         <Link to="/admin/rates" style={{ textDecoration: "none" }}>
                             <li>
-                                <PriceChangeOutlinedIcon className="icon" />
+                                <PriceChangeOutlinedIcon className={classes.icon} />
                                 <span>Rate List</span>
                             </li>
                         </Link>
                         <Link to="/admin/reports" style={{ textDecoration: "none" }}>
                             <li>
-                                <MedicalInformationIcon className="icon" />
+                                <MedicalInformationIcon className={classes.icon} />
                                 <span>Reports</span>
                             </li>
                         </Link>
@@ -105,6 +77,7 @@ const AdminSidebar = ({ open, onClose }) => {
                 </div>
             </Drawer>
         </div>
+
     );
 };
 

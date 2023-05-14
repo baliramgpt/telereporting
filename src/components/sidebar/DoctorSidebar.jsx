@@ -14,35 +14,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext, useState } from "react";
+import useStyles from './Sidebar.styles';
 
-import "./Sidebar.scss";
-
-const drawerWidth = 240;
-
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        },
-    },
-    hide: {
-        display: 'none',
-    },
-}));
 
 const DoctorSidebar = ({ open, onClose }) => {
     const classes = useStyles();
@@ -70,59 +43,56 @@ const DoctorSidebar = ({ open, onClose }) => {
                     <IconButton onClick={handleDrawerClose} aria-label="close sidebar" edge="start">
                         <Close />
                     </IconButton>
-                </div>
-
-                <div className="top">
                     <Link to="/doctor" style={{ textDecoration: "none" }}>
-                        <span className="logo">Medicare</span>
+                        <span className={classes.logo}>Medicare</span>
                     </Link>
                 </div>
                 <hr />
-                <div className="center">
+                <div className={classes.center}>
                     <ul>
-                        <p className="title">MAIN</p>
+                        <p className={classes.title}>MAIN</p>
                         <Link to="/doctor" style={{ textDecoration: "none" }}>
                             <li>
-                                <DashboardIcon className="icon" />
+                                <DashboardIcon className={classes.icon} />
                                 <span>Dashboard</span>
                             </li>
                         </Link>
 
-                        <p className="title">ACCOUNTS</p>
+                        <p className={classes.title}>ACCOUNTS</p>
                         <Link to="/lab/payment" style={{ textDecoration: "none" }}>
                             <li>
-                                <PaymentIcon className="icon" />
+                                <PaymentIcon className={classes.icon} />
                                 <span>Payment</span>
                             </li>
                         </Link>
                         <Link to="/lab/billing" style={{ textDecoration: "none" }}>
                             <li>
-                                <PaymentsIcon className="icon" />
+                                <PaymentsIcon className={classes.icon} />
                                 <span>X-Ray Billing</span>
                             </li>
                         </Link>
                         <Link to="/lab/billing" style={{ textDecoration: "none" }}>
                             <li>
-                                <PaymentsIcon className="icon" />
+                                <PaymentsIcon className={classes.icon} />
                                 <span>ECG Billing</span>
                             </li>
                         </Link>
-                        <p className="title">SETTINGS</p>
+                        <p className={classes.title}>SETTINGS</p>
                         <Link to="/lab/settings" style={{ textDecoration: "none" }}>
                             <li>
-                                <SettingsApplicationsIcon className="icon" />
+                                <SettingsApplicationsIcon className={classes.icon} />
                                 <span>General Settings</span>
                             </li>
                         </Link>
                         <Link to="/lab/rate" style={{ textDecoration: "none" }}>
                             <li>
-                                <PriceChangeOutlinedIcon className="icon" />
+                                <PriceChangeOutlinedIcon className={classes.icon} />
                                 <span>Rate Chart</span>
                             </li>
                         </Link>
                         <Link to="/lab/contact" style={{ textDecoration: "none" }}>
                             <li>
-                                <CallOutlinedIcon className="icon" />
+                                <CallOutlinedIcon className={classes.icon} />
                                 <span>Contact Admin</span>
                             </li>
                         </Link>
