@@ -1,207 +1,226 @@
-import React, { useState, useEffect } from 'react'
-import TypoPayment from '../../control/TypoPayment'
+import React, { useState } from 'react';
+import './Report.scss';
+import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
-    FormControl,
-    Select,
-    MenuItem,
-    Button,
-    Modal,
-    InputLabel
-} from "@material-ui/core"
-import { Grid, TextField } from '@mui/material'
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import * as services from '../../services/Services';
+import Controls from '../../control/Controls';
+import Popup from '../modal/Popup';
+import { Grid, Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
+import Tables from '../tables/Tables';
+import { Search, NoteAdd } from '@mui/icons-material';
+import { EditOutlined } from '@mui/icons-material';
+import { GridCloseIcon } from '@mui/x-data-grid';
+import ConfirmDialog from '../modal/ConfirmDialog';
+import Typo from '../../control/Typo';
+import AdminNewRateList from './newregistration/AdminNewRateList'
+
 
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    },
     datatable: {
         height: "600px",
         padding: "20px",
     },
-    filterContainer: {
-        display: "flex",
-        justifyContent: "flex-end",
-        marginBottom: 10,
+    container: {
+        padding: "30px 0px",
+        background: "rgb(255, 255, 255)",
+        marginBottom: "10px",
+        borderWidth: "0px 1px 1px",
+        borderTopStyle: "initial",
+        borderRightStyle: "solid",
+        borderBottomStyle: "solid",
+        borderLeftStyle: "solid",
+        borderTopColor: "initial",
+        borderRightColor: "rgb(238, 238, 238)",
+        borderBottomColor: "rgb(238, 238, 238)",
+        borderLeftColor: "rgb(238, 238, 238)",
+        borderImage: "initial",
+
     },
+    pageContent: {
+        margin: theme.spacing(5),
+        padding: theme.spacing(3)
+    },
+    searchInput: {
+        width: '75%'
+    },
+    newButton: {
+        position: 'absolute',
+        right: '10px'
+    },
+    modelsContainer: {
+        marginRight: '-40%'
+    }
 }))
 
+const headCells = [
+    { id: 'id', label: 'ID' },
+    { id: 'test', label: 'Test Name' },
+    { id: 'rate', label: 'Rate' },
+    { id: 'desc', label: 'Description' },
+    { id: 'actions', label: 'Actions', disableSorting: true }
+]
+
+
 const AdminRateList = () => {
-    const [remainingAmount, setRemainingAmount] = useState(1000);
-    const [selectedTest, setSelectedTest] = useState("");
-    const classes = useStyles();
-    const [filter, setFilter] = useState("");
-    const [page, setPage] = useState(0);
-    const rowsPerPage = 5;
-    const [open, setOpen] = useState(false);
-    const [textValue, setTextValue] = useState('');
-    const [rate, setRate] = useState(0);
-    const [records, setRecords] = useState([]);
-    const [sortColumn, setSortColumn] = useState('');
-    const [sortOrder, setSortOrder] = useState('asc');
 
+    const classes = useStyles()
+    const [openPopup, setOpenPopup] = useState(false)
+    const [recordForEdit, setRecordForEdit] = useState(null)
+    const [records, setRecords] = useState(services.getAllDetails())
+    const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+    const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
+    const [selectedRecord, setSelectedRecord] = useState(null)
+    const [showAddCommentModal, setShowAddCommentModal] = useState(false)
 
-    const handleTestChange = (event) => {
-        setSelectedTest(event.target.value);
-        switch (event.target.value) {
-            case 'MRI':
-                setRate(500);
-                break;
-            case 'CTScan':
-                setRate(400);
-                break;
-            case 'ECG':
-                setRate(200);
-                break;
-            default:
-                setRate(0);
-                break;
-        }
-    };
+    const {
+        TblContainer,
+        TblHead,
+        TblPagination,
+        recordsAfterPagingAndSorting
+    } = Tables(records, headCells, filterFn);
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+    const handleSearch = e => {
+        let target = e.target;
+        setFilterFn({
+            fn: items => {
+                if (target.value == "")
+                    return items;
+                else
+                    return items.filter(x => x.fullName.toLowerCase().includes(target.value))
+            }
+        })
+    }
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const addOrEdit = (doctor, resetForm) => {
+        if (doctor.id == 0)
+            services.insertEmployee(doctor)
+        else
+            services.updateEmployee(doctor)
+        resetForm()
+        setRecordForEdit(null)
+        setOpenPopup(false)
+        setRecords(services.getAllDetails())
+    }
 
+    const openInPopup = item => {
+        setRecordForEdit(item)
+        setOpenPopup(true)
+    }
 
-    const handleTextChange = (event) => {
-        setTextValue(event.target.value);
-    };
+    const handleDeleteRecords = (index) => {
+        //alert('clicked')
+        setShowDeleteDialog(true)
+        setDeleteRecordIndex(index)
+    }
 
-    const handleChangePage = (event, newPage) => {
-        setPage(newPage);
-    };
+    const handleDeleteConfirm = () => {
+        const updatedRecords = [...records]
+        updatedRecords.splice(deleteRecordIndex, 1)
+        setRecords(updatedRecords)
+        setShowDeleteDialog(false)
+        setDeleteRecordIndex(null)
+    }
 
-    const handleSort = (column) => {
-        if (column === sortColumn) {
-            setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-        } else {
-            setSortColumn("asc");
-            setSortOrder(column);
-        }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const newRecord = {
-            test: selectedTest,
-            text: textValue,
-            rate: rate,
-        };
-        //setRecords([...records, newRecord]);
-        setRecords((prevRecords) => [...prevRecords, newRecord]);
-        setSelectedTest('');
-        setTextValue('');
-        setRate(0);
-
-        handleClose();
-    };
-
-    useEffect(() => {
-        localStorage.setItem('testRecords', JSON.stringify(records));
-    }, [records]);
-
-    useEffect(() => {
-        const savedRecords = JSON.parse(localStorage.getItem('testRecords'));
-        if (savedRecords) {
-            setRecords(savedRecords);
-        }
-    }, []);
-
-    const sortedRecords = [...records].sort((a, b) => {
-        // Sort the records based on the sortColumn and sortOrder
-        if (sortOrder === 'asc') {
-            return a[sortColumn] > b[sortColumn] ? 1 : -1;
-        } else {
-            return a[sortColumn] < b[sortColumn] ? 1 : -1;
-        }
-    });
-
-    const totalRows = sortedRecords.length;
-    const startIndex = page * rowsPerPage;
-    const endIndex = startIndex + rowsPerPage;
-    //const displayedTests = filteredTests.slice(startIndex, endIndex);
+    const handleDeleteCancel = () => {
+        setShowDeleteDialog(false)
+        setDeleteRecordIndex(null)
+    }
 
     return (
-        <div className={classes.datatable}>
-            <TypoPayment title="Manage Your Rate List" remainingAmount={remainingAmount} />
-            <Grid container alignItems="center" justifyContent="center" className={classes.container} style={{ marginBottom: '20px', marginTop: '20px' }}>
-                <Button variant="contained" onClick={handleOpen}>
-                    Request Test
-                </Button>
-                <Modal open={open} onClose={handleClose} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <div className="modal-container" style={{ backgroundColor: 'white', width: 400, height: 300, padding: 20 }}>
-                        <h2>Test Request Form</h2>
-                        <FormControl fullWidth style={{ marginBottom: '10px' }}>
-                            <InputLabel>Test</InputLabel>
-                            <Select value={selectedTest} onChange={handleTestChange}>
-                                <MenuItem value="MRI">MRI</MenuItem>
-                                <MenuItem value="CTScan">CT Scan</MenuItem>
-                                <MenuItem value="ECG">ECG</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <TextField
-                            fullWidth
-                            label="Text"
-                            value={textValue}
-                            onChange={handleTextChange}
-                            style={{ marginBottom: '10px' }}
+        <div className={classes.root}>
+            <div className={classes.datatable}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Paper className={classes.paper}>
+                            <Typo
+                                title='Manage your Rate List'
+                            />
+                        </Paper>
+                    </Grid>
+                    <Grid container alignItems="center" justifyContent="center" className={classes.container} item xs={12} sm={12}>
+                        <Toolbar>
+                            <Controls.Input
+                                label="Search Rate"
+                                className={classes.searchInput}
+                                InputProps={{
+                                    startAdornment: (<InputAdornment position="start">
+                                        <Search />
+                                    </InputAdornment>)
+                                }}
+                                onChange={handleSearch}
+                            />
+                            <Controls.Button
+                                text="Add Test"
+                                variant="outlined"
+                                startIcon={<GridAddIcon />}
+                                className='newButton'
+                                onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
+                                style={{ width: '100%' }}
+                            />
+                        </Toolbar>
+                        <Grid item xs={12}>
+                            <TblContainer>
+                                <TblHead />
+                                <TableBody>
+                                    {
+                                        recordsAfterPagingAndSorting().map((item, index) =>
+                                        (<TableRow key={index}>
+                                            <TableCell>{item.id}</TableCell>
+                                            <TableCell>{item.test}</TableCell>
+                                            <TableCell>{item.rate}</TableCell>
+                                            <TableCell>{item.desc}</TableCell>
+                                            <TableCell className={classes.modelsContainer}>
+                                                <Controls.IconButton
+                                                    color="primary"
+                                                    onClick={() => { openInPopup(item) }}>
+                                                    <EditOutlined fontSize="small" />
+                                                </Controls.IconButton>
+                                                <Controls.IconButton
+                                                    color="secondary"
+                                                    onClick={() => handleDeleteRecords(index)}
+                                                >
+                                                    <GridCloseIcon fontSize="small" />
+                                                </Controls.IconButton>
+                                            </TableCell>
+                                        </TableRow>)
+                                        )
+                                    }
+                                </TableBody>
+                            </TblContainer>
+                        </Grid>
+
+                        <TblPagination />
+                    </Grid>
+                    <Popup
+                        title="Test Request Form"
+                        openPopup={openPopup}
+                        setOpenPopup={setOpenPopup}
+                    >
+                        <AdminNewRateList
+                            recordForEdit={recordForEdit}
+                            addOrEdit={addOrEdit}
                         />
-                        <TextField
-                            fullWidth
-                            label="Rate"
-                            value={rate}
-                            disabled
-                            style={{ marginBottom: '10px' }}
-                        />
-                        <Button variant="contained" onClick={handleSubmit}>
-                            Submit
-                        </Button>
-                        <Button variant='contained' onClick={handleClose} style={{ marginLeft: '20px' }}>Cancel</Button>
-                    </div>
-                </Modal>
-            </Grid>
-            <Grid item xs={12}>
-                <TableContainer component={Paper} className={classes.tableContainer}>
-                    <Table stickyHeader>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Test</TableCell>
-                                <TableCell>Text</TableCell>
-                                <TableCell>Rate</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {records.map((record, index) => (
-                                <TableRow key={index}>
-                                    <TableCell>{record.test}</TableCell>
-                                    <TableCell>{record.text}</TableCell>
-                                    <TableCell>{record.rate}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                    <Button onClick={() => handleChangePage(null, page - 1)} disabled={page === 0}>
-                        Previous Page
-                    </Button>
-                    <Button onClick={() => handleChangePage(null, page + 1)} disabled={endIndex >= totalRows}>
-                        Next Page
-                    </Button>
-                </TableContainer>
-            </Grid>
+                    </Popup>
+                    <ConfirmDialog
+                        showDeleteDialog={showDeleteDialog}
+                        title="Delete Records"
+                        handleDeleteConfirm={handleDeleteConfirm}
+                        handleDeleteCancel={handleDeleteCancel}
+                    />
+                </Grid>
+            </div>
         </div>
-    )
+    );
 }
 
-export default AdminRateList
+export default AdminRateList;
