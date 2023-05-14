@@ -35,6 +35,7 @@ import AdminListUsers from "./components/admin/AdminListUsers";
 import AdminRateList from "./components/admin/AdminRateList";
 import MedicalReports from "./components/admin/MedicalReports";
 import AdminSharedLayout from "./components/shared-layout/AdminSharedLayout";
+import PDFReports from "./components/reports/PDFReports";
 
 function App() {
 
@@ -91,6 +92,7 @@ function App() {
             </Route>
             <Route path="doctor">
               <Route index element={<DoctorDashboard />} />
+              <Route path="pdf" element={<PDFReports/>}/>
             </Route>
             <Route path="admin" element={<AdminSharedLayout />}>
               <Route index element={<AdminDashboard />} />

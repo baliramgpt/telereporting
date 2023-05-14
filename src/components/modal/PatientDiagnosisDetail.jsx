@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
+import { Link } from 'react-router-dom';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import Controls from '../../control/Controls'
 import { useForm, Form } from '../../components/Forms/useForm'
 import * as services from '../../services/Services'
 import PDFReports from '../reports/PDFReports';
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import './Registration.scss';
 import dayjs from 'dayjs';
 
@@ -105,18 +106,23 @@ const PatientDiagnosisDetail = (props) => {
                             onClick={resetForm}
                         />
 
-                        <PDFDownloadLink
+
+                        <Link to="/doctor/pdf" style={{ textDecoration: "none" }}>
+                            <Controls.Button
+                                text="Preview Report"
+                            // onClick={resetForm}
+                            />
+                        </Link>
+
+                        {/* <PDFViewer
                             document={<PDFReports data={initialFValues} />}
                             fileName="report.pdf"
                             style={{
                                 textDecoration: "none",
                             }}
                         >
-                            <Controls.Button
-                                text="Preview Report"
-                            // onClick={resetForm}
-                            />
-                        </PDFDownloadLink>
+
+                        </PDFViewer> */}
 
                     </div>
                 </Grid>

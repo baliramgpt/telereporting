@@ -10,34 +10,9 @@ import PaymentsIcon from '@mui/icons-material/Payments';
 import PriceChangeOutlinedIcon from '@mui/icons-material/PriceChangeOutlined';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import { Link } from "react-router-dom";
+import useStyles from './Sidebar.styles';
 
-import "./Sidebar.scss";
-
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-    },
-    drawer: {
-        [theme.breakpoints.up('sm')]: {
-            width: drawerWidth,
-            flexShrink: 0,
-        },
-    },
-    drawerPaper: {
-        width: drawerWidth,
-    },
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-            display: 'none',
-        },
-    },
-    hide: {
-        display: 'none',
-    },
-}));
+// import "./Sidebar.scss";
 
 const LabNewSideBar = ({ open, onClose }) => {
     const classes = useStyles();
@@ -62,85 +37,83 @@ const LabNewSideBar = ({ open, onClose }) => {
                     <IconButton onClick={handleDrawerClose} aria-label="close sidebar" edge="start">
                         <Close />
                     </IconButton>
-                </div>
-
-                <div className="top">
                     <Link to="/lab" style={{ textDecoration: "none" }}>
-                        <span className="logo" onClick={handleDrawerClose}>Medicare</span>
+                        <span className={classes.logo} onClick={handleDrawerClose}>Medicare</span>
                     </Link>
                 </div>
+
                 <hr />
 
-                <div className="center">
+                <div className={classes.center}>
                     <ul>
-                        <p className="title">MAIN</p>
+                        <p className={classes.title}>MAIN</p>
                         <Link to="/lab" style={{ textDecoration: "none" }}>
                             <li>
-                                <DashboardIcon className="icon" />
+                                <DashboardIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>Dashboard</span>
                             </li>
                         </Link>
                         <Link to="/lab/x-ray" style={{ textDecoration: "none" }}>
                             <li>
-                                <MedicalInformationIcon className="icon" />
+                                <MedicalInformationIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>X-Ray Reporting</span>
                             </li>
                         </Link>
                         <Link to="/lab/ecg" style={{ textDecoration: "none" }}>
                             <li>
-                                <MonitorHeartIcon className="icon" />
+                                <MonitorHeartIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>ECG Reporting</span>
                             </li>
                         </Link>
 
                         <Link to="/lab/eeg" style={{ textDecoration: "none" }}>
                             <li>
-                                <MedicalInformationIcon className="icon" />
+                                <MedicalInformationIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>EEG Reporting</span>
                             </li>
                         </Link>
                         <Link to="/lab/mri" style={{ textDecoration: "none" }}>
                             <li>
-                                <MedicalInformationIcon className="icon" />
+                                <MedicalInformationIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>MRI Reporting</span>
                             </li>
                         </Link>
                         <Link to="/lab/ctscan" style={{ textDecoration: "none" }}>
                             <li>
-                                <MedicalInformationIcon className="icon" />
+                                <MedicalInformationIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>CT-Scan Reporting</span>
                             </li>
                         </Link>
-                        <p className="title">ACCOUNTS</p>
+                        <p className={classes.title}>ACCOUNTS</p>
                         <Link to="/lab/payment" style={{ textDecoration: "none" }}>
                             <li>
-                                <PaymentIcon className="icon" />
+                                <PaymentIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>Payment</span>
                             </li>
                         </Link>
                         <Link to="/lab/billing" style={{ textDecoration: "none" }}>
                             <li>
-                                <PaymentsIcon className="icon" />
+                                <PaymentsIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>Billing</span>
                             </li>
                         </Link>
-                        <p className="title">SETTINGS</p>
+                        <p className={classes.title}>SETTINGS</p>
                         <Link to="/lab/rate" style={{ textDecoration: "none" }}>
                             <li>
-                                <PriceChangeOutlinedIcon className="icon" />
+                                <PriceChangeOutlinedIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>Rate Chart</span>
                             </li>
                         </Link>
                         <Link to="/lab/contact" style={{ textDecoration: "none" }}>
                             <li>
-                                <CallOutlinedIcon className="icon" />
+                                <CallOutlinedIcon className={classes.icon} />
                                 <span onClick={handleDrawerClose}>Contact Admin</span>
                             </li>
                         </Link>
                     </ul>
-                </div>
-            </Drawer>
-        </div>
+                </div >
+            </Drawer >
+        </div >
     )
 }
 
