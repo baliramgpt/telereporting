@@ -14,9 +14,11 @@ const initialFValues = {
 }
 
 const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
+    { value: 'MRI', label: 'MRI' },
+    { value: 'ECG', label: 'ECG' },
+    { value: 'EEG', label: 'EEG' },
+    { value: 'CT-Scan', label: 'CT-Scan' },
+    { value: 'X-Ray', label: 'X-Ray' },
 ];
 
 const AdminNewRateList = (props) => {
