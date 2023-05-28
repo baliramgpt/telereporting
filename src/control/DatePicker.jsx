@@ -5,7 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
 const Date = (props) => {
-    const { name, label, value, onChange } = props
+    const { name, label, value, onChange, ...others } = props
 
 
     const convertToDefEventPara = (name, value) => ({
@@ -18,6 +18,7 @@ const Date = (props) => {
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
+                    {...others}
                     label={label}
                     value={value}
                     name={name}
