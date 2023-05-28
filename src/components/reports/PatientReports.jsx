@@ -14,6 +14,7 @@ import { GridCloseIcon } from '@mui/x-data-grid';
 import ConfirmDialog from '../modal/ConfirmDialog';
 import PatientDiagnosisDetail from '../modal/PatientDiagnosisDetail';
 import Typo from '../../control/Typo';
+import PatientDetailsModal from '../../pages/doctor/modals/PatientDetailsModal';
 import XrayRegistration from '../../pages/new/XrayRegistration';
 
 
@@ -218,10 +219,10 @@ const PatientReports = () => {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-            <XrayRegistration
-                recordForEdit={recordForEdit}
-                addOrEdit={addOrEdit}
-            />
+                <PatientDetailsModal
+                    recordForEdit={recordForEdit}
+                    addOrEdit={addOrEdit}
+                />
             </Popup>
             <ConfirmDialog
                 showDeleteDialog={showDeleteDialog}

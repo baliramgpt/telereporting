@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 import PriceChangeOutlinedIcon from '@mui/icons-material/PriceChangeOutlined';
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 import PeopleIcon from '@mui/icons-material/People';
 import { Close } from '@material-ui/icons';
 import { Drawer, List, ListItem, ListItemText, IconButton } from '@material-ui/core';
@@ -44,7 +45,7 @@ const AdminSidebar = ({ open, onClose }) => {
                 </div>
 
                 <hr />
-                
+
                 <div className={classes.center}>
                     <ul>
                         <p className={classes.title}>MAIN</p>
@@ -59,6 +60,12 @@ const AdminSidebar = ({ open, onClose }) => {
                             <li>
                                 <PeopleIcon className={classes.icon} />
                                 <span>Users</span>
+                            </li>
+                        </Link>
+                        <Link to="/admin/tests" style={{ textDecoration: "none" }}>
+                            <li>
+                                <MedicalServicesIcon className={classes.icon} />
+                                <span>Tests</span>
                             </li>
                         </Link>
                         <Link to="/admin/rates" style={{ textDecoration: "none" }}>

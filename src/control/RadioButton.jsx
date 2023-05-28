@@ -18,11 +18,11 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const RadioButton = (props) => {
-    const { name, label, value, onChange, items } = props;
+    const { name, label, value, onChange, items, ...others } = props;
     const classes = useStyles();
 
     return (
-        <FormControl className={classes.radioAlign}>
+        <FormControl className={classes.radioAlign} {...others}>
             <FormLabel className={classes.radioLabel}>{label}</FormLabel>
             <MuiRadioGroup row
                 name={name}

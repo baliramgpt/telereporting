@@ -42,8 +42,8 @@ const XrayRegistration = (props) => {
             temp.patientName = fieldValues.patientName ? "" : "This field is required."
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
-        if ('mobile' in fieldValues)
-            temp.mobile = fieldValues.mobile.length > 9 ? "" : "Minimum 10 numbers required."
+        if ('contactNo' in fieldValues)
+            temp.contactNo = fieldValues.contactNo.length > 9 ? "" : "Minimum 10 digits required."
         if ('file' in fieldValues)
             temp.file = fieldValues.file ? "" : "This field is required."
         if ('doctorId' in fieldValues)
@@ -69,7 +69,7 @@ const XrayRegistration = (props) => {
         e.preventDefault()
         console.log(values, "#", validate());
         // if (validate()) {
-        addOrEdit(values, resetForm);
+            addOrEdit(values, resetForm);
         // }
     }
 
@@ -79,12 +79,20 @@ const XrayRegistration = (props) => {
                 ...recordForEdit
             })
     }, [recordForEdit])
-
     return (
+
         <Form onSubmit={handleSubmit}>
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
+                        disabled
+                        label="Registration No / Bill No"
+                        name="regNo"
+                        value={values.regNo}
+                        onChange={handleInputChange}
+                    />
+                    <Controls.Input
+                        required
                         name="patientName"
                         label="Patient Name"
                         value={values.patientName}
@@ -92,6 +100,7 @@ const XrayRegistration = (props) => {
                         error={errors.patientName}
                     />
                     <Controls.Input
+                        required
                         name="age"
                         label="Age"
                         value={values.age}
@@ -106,12 +115,14 @@ const XrayRegistration = (props) => {
                         error={errors.email}
                     />
                     <Controls.Input
+                        required
                         label="Referral Doctor"
                         name="referralDoctor"
                         value={values.referralDoctor}
                         onChange={handleInputChange}
                     />
                     <Controls.SelectButton
+                        required
                         name="testName"
                         label="Test Name"
                         value={values.testName}
@@ -120,12 +131,14 @@ const XrayRegistration = (props) => {
                         error={errors.testName}
                     />
                     <Controls.Date
+                        required
                         label="Test Date"
                         name="testDate"
                         value={dayjs(values.testDate)}
                         onChange={handleInputChange}
                     />
                     <Controls.TextArea
+                        required
                         label="History / Analysis"
                         name="history"
                         placeholder="History / Analysis"
@@ -133,18 +146,16 @@ const XrayRegistration = (props) => {
                         onChange={handleInputChange}
                     />
                     <Controls.Input
+                        required
                         label="Contact Number"
                         name="contactNo"
+                        type="number"
                         value={values.contactNo}
                         onChange={handleInputChange}
-                    />
-                    <Controls.Input
-                        label="Registration No / Bill No"
-                        name="regNo"
-                        value={values.regNo}
-                        onChange={handleInputChange}
+                        error={errors.contactNo}
                     />
                     <Controls.RadioButton
+                        required
                         name="gender"
                         label="Gender"
                         value={values.gender}
@@ -152,6 +163,7 @@ const XrayRegistration = (props) => {
                         items={genderItems}
                     />
                     <Controls.SelectButton
+                        required
                         name="doctorId"
                         label="Assign to Doctor"
                         value={values.doctorId}
