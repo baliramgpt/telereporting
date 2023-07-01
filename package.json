@@ -1,61 +1,24 @@
 {
-  "name": "admindashboard",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@date-io/date-fns": "^2.16.0",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@material-ui/icons": "^4.11.3",
-    "@material-ui/pickers": "^3.3.10",
-    "@mui/icons-material": "^5.5.0",
-    "@mui/joy": "^5.0.0-alpha.70",
-    "@mui/material": "^5.11.10",
-    "@mui/x-data-grid": "^5.8.0",
-    "@mui/x-date-pickers": "^6.0.1",
-    "@react-pdf/renderer": "^3.1.9",
-    "@rehooks/local-storage": "^2.4.4",
-    "@testing-library/jest-dom": "^5.16.2",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/user-event": "^13.5.0",
-    "babel-plugin-macros": "^3.1.0",
-    "date-fns": "^2.29.3",
-    "dayjs": "^1.11.7",
-    "react": "^17.0.2",
-    "react-circular-progressbar": "^2.0.4",
-    "react-dom": "^17.0.2",
-    "react-pro-sidebar": "^0.7.1",
-    "react-router-dom": "^6.2.2",
-    "react-scripts": "5.0.0",
-    "reactstrap": "^9.1.6",
-    "recharts": "^2.1.9",
-    "sass": "^1.49.9",
-    "web-vitals": "^2.1.4"
-  },
+  "name": "teleporting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "install-server": "npm install --prefix server",
+    "install-client": "npm install --prefix client",
+    "install": "npm run install-server && npm run install-client",
+    "server": "npm run watch --prefix server",
+    "client": "npm start --prefix client",
+    "watch": "npm run server & npm run client",
+    "deploy": "npm run build --prefix client && npm start --prefix server",
+    "test": "npm run test --prefix server && npm run test --prefix client"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongodb": "^5.6.0",
+    "mongoose": "^7.3.1",
+    "morgan": "^1.10.0"
   }
 }
