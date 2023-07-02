@@ -56,7 +56,7 @@ const XrayReports = () => {
     const classes = useStyles()
     const [openPopup, setOpenPopup] = useState(false)
     const [recordForEdit, setRecordForEdit] = useState(null)
-    const [records, setRecords] = useState(services.getAllDetails())
+    const [records, setRecords] = useState(services.getAllDetailsXray())
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
@@ -90,7 +90,7 @@ const XrayReports = () => {
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
-        setRecords(services.getAllDetails())
+        setRecords(services.getAllDetailsXray())
     }
 
     const openInPopup = item => {
@@ -163,17 +163,16 @@ const XrayReports = () => {
                         {
                             recordsAfterPagingAndSorting().map((item, index) =>
                             (<TableRow key={index}>
-                                <TableCell>{item.id}</TableCell>
+                                <TableCell>{item.Id}</TableCell>
                                 <TableCell>{item.patientName}</TableCell>
                                 <TableCell>{item.testName}</TableCell>
                                 <TableCell>{item.regNo}</TableCell>
-                                <TableCell>{item.doctorName}</TableCell>
-                                <TableCell>{item.createdAt}</TableCell>
-                                <TableCell>{item.reportedAt}</TableCell>
+                                <TableCell>{item.referral}</TableCell>
+                                <TableCell>{item.testDate}</TableCell>
+                                <TableCell>{item.testDate}</TableCell>
                                 <TableCell>{item.status}</TableCell>
                                 <TableCell>{item.urgent}</TableCell>
-                                <TableCell>{item.review}</TableCell>
-                                {/* <TableCell>{item.options}</TableCell> */}
+                                <TableCell>{item.reviewComment}</TableCell>
                                 <TableCell>
                                     <Controls.IconButton
                                         color="primary"

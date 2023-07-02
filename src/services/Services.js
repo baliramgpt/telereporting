@@ -1,3 +1,5 @@
+import { ReportData } from '../api/_mock/ReportData';
+
 const KEYS = {
     doctor: 'doctor',
     doctorId: 'doctorId',
@@ -53,13 +55,9 @@ export const getAllDetails = () => {
     }))
 }
 
-export const getAllDetailsAdmin = () => {
-    if (localStorage.getItem(KEYS.admin) == null)
-        localStorage.setItem(KEYS.admin, JSON.stringify([]))
-    let admin = JSON.parse(localStorage.getItem(KEYS.admin));
-    let departments = getDoctorsCollection();
-    return admin.map(x => ({
+export const getAllDetailsXray = () => {
+    return ReportData.map(x => ({
         ...x,
-        // department: departments[x.departmentId - 1].title
-    }))
+        //department: departments[x.departmentId - 1].title
+    }));
 }

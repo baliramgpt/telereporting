@@ -65,12 +65,55 @@ const XrayRegistration = (props) => {
         resetForm,
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(values, "#", validate());
         // if (validate()) {
-            addOrEdit(values, resetForm);
+        addOrEdit(values, resetForm);
         // }
+        if (validate()) {
+            const payload = {
+                id: values.id,
+                patientName: values.patientName,
+                age: values.age,
+                email: values.email,
+                contactNo: values.contactNo,
+                gender: values.gender,
+                referralDoctor: values.referralDoctor,
+                testDate: values.testDate.format('YYYY-MM-DD'),
+                testName: values.testName,
+                history: values.history,
+                doctorId: values.doctorId,
+                regNo: values.regNo,
+                file: values.file,
+            };
+
+            // Perform further actions with the payload (e.g., send it to an API endpoint)
+            console.log('payload', payload);
+            // addOrEdit(payload, resetForm);
+
+            try {
+                const response = await fetch('https://api.example.com/xrayregistration', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (response.ok) {
+                    console.log('Form data sent successfully!');
+                } else {
+                    console.log('Failed to send form data.');
+                    // Handle the error condition
+                }
+            } catch (error) {
+                console.log('An error occurred:', error);
+                // Handle the error condition
+            }
+
+        }
+
     }
 
     useEffect(() => {
