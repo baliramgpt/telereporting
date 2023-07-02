@@ -71,12 +71,51 @@ const EcgRegistration = (props) => {
     resetForm,
   } = useForm(initialFValues, true, validate);
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     console.log(values, "#", validate());
     // if (validate()) {
     addOrEdit(values, resetForm);
     // }
+    if (validate()) {
+
+      const payload = {
+        id: values.id,
+        patientName: values.patientName,
+        age: values.age,
+        email: values.email,
+        contactNo: values.contactNo,
+        gender: values.gender,
+        referralDoctor: values.referralDoctor,
+        testDate: values.testDate.format('YYYY-MM-DD'),
+        testName: values.testName,
+        history: values.history,
+        doctorId: values.doctorId,
+        regNo: values.regNo,
+        file: values.file,
+        testtype: values.testtype,
+      }
+
+      try {
+        const response = await fetch('https://api.example.com/ecgregistration', {
+          method: 'POST',
+          body: payload
+        });
+
+        if (response.ok) {
+          // Form submission successful
+          console.log('Form submitted successfully');
+          // Reset the form
+          resetForm();
+        } else {
+          // Form submission failed
+          console.error('Form submission failed');
+        }
+      } catch (error) {
+        console.error('Error occurred during form submission:', error);
+      }
+    }
+
   }
 
   useEffect(() => {

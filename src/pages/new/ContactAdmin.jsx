@@ -59,17 +59,40 @@ const ContactAdmin = (props) => {
         setMessage(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(`title,${title} message: ${message}`);
-        const formData = {
+
+        const payload = {
             title: title,
             message: message,
-        }
+        };
+        console.log(payload);
+
         const existingData = JSON.parse(localStorage.getItem('contactFormData')) || []
-        localStorage.setItem('contactFormData', JSON.stringify([...existingData, formData]));
-        setTitle('')
-        setMessage('')
+        localStorage.setItem('contactFormData', JSON.stringify([...existingData, payload]));
+        try {
+            const response = await fetch('https://api.example.com/contactadmin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                console.log('Form data sent successfully!');
+                // Reset the form fields
+                setTitle('');
+                setMessage('');
+            } else {
+                console.log('Failed to send form data.');
+                // Handle the error condition
+            }
+        } catch (error) {
+            console.log('An error occurred:', error);
+            // Handle the error condition
+        }
     }
 
     return (
