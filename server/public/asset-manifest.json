@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.02e72f1a.css",
+    "main.js": "/static/js/main.859b20ec.js",
+    "static/js/787.d1cf12e5.chunk.js": "/static/js/787.d1cf12e5.chunk.js",
+    "static/media/mri-g070688221_1280.png": "/static/media/mri-g070688221_1280.78bde7660dcb606df64c.png",
+    "index.html": "/index.html",
+    "main.02e72f1a.css.map": "/static/css/main.02e72f1a.css.map",
+    "main.859b20ec.js.map": "/static/js/main.859b20ec.js.map",
+    "787.d1cf12e5.chunk.js.map": "/static/js/787.d1cf12e5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.02e72f1a.css",
+    "static/js/main.859b20ec.js"
+  ]
+}
