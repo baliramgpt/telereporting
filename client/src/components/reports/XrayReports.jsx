@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Report.scss';
 import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
@@ -56,12 +56,25 @@ const XrayReports = () => {
     const classes = useStyles()
     const [openPopup, setOpenPopup] = useState(false)
     const [recordForEdit, setRecordForEdit] = useState(null)
-    const [records, setRecords] = useState(services.getAllDetailsXray())
+    const [records, setRecords] = useState([])
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
     const [selectedRecord, setSelectedRecord] = useState(null)
     const [showAddCommentModal, setShowAddCommentModal] = useState(false)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await services.getAllDetailsXray();
+                setRecords(result);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, []);
+
 
     const {
         TblContainer,
@@ -163,7 +176,7 @@ const XrayReports = () => {
                         {
                             recordsAfterPagingAndSorting().map((item, index) =>
                             (<TableRow key={index}>
-                                <TableCell>{item.Id}</TableCell>
+                                <TableCell>{item.regNo}</TableCell>
                                 <TableCell>{item.patientName}</TableCell>
                                 <TableCell>{item.testName}</TableCell>
                                 <TableCell>{item.regNo}</TableCell>
@@ -212,6 +225,7 @@ const XrayReports = () => {
                 setOpenPopup={setOpenPopup}
             >
                 <XrayRegistration
+                    records={records}
                     recordForEdit={recordForEdit}
                     addOrEdit={addOrEdit}
                 />

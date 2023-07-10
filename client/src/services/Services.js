@@ -1,4 +1,31 @@
+import axios from 'axios';
 import { ReportData } from '../api/_mock/ReportData';
+
+const API_URL = 'http://localhost:9000';
+
+// async function httpGetPlanets() {
+//     const response = await fetch(`${API_URL}/planets`);
+//     return await response.json();
+//   }
+
+async function getReports() {
+    const response = await fetch(`${API_URL}/reports`);
+    return await response.json();
+  }
+
+// axios.get(`${API_URL}/planets`)
+//   .then(function (response) {
+//     // handle success
+//     console.log(response);
+//   })
+//   .catch(function (error) {
+//     // handle error
+//     console.log(error);
+//   })
+//   .finally(function () {
+//     // always executed
+//   });
+
 
 const KEYS = {
     doctor: 'doctor',
@@ -55,8 +82,10 @@ export const getAllDetails = () => {
     }))
 }
 
-export const getAllDetailsXray = () => {
-    return ReportData.map(x => ({
+export const getAllDetailsXray = async () => {
+    const reports = await getReports();
+    console.log("reports", reports);
+    return reports.map(x => ({
         ...x,
         //department: departments[x.departmentId - 1].title
     }));

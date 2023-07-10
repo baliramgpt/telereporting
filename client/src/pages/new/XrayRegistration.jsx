@@ -6,6 +6,7 @@ import { useForm, Form } from '../../components/Forms/useForm'
 import * as services from '../../services/Services'
 import './Registration.scss';
 import dayjs from 'dayjs';
+import { API_URL } from '../../api/_mock/api';
 
 
 const genderItems = [
@@ -33,8 +34,9 @@ const initialFValues = {
 }
 
 const XrayRegistration = (props) => {
-    const { addOrEdit, recordForEdit } = props
+    const { addOrEdit, recordForEdit, records } = props
     const [file, setFile] = useState(null);
+    const DEFAULT_REG_NO = 1000;
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -65,13 +67,21 @@ const XrayRegistration = (props) => {
         resetForm,
     } = useForm(initialFValues, true, validate);
 
+    function getLatestRegNo(){
+        const latestReport = records.sort((x,y) => y.regNo - x.regNo)[0];
+        if(!latestReport){
+            return DEFAULT_REG_NO;
+        }
+        return latestReport.regNo;
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(values, "#", validate());
         // if (validate()) {
         addOrEdit(values, resetForm);
         // }
-        if (validate()) {
+        if (true) {
             const payload = {
                 id: values.id,
                 patientName: values.patientName,
@@ -93,14 +103,18 @@ const XrayRegistration = (props) => {
             // addOrEdit(payload, resetForm);
 
             try {
-                const response = await fetch('https://api.example.com/xrayregistration', {
+                const response = await fetch(`${API_URL}/reports`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(payload),
+                })
+                .then((res)=> { 
+                    console.log(res); 
+                    return res.json();
                 });
-
+                console.log("inside try block");
                 if (response.ok) {
                     console.log('Form data sent successfully!');
                 } else {
@@ -131,7 +145,7 @@ const XrayRegistration = (props) => {
                         disabled
                         label="Registration No / Bill No"
                         name="regNo"
-                        value={values.regNo}
+                        value={getLatestRegNo()+1}
                         onChange={handleInputChange}
                     />
                     <Controls.Input

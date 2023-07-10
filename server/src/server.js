@@ -7,7 +7,7 @@ const { loadPlanetsData } = require('./models/planets.model');
 
 const { start } = require('repl');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 9000;
 
 const MONGO_URL = 'mongodb+srv://baliram:J58zxz0dWHd22XkW@nasacluster.pyuwpap.mongodb.net/?retryWrites=true&w=majority';
 
