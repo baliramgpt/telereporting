@@ -82,7 +82,7 @@ export const getAllDetails = () => {
     }))
 }
 
-export const getAllDetailsXray = async () => {
+export const getAllReports = async () => {
     const reports = await getReports();
     console.log("reports", reports);
     return reports.map(x => ({

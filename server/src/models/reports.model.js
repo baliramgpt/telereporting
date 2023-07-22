@@ -49,7 +49,7 @@ const reportsSchema = new mongoose.Schema({
         required: true,
     },
     history: {
-        type: Number,
+        type: String,
         required: true,
     },
     assignedDoctor: {

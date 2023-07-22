@@ -1,3 +1,14 @@
+.MuiPaper-root {
+    top: 10px !important;
+    bottom: 12px;
+}
+
+.MuiDialogTitle-root {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: 8px 24px !important;
+}
+
 .formInput {
     width: 40%;
     display: flex;
@@ -27,7 +38,7 @@
 
     .img-attached {
         width: auto;
-        height: 560px;
+        height: 480px;
     }
 }
 

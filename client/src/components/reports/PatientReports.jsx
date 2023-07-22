@@ -48,12 +48,6 @@ const headCells = [
     { id: 'reportedAt', label: 'Reported At' },
     { id: 'status', label: 'Status' },
     { id: 'urgent', label: 'Urgent' },
-    // { id: 'review', label: 'Review' },
-    // { id: 'options', label: 'Options' },
-    // { id: 'email', label: 'Email Address (Personal)' },
-    // { id: 'mobile', label: 'Mobile Number' },
-    // { id: 'department', label: 'Department' },
-    // { id: 'file', label: 'file' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -64,7 +58,7 @@ const PatientReports = () => {
     const [openPopup, setOpenPopup] = useState(false)
     const [openPatientDiagnosisPopup, setOpenPatientDiagnosisPopup] = useState(false)
     const [recordForEdit, setRecordForEdit] = useState(null)
-    const [records, setRecords] = useState(services.getAllDetailsXray())
+    const [records, setRecords] = useState(services.getAllReports())
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
@@ -97,7 +91,7 @@ const PatientReports = () => {
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
-        setRecords(services.getAllDetailsXray())
+        setRecords(services.getAllReports())
     }
 
     const openInPopup = item => {

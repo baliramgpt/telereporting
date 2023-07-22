@@ -4,9 +4,10 @@ import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUpload
 import Controls from '../../control/Controls'
 import { useForm, Form } from '../../components/Forms/useForm'
 import * as services from '../../services/Services'
+import axios from 'axios';
 import './Registration.scss';
 import dayjs from 'dayjs';
-import { API_URL } from '../../api/_mock/api';
+import { API_URL } from '../../api/api';
 
 
 const genderItems = [
@@ -34,7 +35,7 @@ const initialFValues = {
 }
 
 const XrayRegistration = (props) => {
-    const { addOrEdit, recordForEdit, records } = props
+    const { addOrEdit, recordForEdit, records, setRecords } = props
     const [file, setFile] = useState(null);
     const DEFAULT_REG_NO = 1000;
 
@@ -67,9 +68,9 @@ const XrayRegistration = (props) => {
         resetForm,
     } = useForm(initialFValues, true, validate);
 
-    function getLatestRegNo(){
-        const latestReport = records.sort((x,y) => y.regNo - x.regNo)[0];
-        if(!latestReport){
+    function getLatestRegNo() {
+        const latestReport = records.sort((x, y) => y.regNo - x.regNo)[0];
+        if (!latestReport) {
             return DEFAULT_REG_NO;
         }
         return latestReport.regNo;
@@ -77,7 +78,7 @@ const XrayRegistration = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(values, "#", validate());
+        // console.log(values, "#", validate());
         // if (validate()) {
         addOrEdit(values, resetForm);
         // }
@@ -95,7 +96,8 @@ const XrayRegistration = (props) => {
                 history: values.history,
                 doctorId: values.doctorId,
                 regNo: values.regNo,
-                file: values.file,
+                reportType: "xray",
+                // file: values.file,
             };
 
             // Perform further actions with the payload (e.g., send it to an API endpoint)
@@ -103,27 +105,11 @@ const XrayRegistration = (props) => {
             // addOrEdit(payload, resetForm);
 
             try {
-                const response = await fetch(`${API_URL}/reports`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload),
-                })
-                .then((res)=> { 
-                    console.log(res); 
-                    return res.json();
-                });
-                console.log("inside try block");
-                if (response.ok) {
-                    console.log('Form data sent successfully!');
-                } else {
-                    console.log('Failed to send form data.');
-                    // Handle the error condition
-                }
+                await axios.post(`${API_URL}/reports`, payload)
+                    .then((res) => setRecords([...records, res.data]));
+                console.log('Form data sent successfully!');
             } catch (error) {
                 console.log('An error occurred:', error);
-                // Handle the error condition
             }
 
         }
@@ -135,7 +121,9 @@ const XrayRegistration = (props) => {
             setValues({
                 ...recordForEdit
             })
-    }, [recordForEdit])
+
+        setRecords(records);
+    }, [recordForEdit, records])
     return (
 
         <Form onSubmit={handleSubmit}>
@@ -145,7 +133,7 @@ const XrayRegistration = (props) => {
                         disabled
                         label="Registration No / Bill No"
                         name="regNo"
-                        value={getLatestRegNo()+1}
+                        value={getLatestRegNo() + 1}
                         onChange={handleInputChange}
                     />
                     <Controls.Input

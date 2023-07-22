@@ -66,7 +66,7 @@ const XrayReports = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await services.getAllDetailsXray();
+                const result = await services.getAllReports();
                 setRecords(result);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -95,7 +95,7 @@ const XrayReports = () => {
         })
     }
 
-    const addOrEdit = (doctor, resetForm) => {
+    const addOrEdit = async (doctor, resetForm) => {
         if (doctor.id == 0)
             services.insertEmployee(doctor)
         else
@@ -103,7 +103,8 @@ const XrayReports = () => {
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
-        setRecords(services.getAllDetailsXray())
+        const result = await services.getAllReports();
+        setRecords(result);
     }
 
     const openInPopup = item => {
@@ -228,6 +229,7 @@ const XrayReports = () => {
                     records={records}
                     recordForEdit={recordForEdit}
                     addOrEdit={addOrEdit}
+                    setRecords={setRecords}
                 />
             </Popup>
             <ConfirmDialog

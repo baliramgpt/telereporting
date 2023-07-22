@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import './Report.scss';
 import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
 import * as services from '../../services/Services';
 import Controls from '../../control/Controls';
 import Popup from '../modal/Popup';
-import EcgRegistration from '../../pages/new/EcgRegistration';
+import ECGRegistration from '../../pages/new/EcgRegistration';
 import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment, Grid } from '@mui/material';
 import Tables from '../tables/Tables';
 import { Search, NoteAdd } from '@mui/icons-material';
@@ -73,12 +73,24 @@ const EcgReports = () => {
   const classes = useStyles()
   const [openPopup, setOpenPopup] = useState(false)
   const [recordForEdit, setRecordForEdit] = useState(null)
-  const [records, setRecords] = useState(services.getAllDetailsXray())
+  const [records, setRecords] = useState([])
   const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [showAddCommentModal, setShowAddCommentModal] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const result = await services.getAllReports();
+            setRecords(result);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    fetchData();
+}, []);
 
   const {
     TblContainer,
@@ -99,7 +111,7 @@ const EcgReports = () => {
     })
   }
 
-  const addOrEdit = (doctor, resetForm) => {
+  const addOrEdit = async (doctor, resetForm) => {
     if (doctor.id == 0)
       services.insertEmployee(doctor)
     else
@@ -107,7 +119,8 @@ const EcgReports = () => {
     resetForm()
     setRecordForEdit(null)
     setOpenPopup(false)
-    setRecords(services.getAllDetailsXray())
+    const result = await services.getAllReports();
+    setRecords(result);
   }
 
   const openInPopup = item => {
@@ -228,9 +241,11 @@ const EcgReports = () => {
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
-        <EcgRegistration
+        <ECGRegistration
           recordForEdit={recordForEdit}
           addOrEdit={addOrEdit}
+          records={records}
+          setRecords={setRecords}
         />
       </Popup>
       <ConfirmDialog
