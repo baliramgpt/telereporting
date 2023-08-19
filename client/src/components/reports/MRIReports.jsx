@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Report.scss';
 import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
@@ -53,12 +53,24 @@ const MRIReports = () => {
   const classes = useStyles()
   const [openPopup, setOpenPopup] = useState(false)
   const [recordForEdit, setRecordForEdit] = useState(null)
-  const [records, setRecords] = useState(services.getAllDetailsXray())
+  const [records, setRecords] = useState([])
   const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [showAddCommentModal, setShowAddCommentModal] = useState(false)
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const result = await services.getAllReports();
+            setRecords(result.filter((item)=> item.reportType === "mri"));
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+    fetchData();
+}, []);
 
   const {
     TblContainer,
@@ -79,7 +91,7 @@ const MRIReports = () => {
     })
   }
 
-  const addOrEdit = (doctor, resetForm) => {
+  const addOrEdit = async (doctor, resetForm) => {
     if (doctor.id == 0)
       services.insertEmployee(doctor)
     else
@@ -87,7 +99,8 @@ const MRIReports = () => {
     resetForm()
     setRecordForEdit(null)
     setOpenPopup(false)
-    setRecords(services.getAllDetailsXray())
+    const result = await services.getAllReports();
+    setRecords(result);
   }
 
   const openInPopup = item => {
@@ -211,6 +224,8 @@ const MRIReports = () => {
         <MRIRegistration
           recordForEdit={recordForEdit}
           addOrEdit={addOrEdit}
+          records={records}
+          setRecords={setRecords}
         />
       </Popup>
       <ConfirmDialog

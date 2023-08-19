@@ -13,7 +13,7 @@ const patientHealthParamsSchema = new mongoose.Schema({
 const reportsSchema = new mongoose.Schema({
     labId: {
         type: Number,
-        required: true,
+        // required: true,
     },
     regNo: {
         type: Number,
@@ -42,21 +42,21 @@ const reportsSchema = new mongoose.Schema({
     },
     testName: {
         type: String,
-        required: true,
+        // required: true,
     },
     testDate: {
         type: Date,
         required: true,
     },
     history: {
-        type: Number,
+        type: String,
         required: true,
     },
     assignedDoctor: {
         type: String,
         required: true,
     },
-    image: {
+    file: {
         type: String,
         required: true,
     },
@@ -78,6 +78,9 @@ const reportsSchema = new mongoose.Schema({
     patientHealthParams: {
         type: patientHealthParamsSchema,
     },
+    file: {
+        type: String,
+    }
 })
 
 // Connects launchesSchema with the "launches" collection

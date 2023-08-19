@@ -4,8 +4,29 @@ import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUpload
 import Controls from '../../control/Controls'
 import { useForm, Form } from '../../components/Forms/useForm'
 import * as services from '../../services/Services'
+import axios from 'axios';
+import { makeStyles } from '@material-ui/core'
 import './Registration.scss';
 import dayjs from 'dayjs';
+import { API_URL } from '../../api/api';
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    padding: "30px 0px",
+    background: "rgb(255, 255, 255)",
+    marginBottom: "10px",
+    borderWidth: "0px 1px 1px",
+    borderTopStyle: "initial",
+    borderRightStyle: "solid",
+    borderBottomStyle: "solid",
+    borderLeftStyle: "solid",
+    borderTopColor: "initial",
+    borderRightColor: "rgb(238, 238, 238)",
+    borderBottomColor: "rgb(238, 238, 238)",
+    borderLeftColor: "rgb(238, 238, 238)",
+    borderImage: "initial",
+  },
+}))
 
 
 const genderItems = [
@@ -39,8 +60,10 @@ const initialFValues = {
 }
 
 const CTScanRegsitration = (props) => {
-  const { addOrEdit, recordForEdit } = props
+  const classes = useStyles()
+  const { addOrEdit, recordForEdit, records, setRecords } = props
   const [file, setFile] = useState(null);
+  const DEFAULT_REG_NO = 1000;
 
   const validate = (fieldValues = values) => {
     let temp = { ...errors }
@@ -71,49 +94,55 @@ const CTScanRegsitration = (props) => {
     resetForm,
   } = useForm(initialFValues, true, validate);
 
+  function getLatestRegNo() {
+    const latestReport = records.sort((x, y) => y.regNo - x.regNo)[0];
+    if (!latestReport) {
+      return DEFAULT_REG_NO;
+    }
+    return latestReport.regNo;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(values, "#", validate());
-    // if (validate()) {
     addOrEdit(values, resetForm);
-    // }
 
-    if (validate()) {
-
+    if (true) {
       const payload = {
         id: values.id,
         patientName: values.patientName,
         age: values.age,
         email: values.email,
-        contactNo: values.contactNo,
+        contact: values.contactNo,
         gender: values.gender,
-        referralDoctor: values.referralDoctor,
+        referral: values.referralDoctor,
         testDate: values.testDate.format('YYYY-MM-DD'),
         testName: values.testName,
         history: values.history,
-        doctorId: values.doctorId,
-        regNo: values.regNo,
-        file: values.file,
+        assignedDoctor: values.doctorId,
+        regNo: getLatestRegNo()+1,
         testtype: values.testtype,
+        reportType: "ctscan",
       }
 
-      try {
-        const response = await fetch('https://api.example.com/ctscanregistration', {
-          method: 'POST',
-          body: payload
-        });
+      const formData = new FormData();
+      formData.append("payload", JSON.stringify(payload));
+      formData.append("file", file);
 
-        if (response.ok) {
-          // Form submission successful
-          console.log('Form submitted successfully');
-          // Reset the form
-          resetForm();
-        } else {
-          // Form submission failed
-          console.error('Form submission failed');
-        }
+      console.log("formdata", formData);
+
+      // const urlEncoded = new URLSearchParams(fd).toString();
+
+      try {
+        const response = await axios.post(`${API_URL}/reports`, formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+          .then((res) => {setRecords([...records, res.data])});
       } catch (error) {
-        console.error('Error occurred during form submission:', error);
+        console.log('An error occurred:', error);
       }
     }
   };
@@ -126,9 +155,16 @@ const CTScanRegsitration = (props) => {
   }, [recordForEdit])
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} encType="multipart/form-data">
       <Grid container>
         <Grid item xs={6}>
+          <Controls.Input
+            disabled
+            label="Registration No / Bill No"
+            name="regNo"
+            value={values.regNo || getLatestRegNo() + 1}
+            onChange={handleInputChange}
+          />
           <Controls.Input
             name="patientName"
             label="Patient Name"
@@ -156,50 +192,63 @@ const CTScanRegsitration = (props) => {
             onChange={handleInputChange}
             items={testtype}
           />
-          <Controls.TextArea
-            label="bps"
+          <Controls.Date
+              required
+              label="Test Date"
+              name="testDate"
+              value={dayjs(values.testDate)}
+              onChange={handleInputChange}
+          />
+          <Controls.Input
+            type="number"
+            label="Bps"
             name="bps"
             placeholder="Bp Systole"
             value={values.bps}
             onChange={handleInputChange}
           />
-          <Controls.TextArea
-            label="bpd"
+          <Controls.Input
+            type="number"
+            label="Bpd"
             name="bpd"
             placeholder="Bp Diastole"
             value={values.bpd}
             onChange={handleInputChange}
           />
-          <Controls.TextArea
-            label="spo2"
+          <Controls.Input
+            type="number"
+            label="SpO2"
             name="spo2"
             placeholder="Spo2"
             value={values.spo2}
             onChange={handleInputChange}
           />
-          <Controls.TextArea
-            label="pulse"
+          <Controls.Input
+            type="number"
+            label="Pulse"
             name="pulse"
             placeholder="Pulse Rate"
             value={values.pulse}
             onChange={handleInputChange}
           />
-          <Controls.TextArea
-            label="height"
+          <Controls.Input
+            type="number"
+            label="Height (in cm)"
             name="height"
             placeholder="Height"
             value={values.height}
             onChange={handleInputChange}
           />
-          <Controls.TextArea
-            label="weight"
+          <Controls.Input
+            type="number"
+            label="Weight (in KG)"
             name="weight"
             placeholder="Weight"
             value={values.weight}
             onChange={handleInputChange}
           />
           <Controls.TextArea
-            label="symptoms"
+            label="Symptoms"
             name="symptoms"
             placeholder="Symptoms"
             value={values.symptoms}
@@ -213,15 +262,10 @@ const CTScanRegsitration = (props) => {
             onChange={handleInputChange}
           />
           <Controls.Input
+            type="number"
             label="Contact Number"
             name="contactNo"
             value={values.contactNo}
-            onChange={handleInputChange}
-          />
-          <Controls.Input
-            label="Registration No / Bill No"
-            name="regNo"
-            value={values.regNo}
             onChange={handleInputChange}
           />
 
@@ -242,32 +286,28 @@ const CTScanRegsitration = (props) => {
             options={services.getDoctorsCollection()}
             error={errors.doctorId}
           />
-          {/* <Controls.CheckBox
-                        name="isPermanent"
-                        label="Keep Updated"
-                        value={values.isPermanent}
-                        onChange={handleInputChange}
-                    /> */}
           <div className='formInput'>
             <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
-            <input type='file' id='file' accept='image/*' name='file' value={values.file} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
+            <input type='file' id='file' name='file' style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
           </div>
           <div className='left'>
             {file && (
-              <img src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'}
+              <img className='img-attached' src={file ? URL.createObjectURL(file) : 'https://png.pngitem.com/pimgs/s/516-5168760_upload-avatar-upload-avatar-png-transparent-png.png'}
                 alt='profile upload photo' />
             )}
           </div>
           <div>
-            <Controls.Button
-              type="submit"
-              text="Submit"
-            />
-            <Controls.Button
-              text="Reset"
-              color="default"
-              onClick={resetForm}
-            />
+            <div className='btn-grp'>
+              <Controls.Button
+                type="submit"
+                text="Submit"
+              />
+              <Controls.Button
+                text="Reset"
+                color="default"
+                onClick={resetForm}
+              />
+            </div>
           </div>
         </Grid>
       </Grid>
