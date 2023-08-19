@@ -2,9 +2,8 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
-const planetsRouter = require('./routes/planets/planets.router');
-const launchesRouter = require('./routes/launches/launches.router');
 const reportsRouter = require('./routes/reports.router');
 const usersRouter = require('./routes/users.router');
 
@@ -16,11 +15,10 @@ app.use(cors({
 
 app.use(morgan('combined'));
 
+app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use('/planets', planetsRouter);
-app.use('/launches', launchesRouter);
 app.use('/users', usersRouter);
 app.use('/reports', reportsRouter);
 

@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     borderBottomColor: "rgb(238, 238, 238)",
     borderLeftColor: "rgb(238, 238, 238)",
     borderImage: "initial",
-},
+  },
 }))
 
 
@@ -112,22 +112,35 @@ const CTScanRegsitration = (props) => {
         patientName: values.patientName,
         age: values.age,
         email: values.email,
-        contactNo: values.contactNo,
+        contact: values.contactNo,
         gender: values.gender,
-        referralDoctor: values.referralDoctor,
+        referral: values.referralDoctor,
         testDate: values.testDate.format('YYYY-MM-DD'),
         testName: values.testName,
         history: values.history,
-        doctorId: values.doctorId,
-        regNo: values.regNo,
-        // file: values.file,
+        assignedDoctor: values.doctorId,
+        regNo: getLatestRegNo()+1,
         testtype: values.testtype,
         reportType: "ctscan",
       }
 
+      const formData = new FormData();
+      formData.append("payload", JSON.stringify(payload));
+      formData.append("file", file);
+
+      console.log("formdata", formData);
+
+      // const urlEncoded = new URLSearchParams(fd).toString();
+
       try {
-        const response = await axios.post(`${API_URL}/reports`, payload)
-          .then((res) => setRecords([...records, response.data]));
+        const response = await axios.post(`${API_URL}/reports`, formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+          .then((res) => {setRecords([...records, res.data])});
       } catch (error) {
         console.log('An error occurred:', error);
       }
@@ -142,14 +155,14 @@ const CTScanRegsitration = (props) => {
   }, [recordForEdit])
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} encType="multipart/form-data">
       <Grid container>
         <Grid item xs={6}>
           <Controls.Input
             disabled
             label="Registration No / Bill No"
             name="regNo"
-            value={getLatestRegNo() + 1}
+            value={values.regNo || getLatestRegNo() + 1}
             onChange={handleInputChange}
           />
           <Controls.Input
@@ -178,6 +191,13 @@ const CTScanRegsitration = (props) => {
             value={values.testtype}
             onChange={handleInputChange}
             items={testtype}
+          />
+          <Controls.Date
+              required
+              label="Test Date"
+              name="testDate"
+              value={dayjs(values.testDate)}
+              onChange={handleInputChange}
           />
           <Controls.Input
             type="number"
@@ -268,7 +288,7 @@ const CTScanRegsitration = (props) => {
           />
           <div className='formInput'>
             <label htmlFor='file'>Image:<DriveFolderUploadOutlinedIcon className="icon" /></label>
-            <input type='file' id='file' accept='image/*' name='file' value={values.file} style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
+            <input type='file' id='file' name='file' style={{ display: 'none' }} onChange={(e) => setFile(e.target.files[0])} />
           </div>
           <div className='left'>
             {file && (

@@ -1,6 +1,11 @@
+const { v4: uuidv4 } = require('uuid');
+
 const users = require('../models/users.model');
+const { getUser, setUser } = require('../utils/auth')
 
 let DEFAULT_USER_ID = 1000;
+
+let DEFAULT_PASSWORD = "newuser";
 
 async function getLatestUserId() {
     const latestUser = await users
@@ -30,6 +35,7 @@ const createUser = async (req, res) => {
 
     const newUser = Object.assign(req.body, {
         userId: newUserId,
+        password: DEFAULT_PASSWORD,
     })
     console.log("newUser", newUser);
     try {
@@ -40,4 +46,17 @@ const createUser = async (req, res) => {
     }
 };
 
-module.exports = { getUsers, createUser };
+// POST /api/login
+const login = async (req, res) => {
+    const { email, password } = req.body;
+    const user = await users.findOne({ email, password }); 
+
+    if(!user){
+        return res.render("", {error: "Invalid username or password"});
+    }
+    const sessionId = uuidv4();
+    setUser(sessionId, user);
+    res.cookie("uid", sessionId);
+}
+
+module.exports = { getUsers, createUser, login };

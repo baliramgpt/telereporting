@@ -87,7 +87,7 @@ const CTScanReports = () => {
         const fetchData = async () => {
             try {
                 const result = await services.getAllReports();
-                setRecords(result);
+                setRecords(result.filter((item)=> item.reportType === "ctscan"));
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
