@@ -21,12 +21,7 @@ async function getLatestUserId() {
 
 // GET /api/users
 const getUsers = async (req, res) => {
-    try {
-        const users = await users.find();
-        res.json(users);
-    } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
-    }
+    return res.status(200).json(await users.find({}, { '_id': 0, '__v': 0 }));
 };
 
 // POST /api/users
@@ -46,17 +41,18 @@ const createUser = async (req, res) => {
     }
 };
 
-// POST /api/login
+// POST /api/users/login
 const login = async (req, res) => {
-    const { email, password } = req.body;
-    const user = await users.findOne({ email, password }); 
+    const { email, password, role } = req.body;
+    const user = await users.findOne({ email, password, role }); 
 
     if(!user){
-        return res.render("", {error: "Invalid username or password"});
+        return res.status(401).json({error: "Invalid username or password"});
     }
     const sessionId = uuidv4();
     setUser(sessionId, user);
     res.cookie("uid", sessionId);
+    res.status(200).json({name: user.name, email: user.email, contactNo: user.contactNo, address: user.address, role: user.role});
 }
 
 module.exports = { getUsers, createUser, login };

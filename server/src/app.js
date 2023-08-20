@@ -3,9 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-
-const reportsRouter = require('./routes/reports.router');
-const usersRouter = require('./routes/users.router');
+const api = require('./routes/api');
 
 const app = express();
 
@@ -19,8 +17,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-app.use('/users', usersRouter);
-app.use('/reports', reportsRouter);
+app.use('/v1', api);
 
 app.get('/*', (req, res)=> {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
