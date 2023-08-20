@@ -1,26 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
-import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import Controls from '../../../control/Controls'
-import { useForm, Form } from '../../../components/Forms/useForm'
-import * as services from '../../../services/Services'
-import './AdminNewUserList.scss';
+import { useForm, Form } from '../../Forms/useForm'
+import './UsersList.scss';
 import {
-    Button,
-    Checkbox,
-    FormControlLabel,
-    Modal,
-    Radio,
     RadioGroup,
-    TextField,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    Paper,
 } from '@material-ui/core';
+import axios from 'axios';
+import { API_URL } from '../../../api/api';
 
 
 const roleItems = [
@@ -28,32 +15,27 @@ const roleItems = [
     { id: 'doctor', title: 'Doctor' },
 ]
 
-const testtype = [
-    { id: 'EEG', title: 'EEG' },
-    { id: 'TMT', title: 'TMT' },
-]
-
 const initialFValues = {
     id: 0,
-    patientName: '',
+    name: '',
     email: '',
-    mobile: '',
+    contactNo: '',
     role: 'lab',
-    adress: '',
+    address: '',
     tests: [],
 }
 
-const MRIRegistration = (props) => {
-    const { addOrEdit, recordForEdit } = props
+const NewUserRegistration = (props) => {
+    const { addOrEdit, recordForEdit, records, setRecords } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('patientName' in fieldValues)
-            temp.patientName = fieldValues.patientName ? "" : "This field is required."
+        if ('name' in fieldValues)
+            temp.patientName = fieldValues.name ? "" : "This field is required."
         if ('email' in fieldValues)
             temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
-        if ('mobile' in fieldValues)
-            temp.mobile = fieldValues.mobile.length > 9 ? "" : "Minimum 10 numbers required."
+        if ('contactNo' in fieldValues)
+            temp.mobile = fieldValues.contactNo.length > 9 ? "" : "Minimum 10 numbers required."
         setErrors({
             ...temp
         })
@@ -71,12 +53,29 @@ const MRIRegistration = (props) => {
         resetForm,
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(values, "#", validate());
-        // if (validate()) {
+        console.log(values, "#");
         addOrEdit(values, resetForm);
-        // }
+        const payload = {
+            name: values.name,
+            email: values.email,
+            contactNo: values.contactNo,
+            address: values.address,
+            role: values.role,
+        };
+
+        // Perform further actions with the payload (e.g., send it to an API endpoint)
+        console.log('payload', payload);
+        // addOrEdit(payload, resetForm);
+
+        try {
+            await axios.post(`${API_URL}/users`, payload)
+                .then((res) => setRecords([...records, res.data]));
+            console.log('Form data sent successfully!');
+        } catch (error) {
+            console.log('An error occurred:', error);
+        }
     }
 
     useEffect(() => {
@@ -91,11 +90,11 @@ const MRIRegistration = (props) => {
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
-                        name="patientName"
-                        label="Patient Name"
-                        value={values.patientName}
+                        name="name"
+                        label="Name"
+                        value={values.name}
                         onChange={handleInputChange}
-                        error={errors.patientName}
+                        error={errors.name}
                     />
                     <Controls.Input
                         name="email"
@@ -105,16 +104,16 @@ const MRIRegistration = (props) => {
                         error={errors.email}
                     />
                     <Controls.Input
-                        label="Mobile"
-                        name="mobile"
-                        value={values.mobile}
+                        label="Contact No"
+                        name="contactNo"
+                        value={values.contactNo}
                         onChange={handleInputChange}
                     />
                     <Controls.TextArea
-                        label="Adress"
-                        name="adress"
-                        placeholder="Adress"
-                        value={values.adress}
+                        label="Address"
+                        name="address"
+                        placeholder="Address"
+                        value={values.address}
                         onChange={handleInputChange}
                     />
 
@@ -171,4 +170,4 @@ const MRIRegistration = (props) => {
     )
 }
 
-export default MRIRegistration;
+export default NewUserRegistration;

@@ -8,6 +8,6 @@ usersRouter.get('/', getUsers);
 
 // POST /api/users
 usersRouter.post('/', createUser);
-usersRouter.post('/', login);
+usersRouter.post('/login', login);
 
 module.exports = usersRouter;

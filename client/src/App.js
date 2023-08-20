@@ -31,7 +31,7 @@ import PaymentSection from "./pages/list/PaymentSection";
 import BillingSection from "./pages/list/BillingSection";
 import Settings from "./pages/new/Settings";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminListUsers from "./components/admin/AdminListUsers";
+import UsersList from "./components/admin/UsersList";
 import AdminRateList from "./components/admin/AdminRateList";
 import MedicalReports from "./components/admin/MedicalReports";
 import AdminSharedLayout from "./components/shared-layout/AdminSharedLayout";
@@ -98,7 +98,7 @@ function App() {
             <Route path="admin" element={<AdminSharedLayout />}>
               <Route index element={<AdminDashboard />} />
               <Route path="users">
-                <Route index element={<AdminListUsers />} />
+                <Route index element={<UsersList />} />
               </Route>
               <Route path="tests">
                 <Route index element={<TestsDetails />} />

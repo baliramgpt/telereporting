@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Report.scss';
 import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
@@ -12,7 +12,7 @@ import { EditOutlined } from '@mui/icons-material';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import ConfirmDialog from '../modal/ConfirmDialog';
 import Typo from '../../control/Typo';
-import AdminNewUserList from './newregistration/AdminNewUserList'
+import NewUserRegistration from './newregistration/NewUserRegistration'
 
 
 
@@ -63,19 +63,21 @@ const useStyles = makeStyles(theme => ({
 
 const headCells = [
     { id: 'id', label: 'ID' },
-    { id: 'fullName', label: 'Patient Name' },
-    { id: 'email', label: 'Email Address (Personal)' },
-    { id: 'mobile', label: 'Mobile Number' },
+    { id: 'fullName', label: 'Name' },
+    { id: 'email', label: 'Email Address' },
+    { id: 'mobile', label: 'Contact Number' },
+    { id: 'role', label: 'Role' },
+    { id: 'address', label: 'Address' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
 
-const CTScanReports = () => {
+const UsersList = () => {
 
     const classes = useStyles()
     const [openPopup, setOpenPopup] = useState(false)
     const [recordForEdit, setRecordForEdit] = useState(null)
-    const [records, setRecords] = useState(services.getAllDetails())
+    const [records, setRecords] = useState([])
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
     const [deleteRecordIndex, setDeleteRecordIndex] = useState(null)
@@ -89,6 +91,19 @@ const CTScanReports = () => {
         recordsAfterPagingAndSorting
     } = Tables(records, headCells, filterFn);
 
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const result = await services.getAllUsers();
+            console.log("result", result);
+            setRecords(result);
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        };
+        fetchData();
+      }, []);
+
     const handleSearch = e => {
         let target = e.target;
         setFilterFn({
@@ -96,12 +111,12 @@ const CTScanReports = () => {
                 if (target.value == "")
                     return items;
                 else
-                    return items.filter(x => x.fullName.toLowerCase().includes(target.value))
+                    return items.filter(x => x.name.toLowerCase().includes(target.value))
             }
         })
     }
 
-    const addOrEdit = (doctor, resetForm) => {
+    const addOrEdit = async (doctor, resetForm) => {
         if (doctor.id == 0)
             services.insertEmployee(doctor)
         else
@@ -109,7 +124,8 @@ const CTScanReports = () => {
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
-        setRecords(services.getAllDetails())
+        const result = await services.getAllUsers();
+        setRecords(result);
     }
 
     const openInPopup = item => {
@@ -150,7 +166,7 @@ const CTScanReports = () => {
                     <Grid container alignItems="center" justifyContent="center" className={classes.container} item xs={12} sm={12}>
                         <Toolbar>
                             <Controls.Input
-                                label="Search Patient"
+                                label="Search User"
                                 className={classes.searchInput}
                                 InputProps={{
                                     startAdornment: (<InputAdornment position="start">
@@ -175,9 +191,11 @@ const CTScanReports = () => {
                                         recordsAfterPagingAndSorting().map((item, index) =>
                                         (<TableRow key={index}>
                                             <TableCell>{item.id}</TableCell>
-                                            <TableCell>{item.patientName}</TableCell>
+                                            <TableCell>{item.name}</TableCell>
                                             <TableCell>{item.email}</TableCell>
-                                            <TableCell>{item.mobile}</TableCell>
+                                            <TableCell>{item.contactNo}</TableCell>
+                                            <TableCell>{item.role}</TableCell>
+                                            <TableCell>{item.address}</TableCell>
                                             <TableCell>{item.options}</TableCell>
                                             <TableCell className={classes.modelsContainer}>
                                                 <Controls.IconButton
@@ -202,11 +220,11 @@ const CTScanReports = () => {
                         <TblPagination />
                     </Grid>
                     <Popup
-                        title="Patient Details"
+                        title="New User"
                         openPopup={openPopup}
                         setOpenPopup={setOpenPopup}
                     >
-                        <AdminNewUserList
+                        <NewUserRegistration
                             recordForEdit={recordForEdit}
                             addOrEdit={addOrEdit}
                         />
@@ -223,4 +241,4 @@ const CTScanReports = () => {
     );
 }
 
-export default CTScanReports;
+export default UsersList;

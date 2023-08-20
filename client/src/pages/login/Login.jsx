@@ -1,86 +1,128 @@
 import React from "react";
-import { Input, FormGroup, InputGroup, InputGroupText, Button } from "reactstrap";
-import PersonIcon from '@mui/icons-material/Person';
-import VpnKeyIcon from '@mui/icons-material/VpnKey';
-import PeopleIcon from '@mui/icons-material/People';
-import { Link } from "react-router-dom";
+import {
+  Input,
+  FormGroup,
+  InputGroup,
+  InputGroupText,
+  Button,
+} from "reactstrap";
+import PersonIcon from "@mui/icons-material/Person";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import PeopleIcon from "@mui/icons-material/People";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_URL } from "../../api/api";
 
-import './Login.scss';
+import "./Login.scss";
 
 const Login = () => {
-    const [username, setUsername] = React.useState();
-    const [password, setPassword] = React.useState();
-    const [role, setRole] = React.useState("lab");
-    const [error, setError] = React.useState();
-    return (
-        <div className="login">
-            {/* <div className="form">
-            <h3 className="title">Login</h3>
-            <input type="button" value="" />
-        </div> */}
-            <FormGroup className="form">
-                <h3 className="title">LOGIN</h3>
+  const [username, setUsername] = React.useState();
+  const [password, setPassword] = React.useState();
+  const [role, setRole] = React.useState("lab");
+  const [error, setError] = React.useState();
 
-                <InputGroup className="input">
-                    <InputGroupText className="icon">
-                        <PeopleIcon />
-                    </InputGroupText>
-                    <Input
-                        type="select"
-                        value={role}
-                        placeholder="Select Your Role"
-                        onChange={(e) => { setRole(e.target.value )}}
-                        className="input-type role"
-                    >
-                        <option value="lab">Lab</option>
-                        <option value="doctor">Doctor</option>
-                        <option value="admin">Admin</option>
-                    </Input>
-                </InputGroup>
+  const usenavigate = useNavigate();
 
-                <InputGroup className="input">
-                    <InputGroupText className="icon">
-                        {/* <FontAwesomeIcon icon="fa-solid fa-user" /> */}
-                        <PersonIcon />
-                    </InputGroupText>
-                    <Input
-                        type="text"
-                        value={username}
-                        placeholder="Enter Your Username"
-                        onChange={(e) => { setUsername(e.target.value) }}
-                        className="input-type"
-                    >
-                        {/* <FontAwesomeIcon icon="fa-solid fa-user" /> */}
-                        Username
-                    </Input>
-                </InputGroup>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // }
+    if (true) {
+      const payload = {
+        email: username,
+        password,
+        role,
+      };
 
-                <InputGroup className="input">
-                    <InputGroupText className="icon">
-                        <VpnKeyIcon />
-                    </InputGroupText>
-                    <Input
-                        type="password"
-                        value={password}
-                        placeholder="Enter Your Password"
-                        onChange={(e) => { setPassword(e.target.value) }}
-                        className="input-type"
-                    >
-                        Password
-                    </Input>
-                </InputGroup>
+      // Perform further actions with the payload (e.g., send it to an API endpoint)
+      console.log("payload", payload);
+      // addOrEdit(payload, resetForm);
 
-                
-                    <Button className="btn">
-                    <Link to={`${role==="lab" ? "/lab" : role==="doctor" ? "/doctor" : "/admin"}`} style={{ textDecoration: "none" }}>
-                        LOGIN
-                    </Link>
-                    </Button>
-                
+      try {
+        await axios
+          .post(`${API_URL}/users/login`, payload)
+          .then((res) => {
+            if(res.data.role === "lab"){
+                usenavigate('/lab');
+            }
+            else if(res.data.role === "doctor"){
+                usenavigate('/doctor');
+            }
+            else if(res.data.role === "admin"){
+                usenavigate('/admin')
+            }
+            else{
+                window.alert("Invalid credentials")
+            }
+          });
+      } catch (error) {
+        console.log("An error occurred:", error);
+      }
+    }
+  };
 
-            </FormGroup>
-        </div>
-    )
-}
+  return (
+    <div className="login">
+      <FormGroup className="form">
+        <h3 className="title">LOGIN</h3>
+
+        <InputGroup className="input">
+          <InputGroupText className="icon">
+            <PeopleIcon />
+          </InputGroupText>
+          <Input
+            type="select"
+            value={role}
+            placeholder="Select Your Role"
+            onChange={(e) => {
+              setRole(e.target.value);
+            }}
+            className="input-type role"
+          >
+            <option value="lab">Lab</option>
+            <option value="doctor">Doctor</option>
+            <option value="admin">Admin</option>
+          </Input>
+        </InputGroup>
+
+        <InputGroup className="input">
+          <InputGroupText className="icon">
+            <PersonIcon />
+          </InputGroupText>
+          <Input
+            type="text"
+            value={username}
+            placeholder="Enter Your Username"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            className="input-type"
+          >
+            Username
+          </Input>
+        </InputGroup>
+
+        <InputGroup className="input">
+          <InputGroupText className="icon">
+            <VpnKeyIcon />
+          </InputGroupText>
+          <Input
+            type="password"
+            value={password}
+            placeholder="Enter Your Password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            className="input-type"
+          >
+            Password
+          </Input>
+        </InputGroup>
+        <Button className="btn" onClick={handleSubmit}>
+            LOGIN
+        </Button>
+      </FormGroup>
+    </div>
+  );
+};
 
 export default Login;
