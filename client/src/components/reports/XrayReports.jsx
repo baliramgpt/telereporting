@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core'
 import * as services from '../../services/Services';
 import Controls from '../../control/Controls';
 import Popup from '../modal/Popup';
-import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@mui/material';
+import { Paper, TableBody, TableRow, TableCell, Toolbar, InputAdornment, Grid } from '@mui/material';
 import Tables from '../tables/Tables';
 import { Search, NoteAdd } from '@mui/icons-material';
 import { EditOutlined } from '@mui/icons-material';
@@ -18,17 +18,67 @@ import XrayRegistration from '../../pages/new/XrayRegistration';
 
 
 const useStyles = makeStyles(theme => ({
+    container: {
+        padding: "30px 0px",
+        background: "rgb(255, 255, 255)",
+        marginBottom: "10px",
+        borderWidth: "0px 1px 1px",
+        borderTopStyle: "initial",
+        borderRightStyle: "solid",
+        borderBottomStyle: "solid",
+        borderLeftStyle: "solid",
+        borderTopColor: "initial",
+        borderRightColor: "rgb(238, 238, 238)",
+        borderBottomColor: "rgb(238, 238, 238)",
+        borderLeftColor: "rgb(238, 238, 238)",
+        borderImage: "initial",
+
+    },
     pageContent: {
-        margin: theme.spacing(5),
-        padding: theme.spacing(3)
+        margin: theme.spacing(2),
+        padding: theme.spacing(1),
+        [theme.breakpoints.up('sm')]: {
+            margin: theme.spacing(5),
+            padding: theme.spacing(3),
+        },
     },
     searchInput: {
-        width: '75%'
+        width: '100%',
+        marginBottom: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
+            width: '75%',
+        },
     },
     newButton: {
-        position: 'absolute',
-        right: '10px'
-    }
+        position: 'relative',
+        width: '100%',
+        marginBottom: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
+            width: 'auto',
+            position: 'absolute',
+            right: theme.spacing(1),
+            bottom: theme.spacing(1),
+            marginBottom: 0,
+        },
+    },
+    tableCell: {
+        padding: theme.spacing(1),
+        [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(2),
+        },
+    },
+    tableCellIcon: {
+        marginRight: theme.spacing(1),
+    },
+    tableContainer: {
+        overflow: 'auto',
+    },
+    responsiveTableCell: {
+        padding: theme.spacing(1),
+        [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(1),
+        },
+    },
 }))
 
 const headCells = [
@@ -42,11 +92,6 @@ const headCells = [
     { id: 'status', label: 'Status' },
     { id: 'urgent', label: 'Urgent' },
     { id: 'review', label: 'Review' },
-    // { id: 'options', label: 'Options' },
-    // { id: 'email', label: 'Email Address (Personal)' },
-    // { id: 'mobile', label: 'Mobile Number' },
-    // { id: 'department', label: 'Department' },
-    // { id: 'file', label: 'file' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -67,7 +112,7 @@ const XrayReports = () => {
         const fetchData = async () => {
             try {
                 const result = await services.getAllReports();
-                setRecords(result.filter((item)=> item.reportType === "xray"));
+                setRecords(result.filter((item) => item.reportType === "xray"));
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -151,7 +196,7 @@ const XrayReports = () => {
             <Typo
                 title='X-Ray Reports'
             />
-            <Paper className={classes.pageContent}>
+            <Grid container alignItems="center" justifyContent="center" className={classes.container}>
                 <Toolbar>
                     <Controls.Input
                         label="Search Patient"
@@ -171,55 +216,63 @@ const XrayReports = () => {
                         onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
                     />
                 </Toolbar>
-                <TblContainer>
-                    <TblHead />
-                    <TableBody>
-                        {
-                            recordsAfterPagingAndSorting().map((item, index) =>
-                            (<TableRow key={index}>
-                                <TableCell>{item.regNo}</TableCell>
-                                <TableCell>{item.patientName}</TableCell>
-                                <TableCell>{item.testName}</TableCell>
-                                <TableCell>{item.regNo}</TableCell>
-                                <TableCell>{item.referral}</TableCell>
-                                <TableCell>{item.testDate}</TableCell>
-                                <TableCell>{item.testDate}</TableCell>
-                                <TableCell>{item.status}</TableCell>
-                                <TableCell>{item.urgent}</TableCell>
-                                <TableCell>{item.reviewComment}</TableCell>
-                                <TableCell>
-                                    <Controls.IconButton
-                                        color="primary"
-                                        onClick={() => { openInPopup(item) }}>
-                                        <EditOutlined fontSize="small" />
-                                    </Controls.IconButton>
-                                    <Controls.IconButton
-                                        color="secondary"
-                                        onClick={() => handleDeleteRecords(index)}
-                                    >
-                                        <GridCloseIcon fontSize="small" />
-                                    </Controls.IconButton>
-                                    <Controls.IconButton
-                                        color="primary"
-                                        onClick={() => handleAddNote(index)}
-                                    >
-                                        <NoteAdd />
-                                    </Controls.IconButton>
-                                    {records.file && (
-                                        <img
-                                            src={URL.createObjectURL(records.file)}
-                                            alt='profile photo'
-                                        />
-                                    )}
+                <div className={classes.tableContainer}>
+                    <TblContainer>
+                        <TblHead />
+                        <TableBody>
+                            {
+                                recordsAfterPagingAndSorting().map((item, index) =>
+                                (<TableRow key={index}>
+                                    <TableCell className={classes.tableCell}>{item.regNo}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.patientName}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.testName}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.regNo}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.referral}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.testDate}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.testDate}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.status}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.urgent}</TableCell>
+                                    <TableCell className={classes.tableCell}>{item.reviewComment}</TableCell>
+                                    <TableCell className={classes.tableCell}>
+                                        <Controls.IconButton
+                                            color="primary"
+                                            onClick={() => { openInPopup(item) }}>
+                                            <span className={classes.tableCellIcon}>
+                                                <EditOutlined fontSize="small" />
+                                            </span>
+                                        </Controls.IconButton>
+                                        <Controls.IconButton
+                                            color="secondary"
+                                            onClick={() => handleDeleteRecords(index)}
+                                        >
+                                            <span className={classes.tableCellIcon}>
+                                                <GridCloseIcon fontSize="small" />
+                                            </span>
+                                        </Controls.IconButton>
+                                        <Controls.IconButton
+                                            color="primary"
+                                            onClick={() => handleAddNote(index)}
+                                        >
+                                            <span className={classes.tableCellIcon}>
+                                                <NoteAdd />
+                                            </span>
+                                        </Controls.IconButton>
+                                        {records.file && (
+                                            <img
+                                                src={URL.createObjectURL(records.file)}
+                                                alt='profile photo'
+                                            />
+                                        )}
 
-                                </TableCell>
-                            </TableRow>)
-                            )
-                        }
-                    </TableBody>
-                </TblContainer>
+                                    </TableCell>
+                                </TableRow>)
+                                )
+                            }
+                        </TableBody>
+                    </TblContainer>
+                </div>
                 <TblPagination />
-            </Paper>
+            </Grid>
             <Popup
                 title="Patient Details"
                 openPopup={openPopup}

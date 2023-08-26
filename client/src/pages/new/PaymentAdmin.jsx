@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core'
-import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
+import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@material-ui/core';
 import Controls from '../../control/Controls';
 import TypoPayment from '../../control/TypoPayment'
 
@@ -85,7 +85,7 @@ const PaymentAdmin = (props) => {
     };
 
     return (
-        <div className='datatable'>
+        <div className={classes.datatable}>
             <TypoPayment title="Make Payment" remainingAmount={remainingAmount} />
             <Grid container spacing={2} justifyContent="center" className={classes.container}>
                 <Grid item xs={12}>
@@ -116,8 +116,11 @@ const PaymentAdmin = (props) => {
                     <Grid item xs={12}>
                         <hr />
                     </Grid>
-                    <Grid item xs={12} className={classes.gridPaymentHistory}>
-                        <h2>Payment History</h2>
+                    <Grid item xs={12}>
+                        <Typography variant="h6" className={classes.gridPaymentHistory}>
+                            Payment History
+                        </Typography>
+
                     </Grid>
                     <Grid item xs={12}>
                         {paymentHistory.length >= 0 && (

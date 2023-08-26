@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Report.scss';
 import { GridAddIcon } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/core'
@@ -39,16 +39,50 @@ const useStyles = makeStyles(theme => ({
 
   },
   pageContent: {
-    margin: theme.spacing(5),
-    padding: theme.spacing(3)
+    margin: theme.spacing(2),
+    padding: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      margin: theme.spacing(5),
+      padding: theme.spacing(3),
+    },
   },
   searchInput: {
-    width: '75%'
+    width: '100%',
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      width: '75%',
+    },
   },
   newButton: {
-    position: 'absolute',
-    right: '10px'
-  }
+    position: 'relative',
+    width: '100%',
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.up('sm')]: {
+      width: 'auto',
+      position: 'absolute',
+      right: theme.spacing(1),
+      bottom: theme.spacing(1),
+      marginBottom: 0,
+    },
+  },
+  tableCell: {
+    padding: theme.spacing(1),
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(2),
+    },
+  },
+  tableCellIcon: {
+    marginRight: theme.spacing(1),
+  },
+  tableContainer: {
+    overflow: 'auto',
+  },
+  responsiveContainer: {
+    padding: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1),
+    },
+  },
 }))
 
 const headCells = [
@@ -60,10 +94,6 @@ const headCells = [
   { id: 'createdAt', label: 'Created At' },
   { id: 'reportedAt', label: 'Reported At' },
   { id: 'options', label: 'Options' },
-  // { id: 'email', label: 'Email Address (Personal)' },
-  // { id: 'mobile', label: 'Mobile Number' },
-  // { id: 'department', label: 'Department' },
-  // { id: 'file', label: 'file' },
   { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -82,15 +112,15 @@ const EcgReports = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const result = await services.getAllReports();
-            setRecords(result.filter((item)=> item.reportType === "ecg"));
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+      try {
+        const result = await services.getAllReports();
+        setRecords(result.filter((item) => item.reportType === "ecg"));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     };
     fetchData();
-}, []);
+  }, []);
 
   const {
     TblContainer,
@@ -163,7 +193,7 @@ const EcgReports = () => {
   }
 
   return (
-    <div className='datatable'>
+    <div className={`${classes.datatable} ${classes.responsiveContainer}`}>
       <Typo
         title='ECG Reports'
       />
