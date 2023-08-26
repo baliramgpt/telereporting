@@ -8,18 +8,15 @@ import './Dashboard.scss';
 import DoctorSidebar from '../../components/sidebar/DoctorSidebar';
 
 const DoctorDashboard = () => {
-    const [ isSideBarOpen, setIsSideBarOpen ] = useState(false);
+    const [isSideBarOpen, setIsSideBarOpen] = useState(false);
     return (
         <div className='home'>
             <div className='homeContainer'>
-                <Navbar isSideBarOpen={isSideBarOpen}
-                    setIsSideBarOpen={setIsSideBarOpen}
-                />
                 <div className='headingCenter'>
                     Welcome to Medicare Pvt Ltd (Doctor Services)
                 </div>
                 <div>
-                    <PatientReports/>
+                    <PatientReports />
                 </div>
             </div>
         </div>

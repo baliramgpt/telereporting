@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   useNavigate,
+  Navigate
 } from "react-router-dom";
 
 import Home from './pages/home/Home';
@@ -38,6 +39,17 @@ import AdminSharedLayout from "./components/shared-layout/AdminSharedLayout";
 import PDFReports from "./components/reports/PDFReports";
 import TestsDetails from "./components/admin/TestsDetails";
 
+const isAuthenticated = () => {
+  // Replace with your actual authentication logic
+  // Return true if authenticated, false otherwise
+  return false; // For demonstration purposes
+};
+
+
+const ProtectedRoute = ({ path, element }) => {
+  return isAuthenticated() ? element : <Navigate to="/" />;
+};
+
 function App() {
 
   const [currentPanel, setCurrentPanel] = useState("admin");
@@ -48,7 +60,7 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Login />} />
-            <Route path="lab" element={<SharedLayout />}>
+            <Route path="lab" element={<ProtectedRoute element={<SharedLayout />} />}>
               <Route index element={<Home />} />
               <Route path="x-ray">
                 <Route index element={<XrayReports />} />
@@ -91,11 +103,11 @@ function App() {
                 <Route index element={<ContactAdminSection />} />
               </Route>
             </Route>
-            <Route path="doctor">
+            <Route path="doctor" element={<ProtectedRoute element={<AdminSharedLayout />} />}>
               <Route index element={<DoctorDashboard />} />
-              <Route path="pdf" element={<PDFReports/>}/>
+              <Route path="pdf" element={<PDFReports />} />
             </Route>
-            <Route path="admin" element={<AdminSharedLayout />}>
+            <Route path="admin" element={<ProtectedRoute element={<AdminSharedLayout />} />}>
               <Route index element={<AdminDashboard />} />
               <Route path="users">
                 <Route index element={<UsersList />} />
