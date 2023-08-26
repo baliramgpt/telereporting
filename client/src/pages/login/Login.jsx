@@ -34,24 +34,24 @@ const Login = () => {
       };
 
       // Perform further actions with the payload (e.g., send it to an API endpoint)
-      console.log("payload", payload);
+      //console.log("payload", payload);
       // addOrEdit(payload, resetForm);
 
       try {
         await axios
           .post(`${API_URL}/users/login`, payload)
           .then((res) => {
-            if(res.data.role === "lab"){
-                usenavigate('/lab');
+            if (res.data.role === "lab") {
+              usenavigate('/lab');
             }
-            else if(res.data.role === "doctor"){
-                usenavigate('/doctor');
+            else if (res.data.role === "doctor") {
+              usenavigate('/doctor');
             }
-            else if(res.data.role === "admin"){
-                usenavigate('/admin')
+            else if (res.data.role === "admin") {
+              usenavigate('/admin')
             }
-            else{
-                window.alert("Invalid credentials")
+            else {
+              window.alert("Invalid credentials")
             }
           });
       } catch (error) {
@@ -118,7 +118,7 @@ const Login = () => {
           </Input>
         </InputGroup>
         <Button className="btn" onClick={handleSubmit}>
-            LOGIN
+          LOGIN
         </Button>
       </FormGroup>
     </div>
