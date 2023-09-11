@@ -18,7 +18,7 @@ const CheckBox = (props) => {
                     name={name}
                     color="primary"
                     checked={value}
-                    onChange={e => onChange(convertToDefEventPara(name, e.target.checked))}
+                    onChange={onChange}
                 />}
                 label={label}
             />

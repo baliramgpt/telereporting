@@ -7,11 +7,29 @@ export const useForm = (initialFValues, validateOnChange = false, validate) => {
     const [errors, setErrors] = useState({});
 
     const handleInputChange = e => {
-        const { name, value } = e.target
-        setValues({
-            ...values,
-            [name]: value
-        })
+        const { name, value, type, checked } = e.target;
+        if (type === 'checkbox') {
+            const updatedTests = values.tests.slice();
+
+            if (checked) {
+                updatedTests.push(name);
+            } else {
+                const index = updatedTests.indexOf(name);
+                if (index !== -1) {
+                    updatedTests.splice(index, 1);
+                }
+            }
+
+            setValues({
+                ...values,
+                tests: updatedTests,
+            });
+        } else {
+            setValues({
+                ...values,
+                [name]: value,
+            });
+        }
         if (validateOnChange)
             validate({ [name]: value })
     }
