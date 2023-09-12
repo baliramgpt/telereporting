@@ -93,16 +93,15 @@ const UsersList = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const result = await services.getAllUsers();
-            console.log("result", result);
-            setRecords(result);
-          } catch (error) {
-            console.error("Error fetching data:", error);
-          }
+            try {
+                const result = await services.getAllUsers();
+                setRecords(result);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         };
         fetchData();
-      }, []);
+    }, []);
 
     const handleSearch = e => {
         let target = e.target;

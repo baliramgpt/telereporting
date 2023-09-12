@@ -127,35 +127,35 @@ const NewUserRegistration = (props) => {
               <Controls.CheckBox
                 name="X-ray"
                 label="X-ray"
-                value="X-ray"
+                value={values.tests.includes('X-ray')}
                 onChange={handleInputChange}
                 // checked={values.tests.includes("X-ray")}
               />
               <Controls.CheckBox
                 name="ECG"
                 label="ECG"
-                value="ECG"
+                value={values.tests.includes('ECG')}
                 onChange={handleInputChange}
                 // checked={values.tests.includes("ECG")}
               />
               <Controls.CheckBox
                 name="EEG"
                 label="EEG"
-                value={values.tests}
+                value={values.tests.includes('EEG')}
                 onChange={handleInputChange}
                 // checked={values.tests.includes("EEG")}
               />
               <Controls.CheckBox
                 name="MRI"
                 label="MRI"
-                value={values.tests}
+                value={values.tests.includes('MRI')}
                 onChange={handleInputChange}
                 // checked={values.tests.includes("MRI")}
               />
               <Controls.CheckBox
                 name="CT-Scan"
                 label="CT-Scan"
-                value={values.tests}
+                value={values.tests.includes('CT-Scan')}
                 onChange={handleInputChange}
                 // checked={values.tests.includes("CT-Scan")}
               />
