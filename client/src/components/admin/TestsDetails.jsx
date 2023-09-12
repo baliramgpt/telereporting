@@ -12,8 +12,8 @@ import { EditOutlined } from '@mui/icons-material';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import ConfirmDialog from '../modal/ConfirmDialog';
 import Typo from '../../control/Typo';
-import AdminNewRateList from './newregistration/AdminNewRateList'
-import TestsDetailsList from './newregistration/TestsDetailsList';
+import AdminNewRateList from './Modals/AdminNewRateList'
+import TestsDetailsList from './Modals/TestsDetailsList';
 
 
 

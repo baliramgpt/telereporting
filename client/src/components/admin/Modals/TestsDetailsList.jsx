@@ -5,7 +5,19 @@ import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUpload
 import Controls from '../../../control/Controls'
 import { useForm, Form } from '../../../components/Forms/useForm'
 import * as services from '../../../services/Services'
+import { makeStyles } from '@material-ui/core'
 import './UsersList.scss';
+
+const useStyles = makeStyles(theme => ({
+    dropdownMenu: {
+        '& .MuiMenu-paper': {
+            maxHeight: theme.spacing(40)
+        },
+        '& .MuiPaper-root': {
+            maxHeight: theme.spacing(30)
+        }
+    }
+}))
 
 const initialFValues = {
     id: 0,
@@ -23,6 +35,8 @@ const options = [
 ];
 
 const TestsDetailsList = (props) => {
+    const classes = useStyles();
+
     const { addOrEdit, recordForEdit } = props
 
     const [testDetailsRow, setTestDetailsRow] = useState([1,2,3,4,5]);
@@ -80,6 +94,7 @@ const TestsDetailsList = (props) => {
                         onChange={handleInputChange}
                         error={errors.test}
                         options={options}
+                        className={classes.dropdownMenu}
                     />
                     {
                         testDetailsRow.map((item, index) => (

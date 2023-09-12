@@ -42,11 +42,12 @@ import TestsDetails from "./components/admin/TestsDetails";
 const isAuthenticated = () => {
   // Replace with your actual authentication logic
   // Return true if authenticated, false otherwise
-  return false; // For demonstration purposes
+  return true; // For demonstration purposes
 };
 
 
 const ProtectedRoute = ({ path, element }) => {
+  console.log("isAutheticated", isAuthenticated());
   return isAuthenticated() ? element : <Navigate to="/" />;
 };
 
