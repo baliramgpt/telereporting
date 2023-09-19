@@ -24,6 +24,7 @@ const initialFValues = {
     test: '',
     rate: '',
     desc: '',
+    type: '',
 }
 
 const options = [
@@ -37,9 +38,9 @@ const options = [
 const TestsDetailsList = (props) => {
     const classes = useStyles();
 
-    const { addOrEdit, recordForEdit } = props
+    const { addOrEdit, recordForEdit, records, setRecords } = props
 
-    const [testDetailsRow, setTestDetailsRow] = useState([1,2,3,4,5]);
+    const [testDetailsRow, setTestDetailsRow] = useState([1, 2, 3, 4, 5]);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -64,10 +65,7 @@ const TestsDetailsList = (props) => {
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log(values, "#", validate());
-        // if (validate()) {
         addOrEdit(values, resetForm);
-        // }
     }
 
     useEffect(() => {
@@ -78,10 +76,9 @@ const TestsDetailsList = (props) => {
     }, [recordForEdit])
 
     const addMoreRow = () => {
-        testDetailsRow.push(testDetailsRow.length+1);
+        testDetailsRow.push(testDetailsRow.length + 1);
         setTestDetailsRow(testDetailsRow);
     }
-    console.log(testDetailsRow);
 
     return (
         <Form>
@@ -96,11 +93,18 @@ const TestsDetailsList = (props) => {
                         options={options}
                         className={classes.dropdownMenu}
                     />
+                    <Controls.TextArea
+                        label="Type"
+                        name="type"
+                        placeholder="Type"
+                        value={values.type}
+                        onChange={handleInputChange}
+                    />
                     {
                         testDetailsRow.map((item, index) => (
                             <Controls.Input
                                 name="rate"
-                                label={`Test Details ${index+1}`}
+                                label={`Test Details ${index + 1}`}
                                 value={values.rate}
                                 onChange={handleInputChange}
                             />

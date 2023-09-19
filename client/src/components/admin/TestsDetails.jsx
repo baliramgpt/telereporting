@@ -65,6 +65,7 @@ const useStyles = makeStyles(theme => ({
 const headCells = [
     { id: 'id', label: 'ID' },
     { id: 'test', label: 'Test Name' },
+    { id: 'type', label: 'Type Name' },
     { id: 'details', label: 'Details' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
@@ -177,7 +178,8 @@ const TestsDetails = () => {
                                         (<TableRow key={index}>
                                             <TableCell>{item.id}</TableCell>
                                             <TableCell>{item.test}</TableCell>
-                                            <TableCell>{item.details}</TableCell>
+                                            <TableCell>{item.type}</TableCell>
+                                            <TableCell>{item.desc}</TableCell>
                                             <TableCell className={classes.modelsContainer}>
                                                 <Controls.IconButton
                                                     color="primary"
