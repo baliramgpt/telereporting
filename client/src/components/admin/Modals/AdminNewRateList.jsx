@@ -5,12 +5,14 @@ import Controls from '../../../control/Controls'
 import { useForm, Form } from '../../../components/Forms/useForm'
 import * as services from '../../../services/Services'
 import './UsersList.scss';
+import axios from 'axios';
 
 const initialFValues = {
     id: 0,
     test: '',
     rate: '',
     desc: '',
+    type: '',
 }
 
 const options = [
@@ -22,7 +24,7 @@ const options = [
 ];
 
 const AdminNewRateList = (props) => {
-    const { addOrEdit, recordForEdit } = props
+    const { addOrEdit, recordForEdit, records, setRecords } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -45,12 +47,36 @@ const AdminNewRateList = (props) => {
         resetForm,
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(values, "#", validate());
-        // if (validate()) {
+
         addOrEdit(values, resetForm);
-        // }
+        if (true) {
+            const payload = {
+                id: values.id,
+                test: values.test,
+                type: values.type,
+                rate: values.rate,
+                desc: values.desc,
+            }
+            const formData = new FormData();
+            formData.append("payload", JSON.stringify(payload));
+            console.log("formadata", formData);
+
+            try {
+                const response = await axios.post("API Link URL", formData,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    }
+                )
+                    .then((res) => { setRecords([...records, res.data]) });
+            } catch (error) {
+                console.log('An error occurred:', error);
+            }
+            resetForm();
+        }
     }
 
     useEffect(() => {
@@ -71,6 +97,13 @@ const AdminNewRateList = (props) => {
                         onChange={handleInputChange}
                         error={errors.test}
                         options={options}
+                    />
+                    <Controls.TextArea
+                        label="Type"
+                        name="type"
+                        placeholder="Type"
+                        value={values.type}
+                        onChange={handleInputChange}
                     />
                     <Controls.Input
                         name="rate"

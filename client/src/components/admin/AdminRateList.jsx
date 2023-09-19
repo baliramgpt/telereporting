@@ -64,6 +64,7 @@ const useStyles = makeStyles(theme => ({
 const headCells = [
     { id: 'id', label: 'ID' },
     { id: 'test', label: 'Test Name' },
+    { id: 'type', label: 'Type Name' },
     { id: 'rate', label: 'Rate' },
     { id: 'desc', label: 'Description' },
     { id: 'actions', label: 'Actions', disableSorting: true }
@@ -177,6 +178,7 @@ const AdminRateList = () => {
                                         (<TableRow key={index}>
                                             <TableCell>{item.id}</TableCell>
                                             <TableCell>{item.test}</TableCell>
+                                            <TableCell>{item.type}</TableCell>
                                             <TableCell>{item.rate}</TableCell>
                                             <TableCell>{item.desc}</TableCell>
                                             <TableCell className={classes.modelsContainer}>
