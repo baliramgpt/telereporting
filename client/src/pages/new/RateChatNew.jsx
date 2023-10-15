@@ -3,7 +3,12 @@ import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Ta
 import Typo from '../../control/Typo'
 import { makeStyles } from '@material-ui/core/styles';
 
+
 const useStyles = makeStyles({
+    datatable: {
+        height: "600px",
+        padding: "20px",
+    },
     tableContainer: {
         marginTop: '40px',
         border: '1px solid #ccc',
@@ -25,7 +30,7 @@ const testPrices = [
 const RateChatNew = () => {
     const classes = useStyles();
     return (
-        <>
+        <div className={classes.datatable}>
             <Typo
                 title='Rate Card'
             />
@@ -51,7 +56,7 @@ const RateChatNew = () => {
                     </TableContainer>
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 };
 
